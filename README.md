@@ -1,4 +1,4 @@
-# LazyCache.Testing.Moq/LazyCache.Testing.NSubstitute
+# LazyCache.Testing
 __*Moq and NSubstitute mocking libraries for LazyCache*__
 
 If you want to mock the LazyCache caching service using Moq or NSubstitute rather than use the built-in fake provided by LazyCache, you're in the right place. I've got you covered.
@@ -15,7 +15,8 @@ LazyCache.Testing.Moq and LazyCache.Testing.NSubstitute are the have your cake a
 
 ## Resources
 - [Source repository](https://github.com/rgvlee/LazyCache.Testing)
-- [NuGet](https://www.nuget.org/packages/LazyCache.Testing.Moq/)
+- [LazyCache.Testing.Moq - NuGet](https://www.nuget.org/packages/LazyCache.Testing.Moq/)
+- [LazyCache.Testing.NSubstitute - NuGet](https://www.nuget.org/packages/LazyCache.Testing.NSubstitute/)
 
 ## The disclaimer
 I have built these libraries for fun (well sort of, I needed the Moq implementation for work). The mocking doesn't extend to the CacheProvider so if you're hitting that explicitly then you're in for a world of nulls. I might add it in a later release but in general I think accessing the CacheProvider should be avoided. If you find these libraries useful and something is missing, not working as you'd expect or you need additional behaviour mocked flick me a message and I'll see what I can do.
