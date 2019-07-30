@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LazyCache.Testing.Moq</name>
+    </assembly>
+    <members>
+        <member name="T:LazyCache.Testing.Moq.Extensions.MockExtensions">
+            <summary>
+            Extensions for mocks.
+            </summary>
+        </member>
+        <member name="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntry``1(Moq.Mock{LazyCache.IAppCache},System.String,``0)">
+            <summary>
+            Sets up a cache entry.
+            </summary>
+            <typeparam name="T">The cache entry value type.</typeparam>
+            <param name="cachingServiceMock">The caching service mock instance.</param>
+            <param name="key">The cache entry key.</param>
+            <param name="value">The cache entry value.</param>
+            <returns>The cache entry value.</returns>
+        </member>
+        <member name="T:LazyCache.Testing.Moq.MockFactory">
+            <summary>
+            Factory for creating mock/mocked instances.
+            </summary>
+        </member>
+        <member name="M:LazyCache.Testing.Moq.MockFactory.CreateCachingServiceMock">
+            <summary>
+            Creates a caching service mock.
+            </summary>
+            <returns>A caching service mock.</returns>
+        </member>
+        <member name="M:LazyCache.Testing.Moq.MockFactory.CreateMockedCachingService">
+            <summary>
+            Creates a mocked caching service.
+            </summary>
+            <returns>A mocked caching service.</returns>
+        </member>
+        <member name="T:LazyCache.Testing.Moq.NoSetUpDefaultValueProvider">
+            <summary>
+            Default value provider for methods that have not been set up on a lazy cache mock.
+            </summary>
+        </member>
+        <member name="M:LazyCache.Testing.Moq.NoSetUpDefaultValueProvider.GetDefaultValue(System.Type,Moq.Mock)">
+            <summary>
+                Checks the current method invocation on the mock;
+                if GetOrAdd or GetOrAddAsync was invoked the addItemFactory result will be returned;
+                otherwise the default value for the specified type will be returned.
+            </summary>
+            <param name="type">The type of the requested default value.</param>
+            <param name="mock">The mock on which an unexpected invocation has occurred.</param>
+            <returns>
+                if GetOrAdd or GetOrAddAsync was invoked the addItemFactory result will be returned;
+                otherwise the default value for the specified type will be returned.
+            </returns>
+        </member>
+    </members>
+</doc>

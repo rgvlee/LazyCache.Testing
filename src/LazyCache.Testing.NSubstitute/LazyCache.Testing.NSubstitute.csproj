@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.3.0</Version>
+    <Authors>rgvlee</Authors>
+    <Company>rgvlee</Company>
+    <Description>LazyCache mocking library for NSubstitute.
+Want to mock the cache rather than use the fake provided by LazyCache? Then this library is for you.</Description>
+    <Copyright>Copyright (c) 2019 Lee Anderson</Copyright>
+    <PackageLicenseUrl>https://github.com/rgvlee/LazyCache.Testing/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/rgvlee/LazyCache.Testing/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rgvlee/LazyCache.Testing/</RepositoryUrl>
+    <PackageTags>LazyCache lazy cache NSubstitute mock mocking test testing</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>LazyCache.Testing.NSubstitute.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NSubstitute" Version="4.2.1" />
+    <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LazyCache.Testing\LazyCache.Testing.csproj" />
+  </ItemGroup>
+
+</Project>
