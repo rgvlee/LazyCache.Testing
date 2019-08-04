@@ -7,7 +7,7 @@ namespace LazyCache.Testing.Moq {
     /// <summary>
     /// Default value provider for methods that have not been set up on a lazy cache mock.
     /// </summary>
-    public class NoSetUpDefaultValueProvider : DefaultValueProvider {
+    internal class NoSetUpDefaultValueProvider : DefaultValueProvider {
         private readonly Mock<IAppCache> _cachingServiceMock;
 
         /// <summary>

@@ -8,7 +8,7 @@ namespace LazyCache.Testing.NSubstitute {
     /// <summary>
     /// Handler for methods that have not been set up on a lazy cache mock.
     /// </summary>
-    public class NoSetUpHandler : ICallHandler {
+    internal class NoSetUpHandler : ICallHandler {
         private readonly IAppCache _cachingServiceMock;
 
         /// <summary>
