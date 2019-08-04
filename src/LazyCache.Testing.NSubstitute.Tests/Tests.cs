@@ -174,6 +174,20 @@ namespace LazyCache.Testing.NSubstitute.Tests {
         }
 
         [Test]
+        public void AddThenGetWithNoSetUp_TestObject_ReturnsExpectedResult() {
+            var cacheEntryKey = "SomethingInTheCache";
+            var expectedResult = new TestObject();
+
+            var cacheMock = MockFactory.CreateCachingServiceMock();
+
+            cacheMock.Add(cacheEntryKey, expectedResult);
+
+            var actualResult = cacheMock.Get<TestObject>(cacheEntryKey);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [Test]
         public void AddThenGetWithSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult1 = Guid.NewGuid();

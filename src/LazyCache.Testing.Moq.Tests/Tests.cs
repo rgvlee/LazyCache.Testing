@@ -170,20 +170,40 @@ namespace LazyCache.Testing.Moq.Tests {
         }
 
         //The ability to handle an unexpected void method is not supported by Moq4
-        //[Test]
-        //public void AddThenGetWithNoSetUp_Guid_ReturnsExpectedResult() {
-        //    var cacheEntryKey = "SomethingInTheCache";
-        //    var expectedResult = Guid.NewGuid();
+        //so I am using a dynamic proxy on the mock to ensure that add methods are set up automatically
+        [Test]
+        public void AddThenGetWithNoSetUp_Guid_ReturnsExpectedResult() {
+            var cacheEntryKey = "SomethingInTheCache";
+            var expectedResult = Guid.NewGuid();
 
-        //    var cacheMock = MockFactory.CreateCachingServiceMock();
-            
-        //    var mockedCache = cacheMock.Object;
-            
-        //    mockedCache.Add(cacheEntryKey, expectedResult);
-        //    var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
+            var cacheMock = MockFactory.CreateCachingServiceMock();
+            var mockedCache = cacheMock.Object;
 
-        //    Assert.AreEqual(expectedResult, actualResult);
-        //}
+            Console.WriteLine("Add invocation started");
+
+            mockedCache.Add(cacheEntryKey, expectedResult);
+
+            Console.WriteLine("Add invocation finished");
+
+            var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
+
+        [Test]
+        public void AddThenGetWithNoSetUp_TestObject_ReturnsExpectedResult() {
+            var cacheEntryKey = "SomethingInTheCache";
+            var expectedResult = new TestObject();
+
+            var cacheMock = MockFactory.CreateCachingServiceMock();
+            var mockedCache = cacheMock.Object;
+
+            mockedCache.Add(cacheEntryKey, expectedResult);
+
+            var actualResult = mockedCache.Get<TestObject>(cacheEntryKey);
+
+            Assert.AreEqual(expectedResult, actualResult);
+        }
 
         [Test]
         public void AddThenGetWithSetUp_Guid_ReturnsExpectedResult() {
