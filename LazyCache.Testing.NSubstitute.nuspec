@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>LazyCache.Testing.NSubstitute</id>
-    <version>0.3.0</version>
+    <version>0.4.0</version>
     <authors>rgvlee</authors>
     <owners>rgvlee</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -15,6 +15,8 @@ Want to mock the cache rather than use the fake provided by LazyCache? Then this
     <repository url="https://github.com/rgvlee/LazyCache.Testing/" />
     <dependencies>
       <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.Extensions.Logging" version="2.1.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Console" version="2.1.0" exclude="Build,Analyzers" />
         <dependency id="LazyCache" version="2.0.0" exclude="Build,Analyzers" />
         <dependency id="NSubstitute" version="4.1.0" exclude="Build,Analyzers" />
       </group>
