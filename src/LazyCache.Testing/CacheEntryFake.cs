@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Caching.Memory;
+﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
+using System;
+using System.Collections.Generic;
 
 namespace LazyCache.Testing {
     /// <summary>
     /// A fake cache entry.
     /// </summary>
     public class CacheEntryFake : ICacheEntry {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="key">The cache entry key.</param>
         public CacheEntryFake(object key) {
             Key = key;
         }
