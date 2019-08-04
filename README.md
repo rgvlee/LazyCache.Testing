@@ -6,12 +6,12 @@ If you want to mock the LazyCache caching service using Moq or NSubstitute rathe
 ## Hang on a minute... but but why? LazyCache already provides a test class to do this?
 Yes, LazyCache does provide a ```MockCachingService``` for unit testing. It works as advertised for most cases __however__ it doesn't work for all.
 
-If you're using Get\<T> you're out of luck. You'll get nulls. Add<T> followed by a Get<T> won't do anything either.
+If you're using Get\<T> you're out of luck. You'll get nulls. Add\<T> followed by a Get\<T> won't do anything either.
 
 LazyCache.Testing.Moq and LazyCache.Testing.NSubstitute are the have your cake and eat it too solution. They are a cross between a mocked caching service and an in-memory provider. They provide:
-- If the SUT populates the cache using Add<T>, GetOrAdd<T> or GetOrAddAsync<T> no explicit set up is required, it just works. Create the mock and consume.
+- If the SUT populates the cache using Add\<T>, GetOrAdd\<T> or GetOrAddAsync\<T> no explicit set up is required, it just works. Create the mock and consume.
 - Add and remove invocations change the cache state (e.g., Add will add a new entry or update an existing entry regardless of whether you have explicitly set it up).
-- The ability to provide explicit set ups if you want (using SetUpCacheEntry<T>).
+- The ability to provide explicit set ups if you want (using SetUpCacheEntry\<T>).
 - Access to all good stuff that Moq provides such as Moq ```Verify```, NSubstitute ```Received``` etc. 
 
 ## Resources
@@ -86,7 +86,7 @@ public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
 
 ## I'm using Get\<T>, what do I need to do?
 The mock needs to know what to return. You'll need to either:
-- Populate the cache using Add<T>, GetOrAdd<T> or GetOrAddAsync<T>; or
+- Populate the cache using Add\<T>, GetOrAdd\<T> or GetOrAddAsync\<T>; or
 - Use the explicit set up as described above.
 
 ## Async? Please tell me you support the async methods.
