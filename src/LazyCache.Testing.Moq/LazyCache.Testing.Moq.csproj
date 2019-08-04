@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.3.0</Version>
+    <Version>0.4.0</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>LazyCache mocking library for Moq.
 Want to mock the cache rather than use the fake provided by LazyCache? Then this library is for you.</Description>
