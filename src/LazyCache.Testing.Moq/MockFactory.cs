@@ -1,3 +1,4 @@
+using Castle.DynamicProxy;
 using Moq;
 
 namespace LazyCache.Testing.Moq {
@@ -10,14 +11,14 @@ namespace LazyCache.Testing.Moq {
         /// </summary>
         /// <returns>A caching service mock.</returns>
         public static Mock<IAppCache> CreateCachingServiceMock() {
-            var mock = new Mock<IAppCache>();
-
+            var mockProxy = new ProxyGenerator().CreateClassProxy<Mock<IAppCache>>(new NoSetUpInterceptor());
+            
             var cacheDefaultsMock = new Mock<CacheDefaults>();
-            mock.Setup(m => m.DefaultCachePolicy).Returns(cacheDefaultsMock.Object);
+            mockProxy.Setup(m => m.DefaultCachePolicy).Returns(cacheDefaultsMock.Object);
 
-            mock.DefaultValueProvider = new NoSetUpDefaultValueProvider(mock);
+            mockProxy.DefaultValueProvider = new NoSetUpDefaultValueProvider(mockProxy);
 
-            return mock;
+            return mockProxy;
         }
 
         /// <summary>
