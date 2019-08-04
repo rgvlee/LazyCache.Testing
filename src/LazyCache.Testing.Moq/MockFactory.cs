@@ -15,7 +15,7 @@ namespace LazyCache.Testing.Moq {
             var cacheDefaultsMock = new Mock<CacheDefaults>();
             mock.Setup(m => m.DefaultCachePolicy).Returns(cacheDefaultsMock.Object);
 
-            mock.DefaultValueProvider = new NoSetUpDefaultValueProvider();
+            mock.DefaultValueProvider = new NoSetUpDefaultValueProvider(mock);
 
             return mock;
         }

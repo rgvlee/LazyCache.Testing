@@ -17,7 +17,7 @@ namespace LazyCache.Testing.NSubstitute {
             mock.DefaultCachePolicy.Returns(cacheDefaultsMock);
 
             var router = SubstitutionContext.Current.GetCallRouterFor(mock);
-            router.RegisterCustomCallHandlerFactory(state => new NoSetUpHandler());
+            router.RegisterCustomCallHandlerFactory(state => new NoSetUpHandler(mock));
 
             return mock;
         }
