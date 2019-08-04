@@ -15,9 +15,40 @@
             </summary>
             <typeparam name="T">The cache entry value type.</typeparam>
             <param name="cachingServiceMock">The caching service mock instance.</param>
-            <param name="key">The cache entry key.</param>
-            <param name="value">The cache entry value.</param>
-            <returns>The cache entry value.</returns>
+            <param name="cacheEntryKey">The cache entry key.</param>
+            <param name="cacheEntryValue">The cache entry value.</param>
+            <returns>The caching service mock.</returns>
+        </member>
+        <member name="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntryAdd``1(LazyCache.IAppCache,System.String)">
+            <summary>
+            Sets up the add method for a cache entry.
+            </summary>
+            <typeparam name="T">The cache entry value type.</typeparam>
+            <param name="cachingServiceMock">The caching service mock instance.</param>
+            <param name="cacheEntryKey">The cache entry key.</param>
+            <returns>The caching service mock.</returns>
+            <remarks>I've left this accessible for advanced usage. In most cases you should just use <see cref="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)"/>.</remarks>
+        </member>
+        <member name="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntryGet``1(LazyCache.IAppCache,System.String,``0)">
+            <summary>
+            Sets up the get methods for a cache entry.
+            </summary>
+            <typeparam name="T">The cache entry value type.</typeparam>
+            <param name="cachingServiceMock">The caching service mock instance.</param>
+            <param name="cacheEntryKey">The cache entry key.</param>
+            <param name="cacheEntryValue">The cache entry value.</param>
+            <returns>The caching service mock.</returns>
+            <remarks>I've left this accessible for advanced usage. In most cases you should just use <see cref="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)"/>.</remarks>
+        </member>
+        <member name="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntryRemove``1(LazyCache.IAppCache,System.String)">
+            <summary>
+            Sets up the remove method for a cache entry.
+            </summary>
+            <typeparam name="T">The cache entry value type.</typeparam>
+            <param name="cachingServiceMock">The caching service mock instance.</param>
+            <param name="cacheEntryKey">The cache entry key.</param>
+            <returns>The caching service mock.</returns>
+            <remarks>I've left this accessible for advanced usage. In most cases you should just use <see cref="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)"/>.</remarks>
         </member>
         <member name="T:LazyCache.Testing.NSubstitute.MockFactory">
             <summary>
@@ -35,15 +66,23 @@
             Handler for methods that have not been set up on a lazy cache mock.
             </summary>
         </member>
+        <member name="M:LazyCache.Testing.NSubstitute.NoSetUpHandler.#ctor(LazyCache.IAppCache)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="cachingServiceMock">An instance of the caching service mock.</param>
+        </member>
         <member name="M:LazyCache.Testing.NSubstitute.NoSetUpHandler.Handle(NSubstitute.Core.ICall)">
             <summary>
                 Checks the current method invocation on the mock;
-                if GetOrAdd or GetOrAddAsync was invoked the addItemFactory result will be returned;
+                if Add was invoked the unexpected match is set up;
+                if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be returned;
                 otherwise the default value for the specified type will be returned.
             </summary>
             <param name="call"></param>
             <returns>
-                if GetOrAdd or GetOrAddAsync was invoked the addItemFactory result will be returned;
+                if Add was invoked the unexpected match is set up;
+                if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be returned;
                 otherwise the default value for the specified type will be returned.
             </returns>
         </member>
