@@ -1,5 +1,7 @@
+using LazyCache.Testing.Helpers;
 using LazyCache.Testing.NSubstitute.Extensions;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -8,6 +10,15 @@ using System.Threading.Tasks;
 namespace LazyCache.Testing.NSubstitute.Tests {
     [TestFixture]
     public class Tests {
+        private static readonly ILogger<Tests> Logger = LoggerHelper.CreateLogger<Tests>();
+
+        [SetUp]
+        public void SetUp() {
+            var loggerFactory = new LoggerFactory();
+            loggerFactory.AddConsole(LogLevel.Debug);
+            LoggerHelper.LoggerFactory = loggerFactory;
+        }
+
         [Test]
         public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";

@@ -1,14 +1,18 @@
-﻿using System;
-using System.Linq;
-using LazyCache.Testing.Extensions;
+﻿using LazyCache.Testing.Extensions;
 using LazyCache.Testing.NSubstitute.Extensions;
+using Microsoft.Extensions.Logging;
 using NSubstitute.Core;
+using System;
+using System.Linq;
+using LazyCache.Testing.Helpers;
 
 namespace LazyCache.Testing.NSubstitute {
     /// <summary>
     /// Handler for methods that have not been set up on a lazy cache mock.
     /// </summary>
     internal class NoSetUpHandler : ICallHandler {
+        private static readonly ILogger<NoSetUpHandler> Logger = LoggerHelper.CreateLogger<NoSetUpHandler>();
+
         private readonly IAppCache _cachingServiceMock;
 
         /// <summary>
@@ -31,7 +35,7 @@ namespace LazyCache.Testing.NSubstitute {
         ///     otherwise the default value for the specified type will be returned if the last method invocation has a return type.
         /// </returns>
         public RouteAction Handle(ICall call) {
-            Console.WriteLine("NoSetUpHandler invoked");
+            Logger.LogDebug("NoSetUpHandler invoked");
 
             var methodInfo = call.GetMethodInfo();
             var args = call.GetArguments();
@@ -54,9 +58,9 @@ namespace LazyCache.Testing.NSubstitute {
                 var key = args[0].ToString();
 
                 var funcType = methodInfo.GetParameters()[1].ParameterType;
-                Console.WriteLine($"{funcType} methods: ");
+                Logger.LogDebug($"{funcType} methods: ");
                 foreach (var mi in funcType.GetMethods()) {
-                    Console.WriteLine(mi);
+                    Logger.LogDebug(mi.ToString());
                 }
 
                 var item = funcType.GetMethod("Invoke").Invoke(args[1], new []{ new CacheEntryFake(key) });
