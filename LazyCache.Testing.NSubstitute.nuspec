@@ -16,8 +16,7 @@ Want to mock the cache rather than use the fake provided by LazyCache? Then this
     <dependencies>
       <group targetFramework=".NETStandard2.0">
         <dependency id="LazyCache" version="2.0.0" exclude="Build,Analyzers" />
-        <dependency id="NSubstitute" version="4.2.1" exclude="Build,Analyzers" />
-        <dependency id="NSubstitute.Analyzers.CSharp" version="1.0.10" exclude="Build,Analyzers" />
+        <dependency id="NSubstitute" version="4.1.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
