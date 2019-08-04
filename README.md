@@ -85,7 +85,9 @@ public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
 ```
 
 ## I'm using Get\<T>, what do I need to do?
-You'll need to use the explicit set up as described above - the mock needs to know what to return.
+The mock needs to know what to return. You'll need to either:
+- Populate the cache using Add<T>, GetOrAdd<T> or GetOrAddAsync<T>; or
+- Use the explicit set up as described above.
 
 ## Async? Please tell me you support the async methods.
 The survey says, yes the async methods are supported. You're welcome.
