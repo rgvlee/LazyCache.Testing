@@ -19,7 +19,7 @@ namespace LazyCache.Testing.Moq {
         }
 
         /// <summary>
-        ///     Checks the current method invocation on the mock;
+        ///     Checks the last method invocation on the mock;
         ///     if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be returned;
         ///     otherwise the default value for the specified type will be returned.
         /// </summary>
@@ -27,14 +27,13 @@ namespace LazyCache.Testing.Moq {
         /// <param name="mock">The mock on which an unexpected invocation has occurred.</param>
         /// <returns>
         ///     if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be returned;
-        ///     otherwise the default value for the specified type will be returned.
+        ///     otherwise the default value for the specified type will be returned if the last method invocation has a return type.
         /// </returns>
         protected override object GetDefaultValue(Type type, Mock mock) {
             Console.WriteLine("NoSetUpDefaultValueProvider invoked");
 
             var lastInvocation = mock.Invocations.Last();
             var methodInfo = lastInvocation.Method;
-
             var args = lastInvocation.Arguments;
             
             if (methodInfo.Name.StartsWith("GetOrAdd", StringComparison.CurrentCultureIgnoreCase)) {
