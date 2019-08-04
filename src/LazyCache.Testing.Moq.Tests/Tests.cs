@@ -180,11 +180,8 @@ namespace LazyCache.Testing.Moq.Tests {
             var mockedCache = cacheMock.Object;
 
             Console.WriteLine("Add invocation started");
-
             mockedCache.Add(cacheEntryKey, expectedResult);
-
             Console.WriteLine("Add invocation finished");
-
             var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
 
             Assert.AreEqual(expectedResult, actualResult);
