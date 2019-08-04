@@ -5,9 +5,13 @@ using Microsoft.Extensions.Primitives;
 
 namespace LazyCache.Testing {
     /// <summary>
-    /// A fake cache entry used to obtain a result from an addItemFactory parameter.
+    /// A fake cache entry.
     /// </summary>
     public class CacheEntryFake : ICacheEntry {
+        public CacheEntryFake(object key) {
+            Key = key;
+        }
+
         /// <inheritdoc />
         public void Dispose() {
             //throw new NotImplementedException();
@@ -17,7 +21,7 @@ namespace LazyCache.Testing {
         public object Key { get; }
 
         /// <inheritdoc />
-        public object Value { get; set; }
+        public virtual object Value { get; set; }
 
         /// <inheritdoc />
         public DateTimeOffset? AbsoluteExpiration { get; set; }
