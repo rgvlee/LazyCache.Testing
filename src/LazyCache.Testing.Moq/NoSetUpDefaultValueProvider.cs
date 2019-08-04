@@ -1,13 +1,17 @@
-﻿using System;
-using System.Linq;
-using LazyCache.Testing.Extensions;
+﻿using LazyCache.Testing.Extensions;
+using Microsoft.Extensions.Logging;
 using Moq;
+using System;
+using System.Linq;
+using LazyCache.Testing.Helpers;
 
 namespace LazyCache.Testing.Moq {
     /// <summary>
     /// Default value provider for methods that have not been set up on a lazy cache mock.
     /// </summary>
     internal class NoSetUpDefaultValueProvider : DefaultValueProvider {
+        private static readonly ILogger<NoSetUpDefaultValueProvider> Logger = LoggerHelper.CreateLogger<NoSetUpDefaultValueProvider>();
+
         private readonly Mock<IAppCache> _cachingServiceMock;
 
         /// <summary>
@@ -30,7 +34,7 @@ namespace LazyCache.Testing.Moq {
         ///     otherwise the default value for the specified type will be returned if the last method invocation has a return type.
         /// </returns>
         protected override object GetDefaultValue(Type type, Mock mock) {
-            Console.WriteLine("NoSetUpDefaultValueProvider invoked");
+            Logger.LogDebug("NoSetUpDefaultValueProvider invoked");
 
             var lastInvocation = mock.Invocations.Last();
             var methodInfo = lastInvocation.Method;
@@ -41,9 +45,9 @@ namespace LazyCache.Testing.Moq {
                 var key = args[0].ToString();
 
                 var funcType = methodInfo.GetParameters()[1].ParameterType;
-                Console.WriteLine($"{funcType} methods: ");
+                Logger.LogDebug($"{funcType} methods: ");
                 foreach (var mi in funcType.GetMethods()) {
-                    Console.WriteLine(mi);
+                    Logger.LogDebug(mi.ToString());
                 }
 
                 var item = funcType.GetMethod("Invoke").Invoke(args[1], new object[] { new CacheEntryFake(key) });

@@ -1,5 +1,7 @@
+using LazyCache.Testing.Helpers;
 using LazyCache.Testing.Moq.Extensions;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -8,6 +10,15 @@ using System.Threading.Tasks;
 namespace LazyCache.Testing.Moq.Tests {
     [TestFixture]
     public class Tests {
+        private static readonly ILogger<Tests> Logger = LoggerHelper.CreateLogger<Tests>();
+
+        [SetUp]
+        public void SetUp() {
+            var loggerFactory = new LoggerFactory();
+            loggerFactory.AddConsole(LogLevel.Debug);
+            LoggerHelper.LoggerFactory = loggerFactory;
+        }
+
         [Test]
         public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
@@ -179,9 +190,9 @@ namespace LazyCache.Testing.Moq.Tests {
             var cacheMock = MockFactory.CreateCachingServiceMock();
             var mockedCache = cacheMock.Object;
 
-            Console.WriteLine("Add invocation started");
+            Logger.LogDebug("Add invocation started");
             mockedCache.Add(cacheEntryKey, expectedResult);
-            Console.WriteLine("Add invocation finished");
+            Logger.LogDebug("Add invocation finished");
             var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
 
             Assert.AreEqual(expectedResult, actualResult);

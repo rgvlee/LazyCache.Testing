@@ -1,7 +1,9 @@
+using Castle.DynamicProxy;
+using Microsoft.Extensions.Logging;
+using Moq;
 using System;
 using System.Linq;
-using Castle.DynamicProxy;
-using Moq;
+using LazyCache.Testing.Helpers;
 using IInvocation = Castle.DynamicProxy.IInvocation;
 
 namespace LazyCache.Testing.Moq {
@@ -9,13 +11,15 @@ namespace LazyCache.Testing.Moq {
     /// Dynamic proxy interceptor for methods that have not been set up on a lazy cache mock.
     /// </summary>
     internal class NoSetUpInterceptor : IInterceptor {
+        private static readonly ILogger<NoSetUpInterceptor> Logger = LoggerHelper.CreateLogger<NoSetUpInterceptor>();
+
         /// <summary>
         ///     Checks the last method invocation on the mock;
         ///     if Add was invoked the unexpected match is set up;
         /// </summary>
         /// <param name="invocation">The proxied method invocation.</param>
         public void Intercept(IInvocation invocation) {
-            //Console.WriteLine($"{invocation.Method}");
+            //Logger.LogDebug($"{invocation.Method}");
             
             try {
                 invocation.Proceed();
@@ -26,7 +30,7 @@ namespace LazyCache.Testing.Moq {
             finally {
                 if (invocation.ReturnValue != null && invocation.ReturnValue is IInvocationList mockInvocations) {
                     if (mockInvocations.Any() && mockInvocations.Last().Method.Name.StartsWith("Add", StringComparison.CurrentCultureIgnoreCase)) {
-                        Console.WriteLine("I have detected that the previous mock invocation was an add");
+                        Logger.LogDebug("I have detected that the previous mock invocation was an add");
 
                         var lastInvocation = mockInvocations.Last();
                         var methodInfo = lastInvocation.Method;
@@ -42,7 +46,7 @@ namespace LazyCache.Testing.Moq {
                     };
                 }
 
-                //Console.WriteLine(invocation.ReturnValue);
+                //Logger.LogDebug(invocation.ReturnValue);
             }
         }
     }
