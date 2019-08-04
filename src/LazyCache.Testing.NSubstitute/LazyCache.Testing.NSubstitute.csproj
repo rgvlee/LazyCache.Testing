@@ -20,8 +20,7 @@ Want to mock the cache rather than use the fake provided by LazyCache? Then this
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NSubstitute" Version="4.2.1" />
-    <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.10" />
+    <PackageReference Include="NSubstitute" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>

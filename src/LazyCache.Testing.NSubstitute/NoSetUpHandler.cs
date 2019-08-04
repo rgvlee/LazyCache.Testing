@@ -20,16 +20,15 @@ namespace LazyCache.Testing.NSubstitute {
         }
 
         /// <summary>
-        ///     Checks the current method invocation on the mock;
+        ///     Checks the last method invocation on the mock;
         ///     if Add was invoked the unexpected match is set up;
         ///     if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be returned;
         ///     otherwise the default value for the specified type will be returned.
         /// </summary>
         /// <param name="call"></param>
         /// <returns>
-        ///     if Add was invoked the unexpected match is set up;
         ///     if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be returned;
-        ///     otherwise the default value for the specified type will be returned.
+        ///     otherwise the default value for the specified type will be returned if the last method invocation has a return type.
         /// </returns>
         public RouteAction Handle(ICall call) {
             Console.WriteLine("NoSetUpHandler invoked");
