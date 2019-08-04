@@ -80,7 +80,7 @@
         </member>
         <member name="M:LazyCache.Testing.Moq.NoSetUpDefaultValueProvider.GetDefaultValue(System.Type,Moq.Mock)">
             <summary>
-                Checks the current method invocation on the mock;
+                Checks the last method invocation on the mock;
                 if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be returned;
                 otherwise the default value for the specified type will be returned.
             </summary>
@@ -88,8 +88,20 @@
             <param name="mock">The mock on which an unexpected invocation has occurred.</param>
             <returns>
                 if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be returned;
-                otherwise the default value for the specified type will be returned.
+                otherwise the default value for the specified type will be returned if the last method invocation has a return type.
             </returns>
+        </member>
+        <member name="T:LazyCache.Testing.Moq.NoSetUpInterceptor">
+            <summary>
+            Dynamic proxy interceptor for methods that have not been set up on a lazy cache mock.
+            </summary>
+        </member>
+        <member name="M:LazyCache.Testing.Moq.NoSetUpInterceptor.Intercept(Castle.DynamicProxy.IInvocation)">
+            <summary>
+                Checks the last method invocation on the mock;
+                if Add was invoked the unexpected match is set up;
+            </summary>
+            <param name="invocation">The proxied method invocation.</param>
         </member>
     </members>
 </doc>
