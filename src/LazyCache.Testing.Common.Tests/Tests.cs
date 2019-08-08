@@ -1,16 +1,15 @@
-using System;
-using System.Threading.Tasks;
 using LazyCache.Testing.Helpers;
-using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using System;
+using System.Threading.Tasks;
 
 namespace LazyCache.Testing.Common.Tests {
     [TestFixture]
-    public abstract class Tests {
-        protected static readonly ILogger<Tests> Logger = LoggerHelper.CreateLogger<Tests>();
+    public abstract class TestBase {
+        protected static readonly ILogger<TestBase> Logger = LoggerHelper.CreateLogger<TestBase>();
 
-        protected IAppCache mockedCache;
+        protected IAppCache MockedCache;
 
         protected abstract void SetUpCacheEntry<T>(string cacheEntryKey, T expectedResult);
             
@@ -22,12 +21,12 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
             SetUpCacheEntry(cacheEntryKey, expectedResult);
             
-            var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+            var actualResult = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
             
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -38,52 +37,50 @@ namespace LazyCache.Testing.Common.Tests {
             var expectedResult = Guid.NewGuid();
             SetUpCacheEntry(cacheEntryKey, expectedResult);
             
-            var actualResult = await mockedCache.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult));
+            var actualResult = await MockedCache.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult));
 
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
-        public void GetWithNoSetUp_ReturnsDefaultValue() {
+        public virtual void GetWithNoSetUp_ReturnsDefaultValue() {
             var cacheEntryKey = "SomethingInTheCache";
             
-            var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
+            var actualResult = MockedCache.Get<Guid>(cacheEntryKey);
 
             Assert.That(actualResult, Is.EqualTo(default(Guid)));
         }
 
-        //[Test]
-        //public void GetOrAddWithNoSetUp_Guid_ReturnsExpectedResult() {
-        //    var cacheEntryKey = "SomethingInTheCache";
-        //    var expectedResult = Guid.NewGuid();
-            
-        //    var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+        [Test]
+        public void GetOrAddWithNoSetUp_Guid_ReturnsExpectedResult() {
+            var cacheEntryKey = "SomethingInTheCache";
+            var expectedResult = Guid.NewGuid();
 
-        //    Assert.Multiple(() => {
-        //        Assert.AreEqual(expectedResult, actualResult);
-        //        cacheMock.Verify(m => m.GetOrAdd(It.IsAny<string>(), It.IsAny<Func<ICacheEntry, Guid>>()), Times.Once);
-        //    });
-        //}
+            var actualResult = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-        //[Test]
-        //public void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
-        //    var cacheEntryKey = "SomethingInTheCache";
-        //    var expectedResult = new TestObject();
+            Assert.Multiple(() => {
+                Assert.AreEqual(expectedResult, actualResult);
+            });
+        }
 
-        //    var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+        [Test]
+        public void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
+            var cacheEntryKey = "SomethingInTheCache";
+            var expectedResult = new TestObject();
 
-        //    Assert.Multiple(() => {
-        //        Assert.AreEqual(expectedResult, actualResult);
-        //        cacheMock.Verify(m => m.GetOrAdd(It.IsAny<string>(), It.IsAny<Func<ICacheEntry, TestObject>>()), Times.Once);
-        //    });
-        //}
+            var actualResult = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+
+            Assert.Multiple(() => {
+                Assert.AreEqual(expectedResult, actualResult);
+            });
+        }
 
         [Test]
         public async Task GetOrAddAsyncWithNoSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
             
-            var actualResult = await mockedCache.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult));
+            var actualResult = await MockedCache.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult));
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -93,119 +90,113 @@ namespace LazyCache.Testing.Common.Tests {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
             
-            var actualResult = await mockedCache.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult));
+            var actualResult = await MockedCache.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult));
 
             Assert.AreEqual(expectedResult, actualResult);
         }
 
-        //[Test]
-        //public void GetThenGetOrAddThenGetWithNoSetUp_TestObject_ReturnsExpectedResults() {
-        //    var cacheEntryKey = "SomethingInTheCache";
-        //    var expectedResult1 = default(TestObject);
-        //    var expectedResult2 = new TestObject();
-        //    var expectedResult3 = expectedResult2;
+        [Test]
+        public void GetThenGetOrAddThenGetWithNoSetUp_TestObject_ReturnsExpectedResults() {
+            var cacheEntryKey = "SomethingInTheCache";
+            var expectedResult1 = default(TestObject);
+            var expectedResult2 = new TestObject();
+            var expectedResult3 = expectedResult2;
 
-        //    var actualResult1 = mockedCache.Get<TestObject>(cacheEntryKey);
-        //    var actualResult2 = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult2, DateTimeOffset.Now.AddMinutes(30));
-        //    var actualResult3 = mockedCache.Get<TestObject>(cacheEntryKey);
+            var actualResult1 = MockedCache.Get<TestObject>(cacheEntryKey);
+            var actualResult2 = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult2, DateTimeOffset.Now.AddMinutes(30));
+            var actualResult3 = MockedCache.Get<TestObject>(cacheEntryKey);
 
-        //    Assert.Multiple(() => {
-        //        Assert.IsNull(actualResult1);
-        //        Assert.AreEqual(expectedResult1, actualResult1);
+            Assert.Multiple(() => {
+                Assert.IsNull(actualResult1);
+                Assert.AreEqual(expectedResult1, actualResult1);
 
-        //        Assert.AreEqual(expectedResult2, actualResult2);
+                Assert.AreEqual(expectedResult2, actualResult2);
 
-        //        Assert.IsNotNull(actualResult3);
-        //        Assert.AreEqual(expectedResult3, actualResult3);
-
-        //        cacheMock.Verify(m => m.GetOrAdd(It.IsAny<string>(), It.IsAny<Func<ICacheEntry, TestObject>>()), Times.Once);
-        //        cacheMock.Verify(m => m.Get<TestObject>(It.IsAny<string>()), Times.Exactly(2));
-        //    });
-        //}
-
-        //[Test]
-        //public void GetThenGetOrAddThenGetWithSetUp_TestObject_ReturnsExpectedResults() {
-        //    var cacheEntryKey = "SomethingInTheCache";
-        //    var expectedResult = new TestObject();
-
-        //    SetUpCacheEntry(cacheEntryKey, expectedResult);
-            
-        //    var actualResult1 = mockedCache.Get<TestObject>(cacheEntryKey);
-        //    var actualResult2 = mockedCache.GetOrAdd(cacheEntryKey, addItemFactory: () => expectedResult, expires: DateTimeOffset.Now.AddMinutes(30));
-        //    var actualResult3 = mockedCache.Get<TestObject>(cacheEntryKey);
-
-        //    Assert.Multiple(() => {
-        //        Assert.AreEqual(expectedResult, actualResult1);
-        //        Assert.AreEqual(expectedResult, actualResult2);
-        //        Assert.AreEqual(expectedResult, actualResult3);
-
-        //        cacheMock.Verify(m => m.GetOrAdd(It.IsAny<string>(), It.IsAny<Func<ICacheEntry, TestObject>>()), Times.Once);
-        //        cacheMock.Verify(m => m.Get<TestObject>(It.IsAny<string>()), Times.Exactly(2));
-        //    });
-        //}
+                Assert.IsNotNull(actualResult3);
+                Assert.AreEqual(expectedResult3, actualResult3);
+            });
+        }
 
         [Test]
-        public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
+        public void GetThenGetOrAddThenGetWithSetUp_TestObject_ReturnsExpectedResults() {
+            var cacheEntryKey = "SomethingInTheCache";
+            var expectedResult = new TestObject();
+
+            SetUpCacheEntry(cacheEntryKey, expectedResult);
+
+            var actualResult1 = MockedCache.Get<TestObject>(cacheEntryKey);
+            var actualResult2 = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+            var actualResult3 = MockedCache.Get<TestObject>(cacheEntryKey);
+
+            Assert.Multiple(() => {
+                Assert.AreEqual(expectedResult, actualResult1);
+                Assert.AreEqual(expectedResult, actualResult2);
+                Assert.AreEqual(expectedResult, actualResult3);
+            });
+        }
+
+        [Test]
+        public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
             
-            var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+            var actualResult = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
-        public void AddThenGetWithNoSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void AddThenGetWithNoSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
             
             Logger.LogDebug("Add invocation started");
-            mockedCache.Add(cacheEntryKey, expectedResult);
+            MockedCache.Add(cacheEntryKey, expectedResult);
             Logger.LogDebug("Add invocation finished");
-            var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
+            var actualResult = MockedCache.Get<Guid>(cacheEntryKey);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
-        public void AddThenGetWithNoSetUp_TestObject_ReturnsExpectedResult() {
+        public virtual void AddThenGetWithNoSetUp_TestObject_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
             
-            mockedCache.Add(cacheEntryKey, expectedResult);
+            MockedCache.Add(cacheEntryKey, expectedResult);
 
-            var actualResult = mockedCache.Get<TestObject>(cacheEntryKey);
+            var actualResult = MockedCache.Get<TestObject>(cacheEntryKey);
 
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
-        public void AddThenGetWithSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void AddThenGetWithSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult1 = Guid.NewGuid();
             var expectedResult2 = Guid.NewGuid();
 
             SetUpCacheEntry(cacheEntryKey, expectedResult1);
             
-            var actualResult1 = mockedCache.Get<Guid>(cacheEntryKey);
+            var actualResult1 = MockedCache.Get<Guid>(cacheEntryKey);
             Assert.AreEqual(expectedResult1, actualResult1);
 
-            mockedCache.Add(cacheEntryKey, expectedResult2);
-            var actualResult2 = mockedCache.Get<Guid>(cacheEntryKey);
+            MockedCache.Add(cacheEntryKey, expectedResult2);
+            var actualResult2 = MockedCache.Get<Guid>(cacheEntryKey);
 
             Assert.AreEqual(expectedResult2, actualResult2);
         }
 
         [Test]
-        public void RemoveWithSetUp_Guid_ReturnsDefaultValue() {
+        public virtual void RemoveWithSetUp_Guid_ReturnsDefaultValue() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult1 = Guid.NewGuid();
 
             SetUpCacheEntry(cacheEntryKey, expectedResult1);
             
-            var actualResult1 = mockedCache.Get<Guid>(cacheEntryKey);
-            mockedCache.Remove(cacheEntryKey);
-            var actualResult2 = mockedCache.Get<Guid>(cacheEntryKey);
+            var actualResult1 = MockedCache.Get<Guid>(cacheEntryKey);
+            MockedCache.Remove(cacheEntryKey);
+            var actualResult2 = MockedCache.Get<Guid>(cacheEntryKey);
 
             Assert.Multiple(() => {
                 Assert.AreEqual(expectedResult1, actualResult1);
@@ -214,12 +205,12 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public void RemoveWithNoSetUp_Guid_ReturnsDefaultValue() {
+        public virtual void RemoveWithNoSetUp_Guid_ReturnsDefaultValue() {
             var cacheEntryKey = "SomethingInTheCache";
             
-            var actualResult1 = mockedCache.Get<Guid>(cacheEntryKey);
-            mockedCache.Remove(cacheEntryKey);
-            var actualResult2 = mockedCache.Get<Guid>(cacheEntryKey);
+            var actualResult1 = MockedCache.Get<Guid>(cacheEntryKey);
+            MockedCache.Remove(cacheEntryKey);
+            var actualResult2 = MockedCache.Get<Guid>(cacheEntryKey);
 
             Assert.Multiple(() => {
                 Assert.That(actualResult1, Is.EqualTo(default(Guid)));
