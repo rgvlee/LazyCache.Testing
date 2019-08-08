@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LazyCache.Testing.Moq\LazyCache.Testing.Moq.xml = LazyCache.Testing.Moq\LazyCache.Testing.Moq.xml
 		..\LazyCache.Testing.NSubstitute.nuspec = ..\LazyCache.Testing.NSubstitute.nuspec
 		LazyCache.Testing.NSubstitute\LazyCache.Testing.NSubstitute.xml = LazyCache.Testing.NSubstitute\LazyCache.Testing.NSubstitute.xml
-		LazyCache.Testing\LazyCache.Testing.xml = LazyCache.Testing\LazyCache.Testing.xml
+		LazyCache.Testing.Common\LazyCache.Testing.xml = LazyCache.Testing.Common\LazyCache.Testing.xml
 		..\LICENSE = ..\LICENSE
 		..\README.md = ..\README.md
 		TODO.md = TODO.md
@@ -24,11 +24,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyCache.Testing.NSubstitu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyCache.Testing.NSubstitute.Tests", "LazyCache.Testing.NSubstitute.Tests\LazyCache.Testing.NSubstitute.Tests.csproj", "{136F8D70-E018-4142-97F0-412FDBDC7037}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyCache.Testing", "LazyCache.Testing\LazyCache.Testing.csproj", "{7BC898BF-5417-4CB2-901E-1FC310DA1430}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyCache.Testing.Common", "LazyCache.Testing.Common\LazyCache.Testing.Common.csproj", "{7BC898BF-5417-4CB2-901E-1FC310DA1430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyCache.DefaultBehaviour.Tests", "LazyCache.DefaultBehaviour.Tests\LazyCache.DefaultBehaviour.Tests.csproj", "{7620DBAD-5026-4E2E-A222-DDB20B02EBB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyCache.DefaultBehaviour.Tests", "LazyCache.DefaultBehaviour.Tests\LazyCache.DefaultBehaviour.Tests.csproj", "{7620DBAD-5026-4E2E-A222-DDB20B02EBB9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EB080F1F-ED22-4008-86AA-3AA97DCE9944}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyCache.Testing.Common.Tests", "LazyCache.Testing.Common.Tests\LazyCache.Testing.Common.Tests.csproj", "{BB79EAF5-C9BC-4FFD-9020-B9DBD9E3F8FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +62,10 @@ Global
 		{7620DBAD-5026-4E2E-A222-DDB20B02EBB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7620DBAD-5026-4E2E-A222-DDB20B02EBB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7620DBAD-5026-4E2E-A222-DDB20B02EBB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB79EAF5-C9BC-4FFD-9020-B9DBD9E3F8FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB79EAF5-C9BC-4FFD-9020-B9DBD9E3F8FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB79EAF5-C9BC-4FFD-9020-B9DBD9E3F8FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB79EAF5-C9BC-4FFD-9020-B9DBD9E3F8FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{482F15C1-FC59-4AA9-BF1C-C2B3F8D42E35} = {EB080F1F-ED22-4008-86AA-3AA97DCE9944}
 		{136F8D70-E018-4142-97F0-412FDBDC7037} = {EB080F1F-ED22-4008-86AA-3AA97DCE9944}
 		{7620DBAD-5026-4E2E-A222-DDB20B02EBB9} = {EB080F1F-ED22-4008-86AA-3AA97DCE9944}
+		{BB79EAF5-C9BC-4FFD-9020-B9DBD9E3F8FF} = {EB080F1F-ED22-4008-86AA-3AA97DCE9944}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9754E2BB-3BC8-410B-84AC-62BD9E24951F}

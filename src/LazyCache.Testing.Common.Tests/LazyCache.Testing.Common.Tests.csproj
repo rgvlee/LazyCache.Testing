@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LazyCache.Testing.Common.Tests\LazyCache.Testing.Common.Tests.csproj" />
-    <ProjectReference Include="..\LazyCache.Testing.NSubstitute\LazyCache.Testing.NSubstitute.csproj" />
+    <ProjectReference Include="..\LazyCache.Testing.Common\LazyCache.Testing.Common.csproj" />
   </ItemGroup>
 
 </Project>

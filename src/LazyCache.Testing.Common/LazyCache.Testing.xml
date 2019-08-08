@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>LazyCache.Testing</name>
+        <name>LazyCache.Testing.Common</name>
     </assembly>
     <members>
         <member name="T:LazyCache.Testing.CacheEntryFake">

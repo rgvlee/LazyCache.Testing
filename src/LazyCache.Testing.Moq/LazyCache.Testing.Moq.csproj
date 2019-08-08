@@ -23,7 +23,7 @@ Want to mock the cache rather than use the fake provided by LazyCache? Then this
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LazyCache.Testing\LazyCache.Testing.csproj" />
+    <ProjectReference Include="..\LazyCache.Testing.Common\LazyCache.Testing.Common.csproj" />
   </ItemGroup>
 
 </Project>
