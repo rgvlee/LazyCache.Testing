@@ -1,12 +1,12 @@
 # LazyCache.Testing
 __*Moq and NSubstitute mocking libraries for LazyCache*__
 
-If you want to mock the LazyCache caching service using Moq or NSubstitute rather than use the built-in fake provided by LazyCache, you're in the right place. I've got you covered.
+If you want to mock the LazyCache caching service using Moq or NSubstitute you're in the right place. I've got you covered.
 
 ## Hang on a minute... but but why? LazyCache already provides a test class to do this?
-Yes, LazyCache does provide a ```MockCachingService``` for unit testing. It works as advertised for most cases __however__ it doesn't work for all.
+Yes, LazyCache does provide a ```MockCachingService``` for unit testing. It works as advertised for some cases __however__ it doesn't work for all.
 
-If you're using Get\<T> you're out of luck. You'll get nulls. Add\<T> followed by a Get\<T> won't do anything either.
+If the SUT is only using Get\<T> you're out of luck. Add\<T> followed by a Get\<T> won't do anything either.
 
 LazyCache.Testing.Moq and LazyCache.Testing.NSubstitute are the have your cake and eat it too solution. They are a cross between a mocked caching service and an in-memory provider. Some of the features include:
 - If the SUT populates the cache using Add\<T>, GetOrAdd\<T> or GetOrAddAsync\<T> no explicit set up is required, it just works. Create the mock and consume.
