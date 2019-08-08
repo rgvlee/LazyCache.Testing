@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\LazyCache.Testing.Common.Tests\LazyCache.Testing.Common.Tests.csproj" />
     <ProjectReference Include="..\LazyCache.Testing.Moq\LazyCache.Testing.Moq.csproj" />
   </ItemGroup>
 
