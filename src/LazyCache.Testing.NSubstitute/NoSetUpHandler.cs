@@ -1,10 +1,11 @@
-﻿using LazyCache.Testing.Extensions;
+﻿using LazyCache.Testing.Common;
+using LazyCache.Testing.Common.Extensions;
+using LazyCache.Testing.Common.Helpers;
 using LazyCache.Testing.NSubstitute.Extensions;
 using Microsoft.Extensions.Logging;
 using NSubstitute.Core;
 using System;
 using System.Linq;
-using LazyCache.Testing.Helpers;
 
 namespace LazyCache.Testing.NSubstitute {
     /// <summary>
