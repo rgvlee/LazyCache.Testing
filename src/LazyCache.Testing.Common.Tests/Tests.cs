@@ -1,4 +1,4 @@
-using LazyCache.Testing.Helpers;
+using LazyCache.Testing.Common.Helpers;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using System;
@@ -201,6 +201,15 @@ namespace LazyCache.Testing.Common.Tests {
             Assert.Multiple(() => {
                 Assert.AreEqual(expectedResult1, actualResult1);
                 Assert.That(actualResult2, Is.EqualTo(default(Guid)));
+            });
+        }
+
+        [Test]
+        public virtual void RemoveWithNoSetUp_DoesNothing() {
+            var cacheEntryKey = "SomethingInTheCache";
+
+            Assert.DoesNotThrow(() => {
+                MockedCache.Remove(cacheEntryKey);
             });
         }
 
