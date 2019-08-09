@@ -1,6 +1,6 @@
-﻿using System;
-using LazyCache.Mocks;
+﻿using LazyCache.Mocks;
 using NUnit.Framework;
+using System;
 
 namespace LazyCache.DefaultBehaviour.Tests {
     [TestFixture]
