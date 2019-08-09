@@ -8,15 +8,13 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <licenseUrl>https://github.com/rgvlee/LazyCache.Testing/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/rgvlee/LazyCache.Testing/</projectUrl>
-    <description>LazyCache mocking library for Moq.
-Want to mock the cache rather than use the fake provided by LazyCache? Then this library is for you.</description>
+    <description>A mocking library for LazyCache using Moq.</description>
     <copyright>Copyright (c) 2019 Lee Anderson</copyright>
     <tags>LazyCache lazy cache moq mock mocking test testing</tags>
     <repository url="https://github.com/rgvlee/LazyCache.Testing/" />
     <dependencies>
       <group targetFramework=".NETStandard2.0">
         <dependency id="Microsoft.Extensions.Logging" version="2.1.0" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.Logging.Console" version="2.1.0" exclude="Build,Analyzers" />
         <dependency id="LazyCache" version="2.0.0" exclude="Build,Analyzers" />
         <dependency id="Moq" version="4.9.0" exclude="Build,Analyzers" />
       </group>
