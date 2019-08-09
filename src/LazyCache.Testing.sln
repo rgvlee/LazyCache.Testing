@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LazyCache.Testing.Common\LazyCache.Testing.xml = LazyCache.Testing.Common\LazyCache.Testing.xml
 		..\LICENSE = ..\LICENSE
 		..\README.md = ..\README.md
-		TODO.md = TODO.md
+		..\TODO.md = ..\TODO.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyCache.Testing.NSubstitute", "LazyCache.Testing.NSubstitute\LazyCache.Testing.NSubstitute.csproj", "{175F661B-1A52-4F60-99B4-EFDC58DE3C20}"
@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyCache.DefaultBehaviour.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EB080F1F-ED22-4008-86AA-3AA97DCE9944}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyCache.Testing.Common.Tests", "LazyCache.Testing.Common.Tests\LazyCache.Testing.Common.Tests.csproj", "{BB79EAF5-C9BC-4FFD-9020-B9DBD9E3F8FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LazyCache.Testing.Common.Tests", "LazyCache.Testing.Common.Tests\LazyCache.Testing.Common.Tests.csproj", "{BB79EAF5-C9BC-4FFD-9020-B9DBD9E3F8FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
