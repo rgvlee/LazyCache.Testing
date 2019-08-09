@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using System;
 
-namespace LazyCache.Testing.Helpers {
+namespace LazyCache.Testing.Common.Helpers {
     /// <summary>
     /// Helper for creating logger instances.
     /// </summary>

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LazyCache.Testing.Extensions {
+namespace LazyCache.Testing.Common.Extensions {
     /// <summary>
     /// Extensions for types.
     /// </summary>
