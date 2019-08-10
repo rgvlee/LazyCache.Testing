@@ -22,9 +22,6 @@ LazyCache.Testing.Moq and LazyCache.Testing.NSubstitute are the have your cake a
 ## The disclaimer
 I have built these libraries for fun (well sort of, I needed the Moq implementation for work). The mocking doesn't extend to the CacheProvider so if you're hitting that explicitly then you're in for a world of nulls. I might add it in a later release but in general I think accessing the CacheProvider should be avoided. If you find these libraries useful and something is missing, not working as you'd expect or you need additional behaviour mocked flick me a message and I'll see what I can do.
 
-## Fluent interface
-Let's be honest, there isn't much set up to do except for some tricky bits to do with the no explicit set up case. That being said I've still provided a fluent interface for the cache entry set up for ease of use.
-
 # Moq
 ## Basic usage
 - Get a mocked lazy cache
@@ -33,12 +30,12 @@ Let's be honest, there isn't much set up to do except for some tricky bits to do
 ```
 [Test]
 public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
-    var cacheKey = "SomethingInTheCache";
+    var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
     var mockedCache = MockFactory.CreateMockedCachingService();
             
-    var actualResult = mockedCache.GetOrAdd(cacheKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+    var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
     Assert.AreSame(expectedResult, actualResult);
 }
@@ -48,20 +45,17 @@ public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
 No problem. Use the mock helper to create the mock. At this point it's a Mock\<IAppCache> for you to specify additional set ups, assert verify method invocations etc.
 
 ```
- [Test]
+[Test]
 public void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
-    var cacheKey = "SomethingInTheCache";
+    var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = new TestObject();
 
     var cacheMock = MockFactory.CreateCachingServiceMock();
     var mockedCache = cacheMock.Object;
 
-    var actualResult = mockedCache.GetOrAdd(cacheKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
-
-    Assert.Multiple(() => {
-        Assert.AreSame(expectedResult, actualResult);
-        cacheMock.Verify(m => m.GetOrAdd(Arg.Any<string>(), Arg.Any<Func<ICacheEntry, TestObject>>()), Times.Once);
-    });
+    var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+	    
+    Assert.AreSame(expectedResult, actualResult);
 }
 ```
 
@@ -71,14 +65,14 @@ If you want to explicitly specify a cache entry set up, use the fluent extension
 ```
 [Test]
 public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
-    var cacheKey = "SomethingInTheCache";
+    var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
     var cacheMock = MockFactory.CreateCachingServiceMock();
-    cacheMock.SetUpCacheEntry(cacheKey, expectedResult);
+    cacheMock.SetUpCacheEntry(cacheEntryKey, expectedResult);
     var mockedCache = cacheMock.Object;
 
-    var actualResult = mockedCache.GetOrAdd(cacheKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+    var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
     Assert.AreSame(expectedResult, actualResult);
 }
@@ -101,12 +95,12 @@ I'm not going to go deep into NSubstitute usage as, well, it is the same except 
 ```
 [Test]
 public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
-    var cacheKey = "SomethingInTheCache";
+    var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
     var mockedCache = MockFactory.CreateCachingServiceMock();
 
-    var actualResult = mockedCache.GetOrAdd(cacheKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+    var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
     Assert.AreSame(expectedResult, actualResult);
 }
@@ -117,13 +111,13 @@ Same same just with the explicit ```SetUpCacheEntry``` to set up the specified c
 ```
 [Test]
 public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
-    var cacheKey = "SomethingInTheCache";
+    var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
     var cacheMock = MockFactory.CreateCachingServiceMock();
-    cacheMock.SetUpCacheEntry(cacheKey, expectedResult);
+    cacheMock.SetUpCacheEntry(cacheEntryKey, expectedResult);
     
-    var actualResult = cacheMock.GetOrAdd(cacheKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+    var actualResult = cacheMock.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
     Assert.AreSame(expectedResult, actualResult);
 }
