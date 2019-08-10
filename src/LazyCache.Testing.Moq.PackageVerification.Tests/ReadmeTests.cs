@@ -1,8 +1,8 @@
+using LazyCache.Testing.Common.Helpers;
 using LazyCache.Testing.Moq.Extensions;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using System;
-using LazyCache.Testing.Helpers;
-using Microsoft.Extensions.Logging;
 
 namespace LazyCache.Testing.Moq.PackageVerification.Tests {
     public class ReadmeTests {
