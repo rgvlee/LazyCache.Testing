@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System;
 
 namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests {
+    [TestFixture]
     public class ReadmeTests {
         [SetUp]
         public virtual void SetUp() {
