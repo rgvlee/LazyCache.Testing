@@ -15,9 +15,7 @@ namespace LazyCache.Testing.Common.Tests {
             
         [SetUp]
         public virtual void SetUp() {
-            var loggerFactory = new LoggerFactory();
-            loggerFactory.AddConsole(LogLevel.Debug);
-            LoggerHelper.LoggerFactory = loggerFactory;
+            LoggerHelper.LoggerFactory.AddConsole(LogLevel.Debug);
         }
 
         [Test]
