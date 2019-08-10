@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>LazyCache.Testing.xml</DocumentationFile>
+    <DocumentationFile>LazyCache.Testing.Common.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -10,11 +10,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1320CF3A-3F61-40AC-B577-CA8B9C1E9D3B}"
 	ProjectSection(SolutionItems) = preProject
 		..\.gitignore = ..\.gitignore
+		LazyCache.Testing.Common\LazyCache.Testing.Common.xml = LazyCache.Testing.Common\LazyCache.Testing.Common.xml
 		..\LazyCache.Testing.Moq.nuspec = ..\LazyCache.Testing.Moq.nuspec
 		LazyCache.Testing.Moq\LazyCache.Testing.Moq.xml = LazyCache.Testing.Moq\LazyCache.Testing.Moq.xml
 		..\LazyCache.Testing.NSubstitute.nuspec = ..\LazyCache.Testing.NSubstitute.nuspec
 		LazyCache.Testing.NSubstitute\LazyCache.Testing.NSubstitute.xml = LazyCache.Testing.NSubstitute\LazyCache.Testing.NSubstitute.xml
-		LazyCache.Testing.Common\LazyCache.Testing.xml = LazyCache.Testing.Common\LazyCache.Testing.xml
 		..\LICENSE = ..\LICENSE
 		..\README.md = ..\README.md
 		..\TODO.md = ..\TODO.md
