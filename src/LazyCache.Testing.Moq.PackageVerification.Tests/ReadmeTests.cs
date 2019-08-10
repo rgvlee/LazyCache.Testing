@@ -20,7 +20,7 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests {
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-            Assert.AreSame(expectedResult, actualResult);
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests {
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-            Assert.AreSame(expectedResult, actualResult);
+            Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests {
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-            Assert.AreSame(expectedResult, actualResult);
+            Assert.AreEqual(expectedResult, actualResult);
         }
     }
 }

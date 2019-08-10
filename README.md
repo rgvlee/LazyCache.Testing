@@ -37,7 +37,7 @@ public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
             
     var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-    Assert.AreSame(expectedResult, actualResult);
+    Assert.AreEqual(expectedResult, actualResult);
 }
 ```
 
@@ -55,7 +55,7 @@ public void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
 
     var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 	    
-    Assert.AreSame(expectedResult, actualResult);
+    Assert.AreEqual(expectedResult, actualResult);
 }
 ```
 
@@ -74,7 +74,7 @@ public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
 
     var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-    Assert.AreSame(expectedResult, actualResult);
+    Assert.AreEqual(expectedResult, actualResult);
 }
 ```
 
@@ -102,7 +102,7 @@ public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
 
     var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-    Assert.AreSame(expectedResult, actualResult);
+    Assert.AreEqual(expectedResult, actualResult);
 }
 ```
 
@@ -119,6 +119,6 @@ public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
     
     var actualResult = cacheMock.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-    Assert.AreSame(expectedResult, actualResult);
+    Assert.AreEqual(expectedResult, actualResult);
 }
 ```
