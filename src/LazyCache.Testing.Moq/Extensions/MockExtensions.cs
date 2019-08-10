@@ -23,7 +23,7 @@ namespace LazyCache.Testing.Moq.Extensions {
         /// <param name="cacheEntryValue">The cache entry value.</param>
         /// <returns>The caching service mock.</returns>
         public static Mock<IAppCache> SetUpCacheEntry<T>(this Mock<IAppCache> cachingServiceMock, string cacheEntryKey, T cacheEntryValue) {
-            Logger.LogDebug($"Setting up cache entry for '{cacheEntryKey}' (type: {typeof(T).Name}; value: '{cacheEntryValue.ToString()}')");
+            Logger.LogDebug($"Setting up cache entry for '{cacheEntryKey}' (type: {typeof(T).Name}; value: '{cacheEntryValue}')");
 
             cachingServiceMock.SetUpCacheEntryAdd<T>(cacheEntryKey);
 
@@ -67,7 +67,7 @@ namespace LazyCache.Testing.Moq.Extensions {
         /// <returns>The caching service mock.</returns>
         /// <remarks>I've left this accessible for advanced usage. In most cases you should just use <see cref="SetUpCacheEntry{T}"/>.</remarks>
         public static Mock<IAppCache> SetUpCacheEntryGet<T>(this Mock<IAppCache> cachingServiceMock, string cacheEntryKey, T cacheEntryValue) {
-            Logger.LogDebug($"Setting up cache entry Get/GetOrAdd for '{cacheEntryKey}' (type: {typeof(T).Name}; value: '{cacheEntryValue.ToString()}')");
+            Logger.LogDebug($"Setting up cache entry Get/GetOrAdd for '{cacheEntryKey}' (type: {typeof(T).Name}; value: '{cacheEntryValue}')");
 
             cachingServiceMock.Setup(m => m.Get<T>(
                     It.Is<string>(s => s.Equals(cacheEntryKey))))

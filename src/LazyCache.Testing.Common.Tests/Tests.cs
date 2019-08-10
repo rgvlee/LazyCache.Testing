@@ -239,5 +239,16 @@ namespace LazyCache.Testing.Common.Tests {
                 Assert.That(actualResult2, Is.EqualTo(default(Guid)));
             });
         }
+
+        [Test]
+        public virtual void AddNullValue_TestObject_DoesNotThrowException() {
+            var cacheEntryKey = "SomethingInTheCache";
+            var expectedResult = default(TestObject);
+
+            Assert.DoesNotThrow(() => {
+                MockedCache.Add(cacheEntryKey, expectedResult);
+                var actualResult = MockedCache.Get<TestObject>(cacheEntryKey);
+            });
+        }
     }
 }
