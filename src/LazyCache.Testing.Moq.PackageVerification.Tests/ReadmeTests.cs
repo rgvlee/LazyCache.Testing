@@ -1,9 +1,16 @@
 using LazyCache.Testing.Moq.Extensions;
 using NUnit.Framework;
 using System;
+using LazyCache.Testing.Helpers;
+using Microsoft.Extensions.Logging;
 
 namespace LazyCache.Testing.Moq.PackageVerification.Tests {
     public class ReadmeTests {
+        [SetUp]
+        public virtual void SetUp() {
+            LoggerHelper.LoggerFactory.AddConsole(LogLevel.Debug);
+        }
+
         [Test]
         public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
