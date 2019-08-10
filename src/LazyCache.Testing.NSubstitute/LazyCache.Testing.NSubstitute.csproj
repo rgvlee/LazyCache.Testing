@@ -3,11 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.4.0</Version>
+    <Version>0.4.1</Version>
     <Authors>rgvlee</Authors>
     <Company>rgvlee</Company>
-    <Description>LazyCache mocking library for NSubstitute.
-Want to mock the cache rather than use the fake provided by LazyCache? Then this library is for you.</Description>
+    <Description>A mocking library for LazyCache using NSubstitute.</Description>
     <Copyright>Copyright (c) 2019 Lee Anderson</Copyright>
     <PackageLicenseUrl>https://github.com/rgvlee/LazyCache.Testing/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/rgvlee/LazyCache.Testing/</PackageProjectUrl>
