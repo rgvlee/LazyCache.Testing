@@ -226,5 +226,20 @@ namespace LazyCache.Testing.Common.Tests {
                 Assert.That(actualResult2, Is.EqualTo(default(Guid)));
             });
         }
+
+        [Test]
+        public virtual void GetOrCreateThenRemoveWithNoSetUp_Guid_ReturnsDefaultValue() {
+            var cacheEntryKey = "SomethingInTheCache";
+            var expectedResult1 = Guid.NewGuid();
+
+            var actualResult1 = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult1);
+            MockedCache.Remove(cacheEntryKey);
+            var actualResult2 = MockedCache.Get<Guid>(cacheEntryKey);
+
+            Assert.Multiple(() => {
+                Assert.That(actualResult1, Is.EqualTo(expectedResult1));
+                Assert.That(actualResult2, Is.EqualTo(default(Guid)));
+            });
+        }
     }
 }
