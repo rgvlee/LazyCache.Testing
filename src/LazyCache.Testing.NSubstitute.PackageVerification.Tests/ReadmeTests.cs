@@ -13,19 +13,19 @@ namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests {
         }
 
         [Test]
-        public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
+        public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid().ToString();
 
-            var mockedCache = MockFactory.CreateCachingServiceMock();
+            var cacheMock = MockFactory.CreateCachingServiceMock();
 
-            var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+            var actualResult = cacheMock.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
             Assert.AreEqual(expectedResult, actualResult);
         }
 
         [Test]
-        public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid().ToString();
 

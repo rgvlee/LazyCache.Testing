@@ -29,7 +29,7 @@ I have built these libraries for fun (well sort of, I needed the Moq implementat
 
 ```
 [Test]
-public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
+public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
     var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
@@ -46,7 +46,7 @@ No problem. Use the mock helper to create the mock. At this point it's a Mock\<I
 
 ```
 [Test]
-public void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
+public virtual void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
     var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = new TestObject();
 
@@ -64,7 +64,7 @@ If you want to explicitly specify a cache entry set up, use the fluent extension
 
 ```
 [Test]
-public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
+public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
     var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
@@ -94,13 +94,13 @@ I'm not going to go deep into NSubstitute usage as, well, it is the same except 
 - Consume
 ```
 [Test]
-public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
+public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
     var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
-    var mockedCache = MockFactory.CreateCachingServiceMock();
+    var cacheMock = MockFactory.CreateCachingServiceMock();
 
-    var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+    var actualResult = cacheMock.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
     Assert.AreEqual(expectedResult, actualResult);
 }
@@ -110,7 +110,7 @@ public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
 Same same just with the explicit ```SetUpCacheEntry``` to set up the specified cache entry.
 ```
 [Test]
-public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
+public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
     var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 

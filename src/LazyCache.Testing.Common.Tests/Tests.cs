@@ -30,7 +30,7 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public async Task GetOrAddAsyncWithSetUp_Guid_ReturnsExpectedResult() {
+        public virtual async Task GetOrAddAsyncWithSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
             SetUpCacheEntry(cacheEntryKey, expectedResult);
@@ -50,7 +50,7 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public void GetOrAddWithNoSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void GetOrAddWithNoSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
 
@@ -62,7 +62,7 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
+        public virtual void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
 
@@ -74,7 +74,7 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public async Task GetOrAddAsyncWithNoSetUp_Guid_ReturnsExpectedResult() {
+        public virtual async Task GetOrAddAsyncWithNoSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
             
@@ -84,7 +84,7 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public async Task GetOrAddAsyncWithNoSetUp_TestObject_ReturnsExpectedResult() {
+        public virtual async Task GetOrAddAsyncWithNoSetUp_TestObject_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
             
@@ -94,7 +94,7 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public void GetThenGetOrAddThenGetWithNoSetUp_TestObject_ReturnsExpectedResults() {
+        public virtual void GetThenGetOrAddThenGetWithNoSetUp_TestObject_ReturnsExpectedResults() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult1 = default(TestObject);
             var expectedResult2 = new TestObject();
@@ -116,7 +116,7 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public void GetThenGetOrAddThenGetWithSetUp_TestObject_ReturnsExpectedResults() {
+        public virtual void GetThenGetOrAddThenGetWithSetUp_TestObject_ReturnsExpectedResults() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
 

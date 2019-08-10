@@ -13,7 +13,7 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests {
         }
 
         [Test]
-        public void MinimumViableInterface_Guid_ReturnsExpectedResult() {
+        public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid().ToString();
 
@@ -25,7 +25,7 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests {
         }
 
         [Test]
-        public void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
+        public virtual void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
 
@@ -38,7 +38,7 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests {
         }
 
         [Test]
-        public void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid().ToString();
 
