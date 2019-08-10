@@ -111,11 +111,11 @@ namespace LazyCache.Testing.Moq.Extensions {
                     Logger.LogDebug("Cache Remove invoked");
 
                     var key = cacheEntryKey;
-                    var item = typeof(T).GetDefaultValue();
-                    var itemType = typeof(T);
+                    var value = typeof(T).GetDefaultValue();
+                    var valueType = typeof(T);
 
                     var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntryGet"));
-                    method.MakeGenericMethod(itemType).Invoke(null, new object[] { cachingServiceMock, key, item });
+                    method.MakeGenericMethod(valueType).Invoke(null, new object[] { cachingServiceMock, key, value });
                 });
 
             return cachingServiceMock;

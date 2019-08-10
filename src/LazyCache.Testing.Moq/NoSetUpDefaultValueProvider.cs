@@ -51,14 +51,14 @@ namespace LazyCache.Testing.Moq {
                     Logger.LogDebug(mi.ToString());
                 }
 
-                var item = funcType.GetMethod("Invoke").Invoke(args[1], new object[] { new CacheEntryFake(key) });
+                var value = funcType.GetMethod("Invoke").Invoke(args[1], new object[] { new CacheEntryFake(key) });
 
-                var itemType = item.GetType();
+                var valueType = value.GetType();
 
                 var method = typeof(LazyCache.Testing.Moq.Extensions.MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntry"));
-                method.MakeGenericMethod(itemType).Invoke(null, new object[] { _cachingServiceMock, key, item });
+                method.MakeGenericMethod(valueType).Invoke(null, new object[] { _cachingServiceMock, key, value });
 
-                return item;
+                return value;
             }
             
             if (methodInfo.ReturnType == typeof(void)) {

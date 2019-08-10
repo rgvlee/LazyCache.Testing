@@ -56,11 +56,11 @@ namespace LazyCache.Testing.NSubstitute.Extensions {
                     var args = x.Args();
                     
                     var key = args[0].ToString();
-                    var item = args[1];
-                    var itemType = x.ArgTypes()[1];
+                    var value = args[1];
+                    var valueType = x.ArgTypes()[1];
 
                     var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntryGet"));
-                    method.MakeGenericMethod(itemType).Invoke(null, new object[] { cachingServiceMock, key, item });
+                    method.MakeGenericMethod(valueType).Invoke(null, new object[] { cachingServiceMock, key, value });
                 });
 
             return cachingServiceMock;
@@ -119,11 +119,11 @@ namespace LazyCache.Testing.NSubstitute.Extensions {
                     Logger.LogDebug("Cache Remove invoked");
 
                     var key = cacheEntryKey;
-                    var item = typeof(T).GetDefaultValue();
-                    var itemType = typeof(T);
+                    var value = typeof(T).GetDefaultValue();
+                    var valueType = typeof(T);
 
                     var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntryGet"));
-                    method.MakeGenericMethod(itemType).Invoke(null, new object[] { cachingServiceMock, key, item });
+                    method.MakeGenericMethod(valueType).Invoke(null, new object[] { cachingServiceMock, key, value });
                 });
 
             return cachingServiceMock;

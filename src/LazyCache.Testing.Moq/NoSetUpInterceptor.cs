@@ -38,11 +38,11 @@ namespace LazyCache.Testing.Moq {
 
                         //We have everything we need to set up a match, so let's do it
                         var key = args[0].ToString();
-                        var item = args[1];
-                        var itemType = methodInfo.GetParameters()[1].ParameterType;
+                        var value = args[1];
+                        var valueType = methodInfo.GetParameters()[1].ParameterType;
 
                         var method = typeof(LazyCache.Testing.Moq.Extensions.MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntry"));
-                        method.MakeGenericMethod(itemType).Invoke(null, new object[] { invocation.Proxy, key, item });
+                        method.MakeGenericMethod(valueType).Invoke(null, new object[] { invocation.Proxy, key, value });
                     };
                 }
 
