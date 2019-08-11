@@ -1,4 +1,5 @@
 using LazyCache.Testing.Common.Helpers;
+using LazyCache.Testing.Common.Tests;
 using LazyCache.Testing.Moq.Extensions;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
