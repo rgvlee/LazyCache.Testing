@@ -4,96 +4,119 @@
         <name>LazyCache.Testing.Moq</name>
     </assembly>
     <members>
+        <member name="T:LazyCache.Testing.Moq.Create">
+            <summary>
+                Factory for creating mock/mocked instances.
+            </summary>
+        </member>
+        <member name="M:LazyCache.Testing.Moq.Create.MockedCachingService">
+            <summary>
+                Creates a mocked caching service.
+            </summary>
+            <returns>A mocked caching service.</returns>
+        </member>
         <member name="T:LazyCache.Testing.Moq.Extensions.MockExtensions">
             <summary>
-            Extensions for mocks.
+                Extensions for mocks.
             </summary>
         </member>
-        <member name="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntry``1(Moq.Mock{LazyCache.IAppCache},System.String,``0)">
+        <member name="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)">
             <summary>
-            Sets up a cache entry.
+                Sets up a cache entry.
             </summary>
             <typeparam name="T">The cache entry value type.</typeparam>
-            <param name="cachingServiceMock">The caching service mock instance.</param>
+            <param name="mockedCachingService">The mocked caching service.</param>
             <param name="cacheEntryKey">The cache entry key.</param>
             <param name="cacheEntryValue">The cache entry value.</param>
-            <returns>The caching service mock.</returns>
+            <returns>The mocked caching service.</returns>
         </member>
-        <member name="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntryAdd``1(Moq.Mock{LazyCache.IAppCache},System.String)">
+        <member name="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntryAdd``1(LazyCache.IAppCache,System.String)">
             <summary>
-            Sets up the add method for a cache entry.
+                Sets up the add method for a cache entry.
             </summary>
             <typeparam name="T">The cache entry value type.</typeparam>
-            <param name="cachingServiceMock">The caching service mock instance.</param>
+            <param name="mockedCachingService">The mocked caching service.</param>
             <param name="cacheEntryKey">The cache entry key.</param>
-            <returns>The caching service mock.</returns>
-            <remarks>I've left this accessible for advanced usage. In most cases you should just use <see cref="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntry``1(Moq.Mock{LazyCache.IAppCache},System.String,``0)"/>.</remarks>
+            <returns>The mocked caching service.</returns>
+            <remarks>
+                I've left this accessible for advanced usage. In most cases you should just use
+                <see cref="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)" />.
+            </remarks>
         </member>
-        <member name="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntryGet``1(Moq.Mock{LazyCache.IAppCache},System.String,``0)">
+        <member name="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntryGet``1(LazyCache.IAppCache,System.String,``0)">
             <summary>
-            Sets up the get methods for a cache entry.
+                Sets up the get methods for a cache entry.
             </summary>
             <typeparam name="T">The cache entry value type.</typeparam>
-            <param name="cachingServiceMock">The caching service mock instance.</param>
+            <param name="mockedCachingService">The mocked caching service.</param>
             <param name="cacheEntryKey">The cache entry key.</param>
             <param name="cacheEntryValue">The cache entry value.</param>
-            <returns>The caching service mock.</returns>
-            <remarks>I've left this accessible for advanced usage. In most cases you should just use <see cref="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntry``1(Moq.Mock{LazyCache.IAppCache},System.String,``0)"/>.</remarks>
+            <returns>The mocked caching service.</returns>
+            <remarks>
+                I've left this accessible for advanced usage. In most cases you should just use
+                <see cref="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)" />.
+            </remarks>
         </member>
-        <member name="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntryRemove``1(Moq.Mock{LazyCache.IAppCache},System.String)">
+        <member name="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntryRemove``1(LazyCache.IAppCache,System.String)">
             <summary>
-            Sets up the remove method for a cache entry.
+                Sets up the remove method for a cache entry.
             </summary>
             <typeparam name="T">The cache entry value type.</typeparam>
-            <param name="cachingServiceMock">The caching service mock instance.</param>
+            <param name="mockedCachingService">The mocked caching service.</param>
             <param name="cacheEntryKey">The cache entry key.</param>
-            <returns>The caching service mock.</returns>
-            <remarks>I've left this accessible for advanced usage. In most cases you should just use <see cref="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntry``1(Moq.Mock{LazyCache.IAppCache},System.String,``0)"/>.</remarks>
+            <returns>The mocked caching service.</returns>
+            <remarks>
+                I've left this accessible for advanced usage. In most cases you should just use
+                <see cref="M:LazyCache.Testing.Moq.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)" />.
+            </remarks>
         </member>
         <member name="T:LazyCache.Testing.Moq.MockFactory">
             <summary>
-            Factory for creating mock/mocked instances.
+                Factory for creating mock/mocked instances.
             </summary>
         </member>
         <member name="M:LazyCache.Testing.Moq.MockFactory.CreateCachingServiceMock">
             <summary>
-            Creates a caching service mock.
+                Creates a caching service mock.
             </summary>
             <returns>A caching service mock.</returns>
         </member>
         <member name="M:LazyCache.Testing.Moq.MockFactory.CreateMockedCachingService">
             <summary>
-            Creates a mocked caching service.
+                Creates a mocked caching service.
             </summary>
             <returns>A mocked caching service.</returns>
         </member>
         <member name="T:LazyCache.Testing.Moq.NoSetUpDefaultValueProvider">
             <summary>
-            Default value provider for methods that have not been set up on a lazy cache mock.
+                Default value provider for methods that have not been set up on a lazy cache mock.
             </summary>
         </member>
-        <member name="M:LazyCache.Testing.Moq.NoSetUpDefaultValueProvider.#ctor(Moq.Mock{LazyCache.IAppCache})">
+        <member name="M:LazyCache.Testing.Moq.NoSetUpDefaultValueProvider.#ctor(LazyCache.IAppCache)">
             <summary>
-            Constructor.
+                Constructor.
             </summary>
-            <param name="cachingServiceMock">An instance of the caching service mock.</param>
+            <param name="mockedCachingService">The mocked caching service.</param>
         </member>
         <member name="M:LazyCache.Testing.Moq.NoSetUpDefaultValueProvider.GetDefaultValue(System.Type,Moq.Mock)">
             <summary>
                 Checks the last method invocation on the mock;
-                if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be returned;
+                if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be
+                returned;
                 otherwise the default value for the specified type will be returned.
             </summary>
             <param name="type">The type of the requested default value.</param>
             <param name="mock">The mock on which an unexpected invocation has occurred.</param>
             <returns>
-                if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be returned;
-                otherwise the default value for the specified type will be returned if the last method invocation has a return type.
+                if GetOrAdd or GetOrAddAsync was invoked the unexpected match is set up and the addItemFactory result will be
+                returned;
+                otherwise the default value for the specified type will be returned if the last method invocation has a return
+                type.
             </returns>
         </member>
         <member name="T:LazyCache.Testing.Moq.NoSetUpInterceptor">
             <summary>
-            Dynamic proxy interceptor for methods that have not been set up on a lazy cache mock.
+                Dynamic proxy interceptor for methods that have not been set up on a lazy cache mock.
             </summary>
         </member>
         <member name="M:LazyCache.Testing.Moq.NoSetUpInterceptor.Intercept(Castle.DynamicProxy.IInvocation)">

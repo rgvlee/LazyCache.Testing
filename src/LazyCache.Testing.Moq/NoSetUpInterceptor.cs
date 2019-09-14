@@ -1,14 +1,15 @@
+using System;
+using System.Linq;
 using Castle.DynamicProxy;
 using LazyCache.Testing.Common.Helpers;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System;
-using System.Linq;
 using IInvocation = Castle.DynamicProxy.IInvocation;
+using MockExtensions = LazyCache.Testing.Moq.Extensions.MockExtensions;
 
 namespace LazyCache.Testing.Moq {
     /// <summary>
-    /// Dynamic proxy interceptor for methods that have not been set up on a lazy cache mock.
+    ///     Dynamic proxy interceptor for methods that have not been set up on a lazy cache mock.
     /// </summary>
     internal class NoSetUpInterceptor : IInterceptor {
         private static readonly ILogger<NoSetUpInterceptor> Logger = LoggerHelper.CreateLogger<NoSetUpInterceptor>();
@@ -20,15 +21,12 @@ namespace LazyCache.Testing.Moq {
         /// <param name="invocation">The proxied method invocation.</param>
         public void Intercept(IInvocation invocation) {
             //Logger.LogDebug($"{invocation.Method}");
-            
+
             try {
                 invocation.Proceed();
             }
-            catch (Exception) {
-                throw;
-            }
             finally {
-                if (invocation.ReturnValue != null && invocation.ReturnValue is IInvocationList mockInvocations) {
+                if (invocation.ReturnValue != null && invocation.ReturnValue is IInvocationList mockInvocations)
                     if (mockInvocations.Any() && mockInvocations.Last().Method.Name.StartsWith("Add", StringComparison.CurrentCultureIgnoreCase)) {
                         Logger.LogDebug("I have detected that the previous mock invocation was an add");
 
@@ -41,10 +39,9 @@ namespace LazyCache.Testing.Moq {
                         var value = args[1];
                         var valueType = methodInfo.GetParameters()[1].ParameterType;
 
-                        var method = typeof(LazyCache.Testing.Moq.Extensions.MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntry"));
-                        method.MakeGenericMethod(valueType).Invoke(null, new object[] { invocation.Proxy, key, value });
-                    };
-                }
+                        var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntry"));
+                        method.MakeGenericMethod(valueType).Invoke(null, new[] {((Mock<IAppCache>) invocation.Proxy).Object, key, value});
+                    }
 
                 //Logger.LogDebug(invocation.ReturnValue);
             }
