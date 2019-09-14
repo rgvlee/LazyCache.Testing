@@ -1,8 +1,8 @@
+using System;
 using LazyCache.Testing.Common.Helpers;
 using LazyCache.Testing.NSubstitute.Extensions;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
-using System;
 
 namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests {
     [TestFixture]
@@ -17,9 +17,9 @@ namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid().ToString();
 
-            var cacheMock = MockFactory.CreateCachingServiceMock();
+            var mockedCache = Create.MockedCachingService();
 
-            var actualResult = cacheMock.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+            var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
             Assert.AreEqual(expectedResult, actualResult);
         }
@@ -29,10 +29,10 @@ namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid().ToString();
 
-            var cacheMock = MockFactory.CreateCachingServiceMock();
-            cacheMock.SetUpCacheEntry(cacheEntryKey, expectedResult);
+            var mockedCache = Create.MockedCachingService();
+            mockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
 
-            var actualResult = cacheMock.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
+            var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
             Assert.AreEqual(expectedResult, actualResult);
         }

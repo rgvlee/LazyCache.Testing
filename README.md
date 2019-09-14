@@ -24,7 +24,7 @@ I have built these libraries for fun (well sort of, I needed the Moq implementat
 
 # Moq
 ## Basic usage
-- Get a mocked lazy cache
+- Create a mocked caching service
 - Consume
 
 ```
@@ -33,7 +33,7 @@ public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
     var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
-    var mockedCache = MockFactory.CreateMockedCachingService();
+    var mockedCache = Create.MockedCachingService();
             
     var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
@@ -42,25 +42,15 @@ public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
 ```
 
 ## But I want the cache mock
-No problem. Use the mock helper to create the mock. At this point it's a Mock\<IAppCache> for you to specify additional set ups, assert verify method invocations etc.
+No problem. Use Mock.Get(mockedCache) to get the cache mock.
 
-```
-[Test]
-public virtual void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
-    var cacheEntryKey = "SomethingInTheCache";
-    var expectedResult = new TestObject();
-
-    var cacheMock = MockFactory.CreateCachingServiceMock();
-    var mockedCache = cacheMock.Object;
-
-    var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
-	    
-    Assert.AreEqual(expectedResult, actualResult);
-}
-```
+## I'm using Get\<T>, what do I need to do?
+The mock needs to know what to return. You'll need to either:
+- Populate the cache using Add\<T>, GetOrAdd\<T> or GetOrAddAsync\<T>; or
+- Use the explicit set up as described below.
 
 ## Let's get explicit
-If you want to explicitly specify a cache entry set up, use the fluent extension method.
+If you want to explicitly set up a cache entry use the following extension method:
 
 ```
 [Test]
@@ -68,59 +58,17 @@ public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
     var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
-    var cacheMock = MockFactory.CreateCachingServiceMock();
-    cacheMock.SetUpCacheEntry(cacheEntryKey, expectedResult);
-    var mockedCache = cacheMock.Object;
-
+    var mockedCache = Create.MockedCachingService();
+    mockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
+    
     var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
     Assert.AreEqual(expectedResult, actualResult);
 }
 ```
-
-## I'm using Get\<T>, what do I need to do?
-The mock needs to know what to return. You'll need to either:
-- Populate the cache using Add\<T>, GetOrAdd\<T> or GetOrAddAsync\<T>; or
-- Use the explicit set up as described above.
 
 ## Async? Please tell me you support the async methods.
 The survey says, yes the async methods are supported. You're welcome.
 
 # NSubstitute
-I'm not going to go deep into NSubstitute usage as, well, it is the same except for one thing. For Moq, ```MockFactory.CreateCachingServiceMock()``` returns a Mock\<T> containing the mocked object (Mock\<T>.Object). For NSubstitute it returns (as you would expect) an IAppCache.
-
-## Basic usage
-- Get a mocked lazy cache
-- Consume
-
-```
-[Test]
-public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
-    var cacheEntryKey = "SomethingInTheCache";
-    var expectedResult = Guid.NewGuid().ToString();
-
-    var cacheMock = MockFactory.CreateCachingServiceMock();
-
-    var actualResult = cacheMock.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
-
-    Assert.AreEqual(expectedResult, actualResult);
-}
-```
-
-## Explicit cache entry set up
-Same same just with the explicit ```SetUpCacheEntry``` to set up the specified cache entry.
-
-```
-[Test]
-public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
-    var cacheEntryKey = "SomethingInTheCache";
-    var expectedResult = Guid.NewGuid().ToString();
-
-    var cacheMock = MockFactory.CreateCachingServiceMock();
-    cacheMock.SetUpCacheEntry(cacheEntryKey, expectedResult);
-    
-    var actualResult = cacheMock.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
-
-    Assert.AreEqual(expectedResult, actualResult);
-}
-```
+It works the same/has the same interface. The only difference is if you want to cache mock. For Moq you need to invoke Mock.Get(mockedCache) to get it. For NSubstitute you don't need to do this.

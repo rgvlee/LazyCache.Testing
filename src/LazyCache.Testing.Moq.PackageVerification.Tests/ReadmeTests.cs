@@ -1,9 +1,9 @@
+using System;
 using LazyCache.Testing.Common.Helpers;
 using LazyCache.Testing.Common.Tests;
 using LazyCache.Testing.Moq.Extensions;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
-using System;
 
 namespace LazyCache.Testing.Moq.PackageVerification.Tests {
     [TestFixture]
@@ -18,20 +18,7 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid().ToString();
 
-            var mockedCache = MockFactory.CreateMockedCachingService();
-
-            var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
-
-            Assert.AreEqual(expectedResult, actualResult);
-        }
-
-        [Test]
-        public virtual void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
-            var cacheEntryKey = "SomethingInTheCache";
-            var expectedResult = new TestObject();
-
-            var cacheMock = MockFactory.CreateCachingServiceMock();
-            var mockedCache = cacheMock.Object;
+            var mockedCache = Create.MockedCachingService();
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
@@ -43,9 +30,8 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid().ToString();
 
-            var cacheMock = MockFactory.CreateCachingServiceMock();
-            cacheMock.SetUpCacheEntry(cacheEntryKey, expectedResult);
-            var mockedCache = cacheMock.Object;
+            var mockedCache = Create.MockedCachingService();
+            mockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
