@@ -1,22 +1,19 @@
+using LazyCache.Testing.Common.Tests;
 using LazyCache.Testing.Moq.Extensions;
-using Moq;
 using NUnit.Framework;
 
 namespace LazyCache.Testing.Moq.Tests {
     [TestFixture]
-    public class Tests : LazyCache.Testing.Common.Tests.TestBase {
-        protected Mock<IAppCache> CacheMock;
-        
-        protected override void SetUpCacheEntry<T>(string cacheEntryKey, T expectedResult) {
-            CacheMock.SetUpCacheEntry(cacheEntryKey, expectedResult);
-        }
-        
+    public class Tests : TestBase {
         [SetUp]
         public override void SetUp() {
             base.SetUp();
 
-            CacheMock = MockFactory.CreateCachingServiceMock();
-            MockedCache = CacheMock.Object;
+            MockedCache = Create.MockedCachingService();
+        }
+
+        protected override void SetUpCacheEntry<T>(string cacheEntryKey, T expectedResult) {
+            MockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
         }
     }
 }
