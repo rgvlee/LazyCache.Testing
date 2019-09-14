@@ -1,119 +1,128 @@
-﻿using LazyCache.Testing.Common.Extensions;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using LazyCache.Testing.Common.Extensions;
 using LazyCache.Testing.Common.Helpers;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LazyCache.Testing.NSubstitute.Extensions {
     /// <summary>
-    /// Extensions for mocks.
+    ///     Extensions for mocks.
     /// </summary>
     public static class MockExtensions {
         private static readonly ILogger Logger = LoggerHelper.CreateLogger(typeof(MockExtensions));
 
         /// <summary>
-        /// Sets up a cache entry.
+        ///     Sets up a cache entry.
         /// </summary>
         /// <typeparam name="T">The cache entry value type.</typeparam>
-        /// <param name="cachingServiceMock">The caching service mock instance.</param>
+        /// <param name="mockedCachingService">The mocked caching service.</param>
         /// <param name="cacheEntryKey">The cache entry key.</param>
         /// <param name="cacheEntryValue">The cache entry value.</param>
-        /// <returns>The caching service mock.</returns>
-        public static IAppCache SetUpCacheEntry<T>(this IAppCache cachingServiceMock, string cacheEntryKey, T cacheEntryValue) {
+        /// <returns>The mocked caching service.</returns>
+        public static IAppCache SetUpCacheEntry<T>(this IAppCache mockedCachingService, string cacheEntryKey, T cacheEntryValue) {
             Logger.LogDebug($"Setting up cache entry for '{cacheEntryKey}' (type: {typeof(T).Name}; value: '{cacheEntryValue}')");
 
-            cachingServiceMock.SetUpCacheEntryAdd<T>(cacheEntryKey);
-            
-            cachingServiceMock.SetUpCacheEntryGet(cacheEntryKey, cacheEntryValue);
+            mockedCachingService.SetUpCacheEntryAdd<T>(cacheEntryKey);
 
-            cachingServiceMock.SetUpCacheEntryRemove<T>(cacheEntryKey);
+            mockedCachingService.SetUpCacheEntryGet(cacheEntryKey, cacheEntryValue);
 
-            return cachingServiceMock;
+            mockedCachingService.SetUpCacheEntryRemove<T>(cacheEntryKey);
+
+            return mockedCachingService;
         }
 
         /// <summary>
-        /// Sets up the add method for a cache entry.
+        ///     Sets up the add method for a cache entry.
         /// </summary>
         /// <typeparam name="T">The cache entry value type.</typeparam>
-        /// <param name="cachingServiceMock">The caching service mock instance.</param>
+        /// <param name="mockedCachingService">The mocked caching service.</param>
         /// <param name="cacheEntryKey">The cache entry key.</param>
-        /// <returns>The caching service mock.</returns>
-        /// <remarks>I've left this accessible for advanced usage. In most cases you should just use <see cref="SetUpCacheEntry{T}"/>.</remarks>
-        public static IAppCache SetUpCacheEntryAdd<T>(this IAppCache cachingServiceMock, string cacheEntryKey) {
+        /// <returns>The mocked caching service.</returns>
+        /// <remarks>
+        ///     I've left this accessible for advanced usage. In most cases you should just use
+        ///     <see cref="SetUpCacheEntry{T}" />.
+        /// </remarks>
+        public static IAppCache SetUpCacheEntryAdd<T>(this IAppCache mockedCachingService, string cacheEntryKey) {
             Logger.LogDebug($"Setting up cache entry Add for '{cacheEntryKey}'");
 
-            cachingServiceMock
+            mockedCachingService
                 .When(x => x.Add(Arg.Is<string>(s => s.Equals(cacheEntryKey)), Arg.Any<T>(), Arg.Any<MemoryCacheEntryOptions>()))
                 .Do(x => {
                     Logger.LogDebug("Cache Add invoked");
 
                     //x provides the args as objects; this means we have to invoke the get set up dynamically to set the item type
-                    //cachingServiceMock.SetUpCacheEntryGet(key, item);
+                    //mockedCachingService.SetUpCacheEntryGet(key, item);
 
                     var args = x.Args();
-                    
+
                     var key = args[0].ToString();
                     var value = args[1];
                     var valueType = x.ArgTypes()[1];
 
                     var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntryGet"));
-                    method.MakeGenericMethod(valueType).Invoke(null, new object[] { cachingServiceMock, key, value });
+                    method.MakeGenericMethod(valueType).Invoke(null, new[] {mockedCachingService, key, value});
                 });
 
-            return cachingServiceMock;
+            return mockedCachingService;
         }
 
         /// <summary>
-        /// Sets up the get methods for a cache entry.
+        ///     Sets up the get methods for a cache entry.
         /// </summary>
         /// <typeparam name="T">The cache entry value type.</typeparam>
-        /// <param name="cachingServiceMock">The caching service mock instance.</param>
+        /// <param name="mockedCachingService">The mocked caching service.</param>
         /// <param name="cacheEntryKey">The cache entry key.</param>
         /// <param name="cacheEntryValue">The cache entry value.</param>
-        /// <returns>The caching service mock.</returns>
-        /// <remarks>I've left this accessible for advanced usage. In most cases you should just use <see cref="SetUpCacheEntry{T}"/>.</remarks>
-        public static IAppCache SetUpCacheEntryGet<T>(this IAppCache cachingServiceMock, string cacheEntryKey, T cacheEntryValue) {
+        /// <returns>The mocked caching service.</returns>
+        /// <remarks>
+        ///     I've left this accessible for advanced usage. In most cases you should just use
+        ///     <see cref="SetUpCacheEntry{T}" />.
+        /// </remarks>
+        public static IAppCache SetUpCacheEntryGet<T>(this IAppCache mockedCachingService, string cacheEntryKey, T cacheEntryValue) {
             Logger.LogDebug($"Setting up cache entry Get/GetOrAdd for '{cacheEntryKey}' (type: {typeof(T).Name}; value: '{cacheEntryValue}')");
 
-            cachingServiceMock.Get<T>(Arg.Is<string>(s => s.Equals(cacheEntryKey)))
+            mockedCachingService.Get<T>(Arg.Is<string>(s => s.Equals(cacheEntryKey)))
                 .Returns(cacheEntryValue)
                 .AndDoes(x => Logger.LogDebug("Cache Get invoked"));
 
-            cachingServiceMock.GetOrAdd<T>(
+            mockedCachingService.GetOrAdd(
                     Arg.Any<string>(),
                     Arg.Any<Func<ICacheEntry, T>>())
                 .Returns(cacheEntryValue)
                 .AndDoes(x => Logger.LogDebug("Cache GetOrAdd invoked"));
 
-            cachingServiceMock.GetAsync<T>(
+            mockedCachingService.GetAsync<T>(
                     Arg.Is<string>(s => s.Equals(cacheEntryKey)))
                 .Returns(Task.FromResult(cacheEntryValue))
                 .AndDoes(x => Logger.LogDebug("Cache GetAsync invoked"));
 
-            cachingServiceMock.GetOrAddAsync<T>(
+            mockedCachingService.GetOrAddAsync(
                     Arg.Any<string>(),
                     Arg.Any<Func<ICacheEntry, Task<T>>>())
                 .Returns(Task.FromResult(cacheEntryValue))
                 .AndDoes(x => Logger.LogDebug("Cache GetOrAddAsync invoked"));
 
-            return cachingServiceMock;
+            return mockedCachingService;
         }
 
         /// <summary>
-        /// Sets up the remove method for a cache entry.
+        ///     Sets up the remove method for a cache entry.
         /// </summary>
         /// <typeparam name="T">The cache entry value type.</typeparam>
-        /// <param name="cachingServiceMock">The caching service mock instance.</param>
+        /// <param name="mockedCachingService">The mocked caching service.</param>
         /// <param name="cacheEntryKey">The cache entry key.</param>
-        /// <returns>The caching service mock.</returns>
-        /// <remarks>I've left this accessible for advanced usage. In most cases you should just use <see cref="SetUpCacheEntry{T}"/>.</remarks>
-        public static IAppCache SetUpCacheEntryRemove<T>(this IAppCache cachingServiceMock, string cacheEntryKey) {
+        /// <returns>The mocked caching service.</returns>
+        /// <remarks>
+        ///     I've left this accessible for advanced usage. In most cases you should just use
+        ///     <see cref="SetUpCacheEntry{T}" />.
+        /// </remarks>
+        public static IAppCache SetUpCacheEntryRemove<T>(this IAppCache mockedCachingService, string cacheEntryKey) {
             Logger.LogDebug($"Setting up cache entry Remove for '{cacheEntryKey}'");
 
-            cachingServiceMock
+            mockedCachingService
                 .When(x => x.Remove(Arg.Is<string>(s => s.Equals(cacheEntryKey))))
                 .Do(x => {
                     Logger.LogDebug("Cache Remove invoked");
@@ -123,10 +132,10 @@ namespace LazyCache.Testing.NSubstitute.Extensions {
                     var valueType = typeof(T);
 
                     var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntryGet"));
-                    method.MakeGenericMethod(valueType).Invoke(null, new object[] { cachingServiceMock, key, value });
+                    method.MakeGenericMethod(valueType).Invoke(null, new[] {mockedCachingService, key, value});
                 });
 
-            return cachingServiceMock;
+            return mockedCachingService;
         }
     }
 }

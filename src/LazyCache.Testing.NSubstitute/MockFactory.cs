@@ -1,25 +1,17 @@
-﻿using NSubstitute;
-using NSubstitute.Core;
+﻿using System;
 
 namespace LazyCache.Testing.NSubstitute {
     /// <summary>
-    /// Factory for creating mock/mocked instances.
+    ///     Factory for creating mock/mocked instances.
     /// </summary>
+    [Obsolete("Use Create.MockedCachingService() to create a mocked caching service. This class will removed in a future release.")]
     public class MockFactory {
         /// <summary>
-        /// Creates a caching service mock.
+        ///     Creates a caching service mock.
         /// </summary>
         /// <returns>A caching service mock.</returns>
         public static IAppCache CreateCachingServiceMock() {
-            var mock = Substitute.For<IAppCache>();
-
-            var cacheDefaultsMock = Substitute.For<CacheDefaults>();
-            mock.DefaultCachePolicy.Returns(cacheDefaultsMock);
-
-            var router = SubstitutionContext.Current.GetCallRouterFor(mock);
-            router.RegisterCustomCallHandlerFactory(state => new NoSetUpHandler(mock));
-
-            return mock;
+            return Create.MockedCachingService();
         }
     }
 }
