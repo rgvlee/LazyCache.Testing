@@ -34,6 +34,7 @@ namespace LazyCache.Testing.Moq.Tests {
             var expectedResult = new TestObject();
 
             MockedCache.Add(cacheEntryKey, expectedResult);
+
             var actualResult = MockedCache.Get<TestObject>(cacheEntryKey);
 
             Mock.Get(MockedCache).Verify(m => m.Get<TestObject>(cacheEntryKey), Times.Once);

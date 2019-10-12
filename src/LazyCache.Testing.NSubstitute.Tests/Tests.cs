@@ -34,6 +34,7 @@ namespace LazyCache.Testing.NSubstitute.Tests {
             var expectedResult = new TestObject();
 
             MockedCache.Add(cacheEntryKey, expectedResult);
+
             var actualResult = MockedCache.Get<TestObject>(cacheEntryKey);
 
             MockedCache.Received(1).Get<TestObject>(cacheEntryKey);
