@@ -3,7 +3,7 @@ using Moq;
 
 namespace LazyCache.Testing.Moq {
     /// <summary>
-    ///     Factory for creating mock/mocked instances.
+    /// Factory for creating mocked instances.
     /// </summary>
     public class Create {
         /// <summary>

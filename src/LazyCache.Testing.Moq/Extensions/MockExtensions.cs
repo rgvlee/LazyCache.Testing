@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using LazyCache.Testing.Common;
 using LazyCache.Testing.Common.Extensions;
 using LazyCache.Testing.Common.Helpers;
 using Microsoft.Extensions.Caching.Memory;
@@ -23,6 +24,9 @@ namespace LazyCache.Testing.Moq.Extensions {
         /// <param name="cacheEntryValue">The cache entry value.</param>
         /// <returns>The mocked caching service.</returns>
         public static IAppCache SetUpCacheEntry<T>(this IAppCache mockedCachingService, string cacheEntryKey, T cacheEntryValue) {
+            EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
+            EnsureArgument.IsNotNullOrEmpty(cacheEntryKey, nameof(cacheEntryKey));
+            
             Logger.LogDebug($"Setting up cache entry for '{cacheEntryKey}' (type: {typeof(T).Name}; value: '{cacheEntryValue}')");
 
             mockedCachingService.SetUpCacheEntryAdd<T>(cacheEntryKey);
@@ -46,6 +50,9 @@ namespace LazyCache.Testing.Moq.Extensions {
         ///     <see cref="SetUpCacheEntry{T}" />.
         /// </remarks>
         public static IAppCache SetUpCacheEntryAdd<T>(this IAppCache mockedCachingService, string cacheEntryKey) {
+            EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
+            EnsureArgument.IsNotNullOrEmpty(cacheEntryKey, nameof(cacheEntryKey));
+
             Logger.LogDebug($"Setting up cache entry Add for '{cacheEntryKey}'");
 
             Mock.Get(mockedCachingService).Setup(m => m.Add(
@@ -73,6 +80,9 @@ namespace LazyCache.Testing.Moq.Extensions {
         ///     <see cref="SetUpCacheEntry{T}" />.
         /// </remarks>
         public static IAppCache SetUpCacheEntryGet<T>(this IAppCache mockedCachingService, string cacheEntryKey, T cacheEntryValue) {
+            EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
+            EnsureArgument.IsNotNullOrEmpty(cacheEntryKey, nameof(cacheEntryKey));
+
             Logger.LogDebug($"Setting up cache entry Get/GetOrAdd for '{cacheEntryKey}' (type: {typeof(T).Name}; value: '{cacheEntryValue}')");
 
             var cachingServiceMock = Mock.Get(mockedCachingService);
@@ -114,6 +124,9 @@ namespace LazyCache.Testing.Moq.Extensions {
         ///     <see cref="SetUpCacheEntry{T}" />.
         /// </remarks>
         public static IAppCache SetUpCacheEntryRemove<T>(this IAppCache mockedCachingService, string cacheEntryKey) {
+            EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
+            EnsureArgument.IsNotNullOrEmpty(cacheEntryKey, nameof(cacheEntryKey));
+
             Logger.LogDebug($"Setting up cache entry Remove for '{cacheEntryKey}'");
 
             Mock.Get(mockedCachingService).Setup(m => m.Remove(

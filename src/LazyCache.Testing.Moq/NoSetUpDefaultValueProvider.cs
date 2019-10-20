@@ -21,6 +21,8 @@ namespace LazyCache.Testing.Moq {
         /// </summary>
         /// <param name="mockedCachingService">The mocked caching service.</param>
         public NoSetUpDefaultValueProvider(IAppCache mockedCachingService) {
+            EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
+            
             _mockedCachingService = mockedCachingService;
         }
 

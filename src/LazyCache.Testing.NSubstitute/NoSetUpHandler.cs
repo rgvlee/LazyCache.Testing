@@ -21,6 +21,8 @@ namespace LazyCache.Testing.NSubstitute {
         /// </summary>
         /// <param name="mockedCachingService">The mocked caching service.</param>
         public NoSetUpHandler(IAppCache mockedCachingService) {
+            EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
+            
             _mockedCachingService = mockedCachingService;
         }
 

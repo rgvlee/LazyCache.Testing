@@ -3,7 +3,7 @@ using NSubstitute.Core;
 
 namespace LazyCache.Testing.NSubstitute {
     /// <summary>
-    ///     Factory for creating mock/mocked instances.
+    /// Factory for creating mocked instances.
     /// </summary>
     public class Create {
         /// <summary>

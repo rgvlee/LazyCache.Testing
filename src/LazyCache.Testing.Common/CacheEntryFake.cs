@@ -13,6 +13,8 @@ namespace LazyCache.Testing.Common {
         /// </summary>
         /// <param name="key">The cache entry key.</param>
         public CacheEntryFake(object key) {
+            EnsureArgument.IsNotNull(key, nameof(key));
+
             Key = key;
         }
 
