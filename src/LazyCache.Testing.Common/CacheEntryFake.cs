@@ -3,23 +3,27 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
 
-namespace LazyCache.Testing.Common {
+namespace LazyCache.Testing.Common
+{
     /// <summary>
     ///     A fake cache entry.
     /// </summary>
-    public class CacheEntryFake : ICacheEntry {
+    public class CacheEntryFake : ICacheEntry
+    {
         /// <summary>
         ///     Constructor.
         /// </summary>
         /// <param name="key">The cache entry key.</param>
-        public CacheEntryFake(object key) {
+        public CacheEntryFake(object key)
+        {
             EnsureArgument.IsNotNull(key, nameof(key));
 
             Key = key;
         }
 
         /// <inheritdoc />
-        public void Dispose() {
+        public void Dispose()
+        {
             //throw new NotImplementedException();
         }
 

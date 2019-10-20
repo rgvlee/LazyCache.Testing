@@ -7,11 +7,13 @@ using Moq;
 using IInvocation = Castle.DynamicProxy.IInvocation;
 using MockExtensions = LazyCache.Testing.Moq.Extensions.MockExtensions;
 
-namespace LazyCache.Testing.Moq {
+namespace LazyCache.Testing.Moq
+{
     /// <summary>
     ///     Dynamic proxy interceptor for methods that have not been set up on a lazy cache mock.
     /// </summary>
-    internal class NoSetUpInterceptor : IInterceptor {
+    internal class NoSetUpInterceptor : IInterceptor
+    {
         private static readonly ILogger<NoSetUpInterceptor> Logger = LoggerHelper.CreateLogger<NoSetUpInterceptor>();
 
         /// <summary>
@@ -19,15 +21,21 @@ namespace LazyCache.Testing.Moq {
         ///     if Add was invoked the unexpected match is set up;
         /// </summary>
         /// <param name="invocation">The proxied method invocation.</param>
-        public void Intercept(IInvocation invocation) {
+        public void Intercept(IInvocation invocation)
+        {
             //Logger.LogDebug($"{invocation.Method}");
 
-            try {
+            try
+            {
                 invocation.Proceed();
             }
-            finally {
-                if (invocation.ReturnValue != null && invocation.ReturnValue is IInvocationList mockInvocations)
-                    if (mockInvocations.Any() && mockInvocations.Last().Method.Name.StartsWith("Add", StringComparison.CurrentCultureIgnoreCase)) {
+            finally
+            {
+                if (invocation.ReturnValue != null &&
+                    invocation.ReturnValue is IInvocationList mockInvocations)
+                    if (mockInvocations.Any() &&
+                        mockInvocations.Last().Method.Name.StartsWith("Add", StringComparison.CurrentCultureIgnoreCase))
+                    {
                         Logger.LogDebug("I have detected that the previous mock invocation was an add");
 
                         var lastInvocation = mockInvocations.Last();

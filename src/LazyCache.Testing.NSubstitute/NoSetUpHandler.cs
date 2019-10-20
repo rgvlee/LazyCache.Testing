@@ -7,11 +7,13 @@ using LazyCache.Testing.NSubstitute.Extensions;
 using Microsoft.Extensions.Logging;
 using NSubstitute.Core;
 
-namespace LazyCache.Testing.NSubstitute {
+namespace LazyCache.Testing.NSubstitute
+{
     /// <summary>
     ///     Handler for methods that have not been set up on a lazy cache mock.
     /// </summary>
-    internal class NoSetUpHandler : ICallHandler {
+    internal class NoSetUpHandler : ICallHandler
+    {
         private static readonly ILogger<NoSetUpHandler> Logger = LoggerHelper.CreateLogger<NoSetUpHandler>();
 
         private readonly IAppCache _mockedCachingService;
@@ -20,9 +22,10 @@ namespace LazyCache.Testing.NSubstitute {
         ///     Constructor.
         /// </summary>
         /// <param name="mockedCachingService">The mocked caching service.</param>
-        public NoSetUpHandler(IAppCache mockedCachingService) {
+        public NoSetUpHandler(IAppCache mockedCachingService)
+        {
             EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
-            
+
             _mockedCachingService = mockedCachingService;
         }
 
@@ -40,13 +43,15 @@ namespace LazyCache.Testing.NSubstitute {
         ///     otherwise the default value for the specified type will be returned if the last method invocation has a return
         ///     type.
         /// </returns>
-        public RouteAction Handle(ICall call) {
+        public RouteAction Handle(ICall call)
+        {
             Logger.LogDebug("NoSetUpHandler invoked");
 
             var methodInfo = call.GetMethodInfo();
             var args = call.GetArguments();
 
-            if (methodInfo.Name.StartsWith("Add", StringComparison.CurrentCultureIgnoreCase)) {
+            if (methodInfo.Name.StartsWith("Add", StringComparison.CurrentCultureIgnoreCase))
+            {
                 //We have everything we need to set up a match, so let's do it
                 var key = args[0].ToString();
                 var value = args[1];
@@ -58,7 +63,8 @@ namespace LazyCache.Testing.NSubstitute {
                 return RouteAction.Return(null);
             }
 
-            if (methodInfo.Name.StartsWith("GetOrAdd", StringComparison.CurrentCultureIgnoreCase)) {
+            if (methodInfo.Name.StartsWith("GetOrAdd", StringComparison.CurrentCultureIgnoreCase))
+            {
                 //We have everything we need to set up a match, so let's do it
                 var key = args[0].ToString();
 

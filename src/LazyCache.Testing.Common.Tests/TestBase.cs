@@ -4,11 +4,14 @@ using LazyCache.Testing.Common.Helpers;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace LazyCache.Testing.Common.Tests {
+namespace LazyCache.Testing.Common.Tests
+{
     [TestFixture]
-    public abstract class TestBase {
+    public abstract class TestBase
+    {
         [SetUp]
-        public virtual void SetUp() {
+        public virtual void SetUp()
+        {
             LoggerHelper.LoggerFactory.AddConsole(LogLevel.Debug);
         }
 
@@ -19,18 +22,21 @@ namespace LazyCache.Testing.Common.Tests {
         protected abstract void SetUpCacheEntry<T>(string cacheEntryKey, T expectedResult);
 
         [Test]
-        public virtual void AddNullValue_TestObject_DoesNotThrowException() {
+        public virtual void AddNullValue_TestObject_DoesNotThrowException()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = default(TestObject);
 
-            Assert.DoesNotThrow(() => {
+            Assert.DoesNotThrow(() =>
+            {
                 MockedCache.Add(cacheEntryKey, expectedResult);
                 var actualResult = MockedCache.Get<TestObject>(cacheEntryKey);
             });
         }
 
         [Test]
-        public virtual void AddThenGetWithNoSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void AddThenGetWithNoSetUp_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
 
@@ -43,7 +49,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual void AddThenGetWithNoSetUp_TestObject_ReturnsExpectedResult() {
+        public virtual void AddThenGetWithNoSetUp_TestObject_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
 
@@ -55,7 +62,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual void AddThenGetWithSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void AddThenGetWithSetUp_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult1 = Guid.NewGuid();
             var expectedResult2 = Guid.NewGuid();
@@ -72,7 +80,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual async Task GetOrAddAsyncWithNoSetUp_Guid_ReturnsExpectedResult() {
+        public virtual async Task GetOrAddAsyncWithNoSetUp_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
 
@@ -82,7 +91,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual async Task GetOrAddAsyncWithNoSetUp_TestObject_ReturnsExpectedResult() {
+        public virtual async Task GetOrAddAsyncWithNoSetUp_TestObject_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
 
@@ -92,7 +102,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual async Task GetOrAddAsyncWithSetUp_Guid_ReturnsExpectedResult() {
+        public virtual async Task GetOrAddAsyncWithSetUp_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
             SetUpCacheEntry(cacheEntryKey, expectedResult);
@@ -103,7 +114,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual void GetOrAddWithNoSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void GetOrAddWithNoSetUp_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
 
@@ -113,7 +125,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult() {
+        public virtual void GetOrAddWithNoSetUp_TestObject_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
 
@@ -123,7 +136,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
             SetUpCacheEntry(cacheEntryKey, expectedResult);
@@ -134,7 +148,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual void GetOrCreateThenRemoveWithNoSetUp_Guid_ReturnsDefaultValue() {
+        public virtual void GetOrCreateThenRemoveWithNoSetUp_Guid_ReturnsDefaultValue()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult1 = Guid.NewGuid();
 
@@ -142,14 +157,16 @@ namespace LazyCache.Testing.Common.Tests {
             MockedCache.Remove(cacheEntryKey);
             var actualResult2 = MockedCache.Get<Guid>(cacheEntryKey);
 
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.That(actualResult1, Is.EqualTo(expectedResult1));
                 Assert.That(actualResult2, Is.EqualTo(default(Guid)));
             });
         }
 
         [Test]
-        public virtual void GetThenGetOrAddThenGetWithNoSetUp_TestObject_ReturnsExpectedResults() {
+        public virtual void GetThenGetOrAddThenGetWithNoSetUp_TestObject_ReturnsExpectedResults()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult1 = default(TestObject);
             var expectedResult2 = new TestObject();
@@ -159,7 +176,8 @@ namespace LazyCache.Testing.Common.Tests {
             var actualResult2 = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult2, DateTimeOffset.Now.AddMinutes(30));
             var actualResult3 = MockedCache.Get<TestObject>(cacheEntryKey);
 
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.IsNull(actualResult1);
                 Assert.AreEqual(expectedResult1, actualResult1);
 
@@ -171,7 +189,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual void GetThenGetOrAddThenGetWithSetUp_TestObject_ReturnsExpectedResults() {
+        public virtual void GetThenGetOrAddThenGetWithSetUp_TestObject_ReturnsExpectedResults()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
 
@@ -181,7 +200,8 @@ namespace LazyCache.Testing.Common.Tests {
             var actualResult2 = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
             var actualResult3 = MockedCache.Get<TestObject>(cacheEntryKey);
 
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.AreEqual(expectedResult, actualResult1);
                 Assert.AreEqual(expectedResult, actualResult2);
                 Assert.AreEqual(expectedResult, actualResult3);
@@ -189,7 +209,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual void GetWithNoSetUp_ReturnsDefaultValue() {
+        public virtual void GetWithNoSetUp_ReturnsDefaultValue()
+        {
             var cacheEntryKey = "SomethingInTheCache";
 
             var actualResult = MockedCache.Get<Guid>(cacheEntryKey);
@@ -198,7 +219,8 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
+        public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
 
@@ -208,28 +230,32 @@ namespace LazyCache.Testing.Common.Tests {
         }
 
         [Test]
-        public virtual void RemoveWithNoSetUp_DoesNothing() {
+        public virtual void RemoveWithNoSetUp_DoesNothing()
+        {
             var cacheEntryKey = "SomethingInTheCache";
 
             Assert.DoesNotThrow(() => { MockedCache.Remove(cacheEntryKey); });
         }
 
         [Test]
-        public virtual void RemoveWithNoSetUp_Guid_ReturnsDefaultValue() {
+        public virtual void RemoveWithNoSetUp_Guid_ReturnsDefaultValue()
+        {
             var cacheEntryKey = "SomethingInTheCache";
 
             var actualResult1 = MockedCache.Get<Guid>(cacheEntryKey);
             MockedCache.Remove(cacheEntryKey);
             var actualResult2 = MockedCache.Get<Guid>(cacheEntryKey);
 
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.That(actualResult1, Is.EqualTo(default(Guid)));
                 Assert.That(actualResult2, Is.EqualTo(default(Guid)));
             });
         }
 
         [Test]
-        public virtual void RemoveWithSetUp_Guid_ReturnsDefaultValue() {
+        public virtual void RemoveWithSetUp_Guid_ReturnsDefaultValue()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult1 = Guid.NewGuid();
 
@@ -239,7 +265,8 @@ namespace LazyCache.Testing.Common.Tests {
             MockedCache.Remove(cacheEntryKey);
             var actualResult2 = MockedCache.Get<Guid>(cacheEntryKey);
 
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.AreEqual(expectedResult1, actualResult1);
                 Assert.That(actualResult2, Is.EqualTo(default(Guid)));
             });

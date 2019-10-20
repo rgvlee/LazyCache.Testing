@@ -2,11 +2,14 @@
 using LazyCache.Mocks;
 using NUnit.Framework;
 
-namespace LazyCache.DefaultBehaviour.Tests {
+namespace LazyCache.DefaultBehaviour.Tests
+{
     [TestFixture]
-    public class MockCachingServiceTests {
+    public class MockCachingServiceTests
+    {
         [Test]
-        public void AddThenGetWithBuiltInFake_Guid_ReturnsDefaultValue() {
+        public void AddThenGetWithBuiltInFake_Guid_ReturnsDefaultValue()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var cacheValue = Guid.NewGuid();
 
@@ -19,7 +22,8 @@ namespace LazyCache.DefaultBehaviour.Tests {
         }
 
         [Test]
-        public void GetWithBuiltInFake_Guid_ReturnsDefaultValue() {
+        public void GetWithBuiltInFake_Guid_ReturnsDefaultValue()
+        {
             var cacheEntryKey = "SomethingInTheCache";
 
             var mockedCache = new MockCachingService();

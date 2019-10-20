@@ -1,16 +1,19 @@
 ﻿using NSubstitute;
 using NSubstitute.Core;
 
-namespace LazyCache.Testing.NSubstitute {
+namespace LazyCache.Testing.NSubstitute
+{
     /// <summary>
-    /// Factory for creating mocked instances.
+    ///     Factory for creating mocked instances.
     /// </summary>
-    public class Create {
+    public class Create
+    {
         /// <summary>
         ///     Creates a mocked caching service.
         /// </summary>
         /// <returns>A mocked caching service.</returns>
-        public static IAppCache MockedCachingService() {
+        public static IAppCache MockedCachingService()
+        {
             var mock = Substitute.For<IAppCache>();
 
             var cacheDefaultsMock = Substitute.For<CacheDefaults>();

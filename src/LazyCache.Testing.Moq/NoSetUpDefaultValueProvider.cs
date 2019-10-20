@@ -7,11 +7,13 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using MockExtensions = LazyCache.Testing.Moq.Extensions.MockExtensions;
 
-namespace LazyCache.Testing.Moq {
+namespace LazyCache.Testing.Moq
+{
     /// <summary>
     ///     Default value provider for methods that have not been set up on a lazy cache mock.
     /// </summary>
-    internal class NoSetUpDefaultValueProvider : DefaultValueProvider {
+    internal class NoSetUpDefaultValueProvider : DefaultValueProvider
+    {
         private static readonly ILogger<NoSetUpDefaultValueProvider> Logger = LoggerHelper.CreateLogger<NoSetUpDefaultValueProvider>();
 
         private readonly IAppCache _mockedCachingService;
@@ -20,9 +22,10 @@ namespace LazyCache.Testing.Moq {
         ///     Constructor.
         /// </summary>
         /// <param name="mockedCachingService">The mocked caching service.</param>
-        public NoSetUpDefaultValueProvider(IAppCache mockedCachingService) {
+        public NoSetUpDefaultValueProvider(IAppCache mockedCachingService)
+        {
             EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
-            
+
             _mockedCachingService = mockedCachingService;
         }
 
@@ -40,14 +43,16 @@ namespace LazyCache.Testing.Moq {
         ///     otherwise the default value for the specified type will be returned if the last method invocation has a return
         ///     type.
         /// </returns>
-        protected override object GetDefaultValue(Type type, Mock mock) {
+        protected override object GetDefaultValue(Type type, Mock mock)
+        {
             Logger.LogDebug("NoSetUpDefaultValueProvider invoked");
 
             var lastInvocation = mock.Invocations.Last();
             var methodInfo = lastInvocation.Method;
             var args = lastInvocation.Arguments;
 
-            if (methodInfo.Name.StartsWith("GetOrAdd", StringComparison.CurrentCultureIgnoreCase)) {
+            if (methodInfo.Name.StartsWith("GetOrAdd", StringComparison.CurrentCultureIgnoreCase))
+            {
                 //We have everything we need to set up a match, so let's do it
                 var key = args[0].ToString();
 

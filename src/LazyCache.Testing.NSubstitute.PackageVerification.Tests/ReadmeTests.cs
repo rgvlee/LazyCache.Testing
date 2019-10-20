@@ -4,20 +4,25 @@ using LazyCache.Testing.NSubstitute.Extensions;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 
-namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests {
+namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests
+{
     [TestFixture]
-    public class ReadmeTests {
+    public class ReadmeTests
+    {
         [SetUp]
-        public virtual void SetUp() {
+        public virtual void SetUp()
+        {
             LoggerHelper.LoggerFactory.AddConsole(LogLevel.Debug);
         }
 
         [Test]
-        public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
+        public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid().ToString();
 
             var mockedCache = Create.MockedCachingService();
+            mockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
@@ -25,12 +30,12 @@ namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests {
         }
 
         [Test]
-        public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
+        public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid().ToString();
 
             var mockedCache = Create.MockedCachingService();
-            mockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 

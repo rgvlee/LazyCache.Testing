@@ -1,11 +1,14 @@
 using System;
 using NUnit.Framework;
 
-namespace LazyCache.DefaultBehaviour.Tests {
+namespace LazyCache.DefaultBehaviour.Tests
+{
     [TestFixture]
-    public class CachingServiceTests {
+    public class CachingServiceTests
+    {
         [Test]
-        public void AddThenAddThenGet_Guid_ReturnsExpectedResult() {
+        public void AddThenAddThenGet_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult1 = Guid.NewGuid();
             var expectedResult2 = Guid.NewGuid();
@@ -21,7 +24,8 @@ namespace LazyCache.DefaultBehaviour.Tests {
         }
 
         [Test]
-        public void AddThenGet_Guid_ReturnsExpectedResult() {
+        public void AddThenGet_Guid_ReturnsExpectedResult()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
 
@@ -35,7 +39,8 @@ namespace LazyCache.DefaultBehaviour.Tests {
         }
 
         [Test]
-        public void Get_Guid_ReturnsDefaultValue() {
+        public void Get_Guid_ReturnsDefaultValue()
+        {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
 
@@ -44,7 +49,8 @@ namespace LazyCache.DefaultBehaviour.Tests {
 
             var actualResult = cache.Get<Guid>(cacheEntryKey);
 
-            Assert.Multiple(() => {
+            Assert.Multiple(() =>
+            {
                 Assert.IsNotNull(expectedResult);
                 Assert.That(actualResult, Is.EqualTo(default(Guid)));
             });
