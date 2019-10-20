@@ -29,12 +29,13 @@ I have built these libraries for fun (well sort of, I needed the Moq implementat
 
 ```
 [Test]
-public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult() {
+public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult()
+{
     var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
     var mockedCache = Create.MockedCachingService();
-            
+
     var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
     Assert.AreEqual(expectedResult, actualResult);
@@ -53,14 +54,14 @@ The mock needs to know what to return. You'll need to either:
 If you want to explicitly set up a cache entry use the following extension method:
 
 ```
-[Test]
-public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult() {
+public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult()
+{
     var cacheEntryKey = "SomethingInTheCache";
     var expectedResult = Guid.NewGuid().ToString();
 
     var mockedCache = Create.MockedCachingService();
     mockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
-    
+
     var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
     Assert.AreEqual(expectedResult, actualResult);
