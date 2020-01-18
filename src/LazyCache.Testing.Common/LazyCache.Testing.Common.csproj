@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.1.1</Version>
     <Authors>rgvlee</Authors>
+    <Company>rgvlee</Company>
+    <Description>Common library for LazyCache.Testing.* libraries.</Description>
     <Copyright>Copyright (c) 2020 Lee Anderson</Copyright>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/rgvlee/LazyCache.Testing/</PackageProjectUrl>
-    <Description>Common library for LazyCache.Testing.* libraries.</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/rgvlee/LazyCache.Testing/</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
