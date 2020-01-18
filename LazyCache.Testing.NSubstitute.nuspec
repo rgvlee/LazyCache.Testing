@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>LazyCache.Testing.NSubstitute</id>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <authors>rgvlee</authors>
     <owners>rgvlee</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/rgvlee/LazyCache.Testing/</projectUrl>
     <description>A mocking library for LazyCache using NSubstitute.</description>
     <copyright>Copyright (c) 2019 Lee Anderson</copyright>
-    <tags>LazyCache lazy cache NSubstitute mock mocking test testing</tags>
+    <tags>LazyCache NSubstitute nsub mock testing</tags>
     <repository url="https://github.com/rgvlee/LazyCache.Testing/" />
     <dependencies>
       <group targetFramework=".NETStandard2.0">
