@@ -6,10 +6,10 @@
     <authors>rgvlee</authors>
     <owners>rgvlee</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <licenseUrl>https://github.com/rgvlee/LazyCache.Testing/blob/master/LICENSE</licenseUrl>
+    <license type="file">LICENSE</license>
     <projectUrl>https://github.com/rgvlee/LazyCache.Testing/</projectUrl>
-    <description>A mocking library for LazyCache using NSubstitute.</description>
-    <copyright>Copyright (c) 2019 Lee Anderson</copyright>
+    <description>A mocking library that provides a system mock for LazyCache using NSubstitute.</description>
+    <copyright>Copyright (c) 2020 Lee Anderson</copyright>
     <tags>LazyCache NSubstitute nsub mock testing</tags>
     <repository url="https://github.com/rgvlee/LazyCache.Testing/" />
     <dependencies>
