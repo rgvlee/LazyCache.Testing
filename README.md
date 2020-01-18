@@ -23,7 +23,7 @@ LazyCache.Testing.Moq and LazyCache.Testing.NSubstitute solve that problem by mo
 ## The disclaimer
 I have built these libraries for fun (well sort of, I needed the Moq implementation for work). The mocking doesn't extend to the `CacheProvider` so if you're hitting that explicitly then you're in for a world of nulls. I might add it in a later release but in general I think accessing the `CacheProvider` should be avoided.
 
-If you find these libraries useful and something is missing, not working as you'd expect or you need additional behaviour mocked, flick me a message and I'll see what I can do.
+If you find these libraries useful and something is missing, not working as you'd expect, or you need additional behaviour mocked, flick me a message and I'll see what I can do.
 
 # Moq
 ## Basic usage
