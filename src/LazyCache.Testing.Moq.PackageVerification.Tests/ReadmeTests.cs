@@ -12,7 +12,7 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests
         [SetUp]
         public virtual void SetUp()
         {
-            LoggerHelper.LoggerFactory.AddConsole(LogLevel.Debug);
+            //LoggerHelper.LoggerFactory.AddConsole(LogLevel.Debug);
         }
 
         [Test]
