@@ -45,8 +45,8 @@ public virtual void MinimumViableInterface_Guid_ReturnsExpectedResult()
 }
 ```
 
-## But I want the cache mock!
-No problem. Use `Mock.Get(mockedCache)` to get the cache mock.
+## But I want the caching service mock!
+No problem. Use `Mock.Get(mockedCache)` to get the caching service mock.
 
 ## My SUT invokes the caching service `Get<T>` method, is there anything specific I need to do?
 The mock needs to know what to return. You'll need to either:
@@ -76,4 +76,4 @@ public virtual void GetOrAddWithSetUp_Guid_ReturnsExpectedResult()
 Yes.
 
 # NSubstitute
-It works the same/has the same interface. The only difference is if you want to cache mock. For Moq you need to invoke `Mock.Get(mockedCache)` to get it. For NSubstitute you don't need to do this.
+It works the same/has the same interface. The only difference is if you want the caching service mock. For Moq you need to invoke `Mock.Get(mockedCache)` to get it. For NSubstitute you don't need to do this.
