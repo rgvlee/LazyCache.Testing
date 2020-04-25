@@ -66,8 +66,6 @@ namespace LazyCache.Testing.NSubstitute.Extensions
                     Logger.LogDebug("Cache Add invoked");
 
                     //x provides the args as objects; this means we have to invoke the get set up dynamically to set the item type
-                    //mockedCachingService.SetUpCacheEntryGet(key, item);
-
                     var args = x.Args();
 
                     var key = args[0].ToString();
@@ -75,7 +73,7 @@ namespace LazyCache.Testing.NSubstitute.Extensions
                     var valueType = x.ArgTypes()[1];
 
                     var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntryGet"));
-                    method.MakeGenericMethod(valueType).Invoke(null, new[] {mockedCachingService, key, value});
+                    method.MakeGenericMethod(valueType).Invoke(null, new[] { mockedCachingService, key, value });
                 });
 
             return mockedCachingService;
@@ -100,24 +98,23 @@ namespace LazyCache.Testing.NSubstitute.Extensions
 
             Logger.LogDebug($"Setting up cache entry Get/GetOrAdd for '{cacheEntryKey}' (type: {typeof(T).Name}; value: '{cacheEntryValue}')");
 
-            mockedCachingService.Get<T>(Arg.Is<string>(s => s.Equals(cacheEntryKey)))
+            mockedCachingService
+                .Get<T>(Arg.Is<string>(s => s.Equals(cacheEntryKey)))
                 .Returns(cacheEntryValue)
                 .AndDoes(x => Logger.LogDebug("Cache Get invoked"));
 
-            mockedCachingService.GetOrAdd(
-                    Arg.Any<string>(),
-                    Arg.Any<Func<ICacheEntry, T>>())
+            mockedCachingService
+                .GetOrAdd(Arg.Any<string>(), Arg.Any<Func<ICacheEntry, T>>())
                 .Returns(cacheEntryValue)
                 .AndDoes(x => Logger.LogDebug("Cache GetOrAdd invoked"));
 
-            mockedCachingService.GetAsync<T>(
-                    Arg.Is<string>(s => s.Equals(cacheEntryKey)))
+            mockedCachingService
+                .GetAsync<T>(Arg.Is<string>(s => s.Equals(cacheEntryKey)))
                 .Returns(Task.FromResult(cacheEntryValue))
                 .AndDoes(x => Logger.LogDebug("Cache GetAsync invoked"));
 
-            mockedCachingService.GetOrAddAsync(
-                    Arg.Any<string>(),
-                    Arg.Any<Func<ICacheEntry, Task<T>>>())
+            mockedCachingService
+                .GetOrAddAsync(Arg.Any<string>(), Arg.Any<Func<ICacheEntry, Task<T>>>())
                 .Returns(Task.FromResult(cacheEntryValue))
                 .AndDoes(x => Logger.LogDebug("Cache GetOrAddAsync invoked"));
 
@@ -153,7 +150,7 @@ namespace LazyCache.Testing.NSubstitute.Extensions
                     var valueType = typeof(T);
 
                     var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntryGet"));
-                    method.MakeGenericMethod(valueType).Invoke(null, new[] {mockedCachingService, key, value});
+                    method.MakeGenericMethod(valueType).Invoke(null, new[] { mockedCachingService, key, value });
                 });
 
             return mockedCachingService;

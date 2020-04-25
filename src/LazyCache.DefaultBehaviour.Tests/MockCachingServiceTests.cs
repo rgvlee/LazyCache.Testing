@@ -18,7 +18,10 @@ namespace LazyCache.DefaultBehaviour.Tests
             mockedCache.Add(cacheEntryKey, cacheValue, null);
             var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
 
-            Assert.Multiple(() => { Assert.That(actualResult, Is.EqualTo(default(Guid))); });
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualResult, Is.EqualTo(default(Guid)));
+            });
         }
 
         [Test]
@@ -30,7 +33,10 @@ namespace LazyCache.DefaultBehaviour.Tests
 
             var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
 
-            Assert.Multiple(() => { Assert.That(actualResult, Is.EqualTo(default(Guid))); });
+            Assert.Multiple(() =>
+            {
+                Assert.That(actualResult, Is.EqualTo(default(Guid)));
+            });
         }
     }
 }

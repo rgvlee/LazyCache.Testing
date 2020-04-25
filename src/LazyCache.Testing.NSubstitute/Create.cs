@@ -6,7 +6,7 @@ namespace LazyCache.Testing.NSubstitute
     /// <summary>
     ///     Factory for creating mocked instances.
     /// </summary>
-    public class Create
+    public static class Create
     {
         /// <summary>
         ///     Creates a mocked caching service.

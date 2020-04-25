@@ -121,7 +121,10 @@ namespace LazyCache.Testing.Common.Tests
 
             var actualResult = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-            Assert.Multiple(() => { Assert.AreEqual(expectedResult, actualResult); });
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(expectedResult, actualResult);
+            });
         }
 
         [Test]
@@ -132,7 +135,10 @@ namespace LazyCache.Testing.Common.Tests
 
             var actualResult = MockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-            Assert.Multiple(() => { Assert.AreEqual(expectedResult, actualResult); });
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(expectedResult, actualResult);
+            });
         }
 
         [Test]
@@ -234,7 +240,10 @@ namespace LazyCache.Testing.Common.Tests
         {
             var cacheEntryKey = "SomethingInTheCache";
 
-            Assert.DoesNotThrow(() => { MockedCache.Remove(cacheEntryKey); });
+            Assert.DoesNotThrow(() =>
+            {
+                MockedCache.Remove(cacheEntryKey);
+            });
         }
 
         [Test]
