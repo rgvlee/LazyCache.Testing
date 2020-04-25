@@ -58,7 +58,7 @@ namespace LazyCache.Testing.NSubstitute
                 var valueType = methodInfo.GetParameters()[1].ParameterType;
 
                 var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntry"));
-                method.MakeGenericMethod(valueType).Invoke(null, new[] {_mockedCachingService, key, value});
+                method.MakeGenericMethod(valueType).Invoke(null, new[] { _mockedCachingService, key, value });
 
                 return RouteAction.Return(null);
             }
@@ -70,19 +70,25 @@ namespace LazyCache.Testing.NSubstitute
 
                 var funcType = methodInfo.GetParameters()[1].ParameterType;
                 Logger.LogDebug($"{funcType} methods: ");
-                foreach (var mi in funcType.GetMethods()) Logger.LogDebug(mi.ToString());
+                foreach (var mi in funcType.GetMethods())
+                {
+                    Logger.LogDebug(mi.ToString());
+                }
 
-                var value = funcType.GetMethod("Invoke").Invoke(args[1], new[] {new CacheEntryFake(key)});
+                var value = funcType.GetMethod("Invoke").Invoke(args[1], new[] { new CacheEntryFake(key) });
 
                 var valueType = value.GetType();
 
                 var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntry"));
-                method.MakeGenericMethod(valueType).Invoke(null, new[] {_mockedCachingService, key, value});
+                method.MakeGenericMethod(valueType).Invoke(null, new[] { _mockedCachingService, key, value });
 
                 return RouteAction.Return(value);
             }
 
-            if (methodInfo.ReturnType == typeof(void)) return RouteAction.Return(null);
+            if (methodInfo.ReturnType == typeof(void))
+            {
+                return RouteAction.Return(null);
+            }
 
             return RouteAction.Return(methodInfo.ReturnType.GetDefaultValue());
         }

@@ -20,7 +20,10 @@ namespace LazyCache.DefaultBehaviour.Tests
             cache.Add(cacheEntryKey, expectedResult2, null);
             var actualResult = cache.Get<Guid>(cacheEntryKey);
 
-            Assert.Multiple(() => { Assert.AreEqual(expectedResult2, actualResult); });
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(expectedResult2, actualResult);
+            });
         }
 
         [Test]
@@ -35,7 +38,10 @@ namespace LazyCache.DefaultBehaviour.Tests
             cache.Add(cacheEntryKey, expectedResult, null);
             var actualResult = cache.Get<Guid>(cacheEntryKey);
 
-            Assert.Multiple(() => { Assert.AreEqual(expectedResult, actualResult); });
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(expectedResult, actualResult);
+            });
         }
 
         [Test]

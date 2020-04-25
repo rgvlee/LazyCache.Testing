@@ -23,18 +23,15 @@ namespace LazyCache.Testing.Moq
         /// <param name="invocation">The proxied method invocation.</param>
         public void Intercept(IInvocation invocation)
         {
-            //Logger.LogDebug($"{invocation.Method}");
-
             try
             {
                 invocation.Proceed();
             }
             finally
             {
-                if (invocation.ReturnValue != null &&
-                    invocation.ReturnValue is IInvocationList mockInvocations)
-                    if (mockInvocations.Any() &&
-                        mockInvocations.Last().Method.Name.StartsWith("Add", StringComparison.CurrentCultureIgnoreCase))
+                if (invocation.ReturnValue != null && invocation.ReturnValue is IInvocationList mockInvocations)
+                {
+                    if (mockInvocations.Any() && mockInvocations.Last().Method.Name.StartsWith("Add", StringComparison.CurrentCultureIgnoreCase))
                     {
                         Logger.LogDebug("I have detected that the previous mock invocation was an add");
 
@@ -48,10 +45,9 @@ namespace LazyCache.Testing.Moq
                         var valueType = methodInfo.GetParameters()[1].ParameterType;
 
                         var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntry"));
-                        method.MakeGenericMethod(valueType).Invoke(null, new[] {((Mock<IAppCache>) invocation.Proxy).Object, key, value});
+                        method.MakeGenericMethod(valueType).Invoke(null, new[] { ((Mock<IAppCache>) invocation.Proxy).Object, key, value });
                     }
-
-                //Logger.LogDebug(invocation.ReturnValue);
+                }
             }
         }
     }

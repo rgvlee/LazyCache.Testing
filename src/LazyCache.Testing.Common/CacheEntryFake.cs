@@ -24,7 +24,7 @@ namespace LazyCache.Testing.Common
         /// <inheritdoc />
         public void Dispose()
         {
-            //throw new NotImplementedException();
+            //Required by the interface, however no implementation is required
         }
 
         /// <inheritdoc />
