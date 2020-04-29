@@ -37,7 +37,21 @@ var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, Dat
 Assert.AreEqual(expectedResult, actualResult);
 ```
 
-Provided your SUT populates the cache that'd be all you need to do. If it doesn't, or you like your arrange to be verbose, use `SetUpCacheEntry<T>` to set up a cache entry:
+If your SUT populates the cache you're done. If it doesn't, or you like your arrange to be verbose, populate it as if you were using the real thing: 
+
+```c#
+var cacheEntryKey = "SomethingInTheCache";
+var expectedResult = Guid.NewGuid().ToString();
+
+var mockedCache = Create.MockedCachingService();
+mockedCache.Add(cacheEntryKey, expectedResult);
+
+var actualResult = mockedCache.Get<string>(cacheEntryKey);
+
+Assert.AreEqual(expectedResult, actualResult);
+```
+
+Or use the provided `SetUpCacheEntry<T>` extension method:
 
 ```c#
 var cacheEntryKey = "SomethingInTheCache";
