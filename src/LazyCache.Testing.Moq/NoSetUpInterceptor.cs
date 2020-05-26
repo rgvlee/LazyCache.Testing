@@ -31,7 +31,7 @@ namespace LazyCache.Testing.Moq
             {
                 if (invocation.ReturnValue != null && invocation.ReturnValue is IInvocationList mockInvocations)
                 {
-                    if (mockInvocations.Any() && mockInvocations.Last().Method.Name.StartsWith("Add", StringComparison.CurrentCultureIgnoreCase))
+                    if (mockInvocations.Any() && mockInvocations.Last().Method.Name.StartsWith("Add"))
                     {
                         Logger.LogDebug("I have detected that the previous mock invocation was an add");
 

@@ -51,7 +51,7 @@ namespace LazyCache.Testing.Moq
             var methodInfo = lastInvocation.Method;
             var args = lastInvocation.Arguments;
 
-            if (methodInfo.Name.StartsWith("GetOrAdd", StringComparison.CurrentCultureIgnoreCase))
+            if (methodInfo.Name.StartsWith("GetOrAdd"))
             {
                 //We have everything we need to set up a match, so let's do it
                 var key = args[0].ToString();

@@ -50,7 +50,7 @@ namespace LazyCache.Testing.NSubstitute
             var methodInfo = call.GetMethodInfo();
             var args = call.GetArguments();
 
-            if (methodInfo.Name.StartsWith("Add", StringComparison.CurrentCultureIgnoreCase))
+            if (methodInfo.Name.StartsWith("Add"))
             {
                 //We have everything we need to set up a match, so let's do it
                 var key = args[0].ToString();
@@ -63,7 +63,7 @@ namespace LazyCache.Testing.NSubstitute
                 return RouteAction.Return(null);
             }
 
-            if (methodInfo.Name.StartsWith("GetOrAdd", StringComparison.CurrentCultureIgnoreCase))
+            if (methodInfo.Name.StartsWith("GetOrAdd"))
             {
                 //We have everything we need to set up a match, so let's do it
                 var key = args[0].ToString();
