@@ -12,7 +12,7 @@ namespace LazyCache.Testing.Common.Tests
         [SetUp]
         public virtual void SetUp()
         {
-            LoggerHelper.LoggerFactory = new LoggerFactory().AddConsole(LogLevel.Debug);
+            LoggerHelper.LoggerFactory.AddConsole(LogLevel.Debug);
         }
 
         protected static readonly ILogger<TestBase> Logger = LoggerHelper.CreateLogger<TestBase>();
