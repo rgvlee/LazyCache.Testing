@@ -25,6 +25,7 @@ namespace LazyCache.Testing.NSubstitute.Extensions
         /// <param name="cacheEntryKey">The cache entry key.</param>
         /// <param name="cacheEntryValue">The cache entry value.</param>
         /// <returns>The mocked caching service.</returns>
+        [Obsolete("Access to this method will be removed in a future version. Use the mocked caching service to maintain cache entries.")]
         public static IAppCache SetUpCacheEntry<T>(this IAppCache mockedCachingService, string cacheEntryKey, T cacheEntryValue)
         {
             EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
@@ -52,6 +53,7 @@ namespace LazyCache.Testing.NSubstitute.Extensions
         ///     I've left this accessible for advanced usage. In most cases you should just use
         ///     <see cref="SetUpCacheEntry{T}" />.
         /// </remarks>
+        [Obsolete("Access to this method will be removed in a future version. Use the mocked caching service to maintain cache entries.")]
         public static IAppCache SetUpCacheEntryAdd<T>(this IAppCache mockedCachingService, string cacheEntryKey)
         {
             EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
@@ -91,6 +93,7 @@ namespace LazyCache.Testing.NSubstitute.Extensions
         ///     I've left this accessible for advanced usage. In most cases you should just use
         ///     <see cref="SetUpCacheEntry{T}" />.
         /// </remarks>
+        [Obsolete("Access to this method will be removed in a future version. Use the mocked caching service to maintain cache entries.")]
         public static IAppCache SetUpCacheEntryGet<T>(this IAppCache mockedCachingService, string cacheEntryKey, T cacheEntryValue)
         {
             EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
@@ -132,6 +135,7 @@ namespace LazyCache.Testing.NSubstitute.Extensions
         ///     I've left this accessible for advanced usage. In most cases you should just use
         ///     <see cref="SetUpCacheEntry{T}" />.
         /// </remarks>
+        [Obsolete("Access to this method will be removed in a future version. Use the mocked caching service to maintain cache entries.")]
         public static IAppCache SetUpCacheEntryRemove<T>(this IAppCache mockedCachingService, string cacheEntryKey)
         {
             EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));

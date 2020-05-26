@@ -51,20 +51,6 @@ var actualResult = mockedCache.Get<string>(cacheEntryKey);
 Assert.AreEqual(expectedResult, actualResult);
 ```
 
-Or use the provided `SetUpCacheEntry<T>` extension method:
-
-```c#
-var cacheEntryKey = "SomethingInTheCache";
-var expectedResult = Guid.NewGuid().ToString();
-
-var mockedCache = Create.MockedCachingService();
-mockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
-
-var actualResult = mockedCache.Get<string>(cacheEntryKey);
-
-Assert.AreEqual(expectedResult, actualResult);
-```
-
 The Moq implementation of `Create.MockedCachingService()` returns the mocked caching service. If you need the mock (e.g., to verify an invocation) use `Mock.Get(mockedCache)`:
 
 ```c#

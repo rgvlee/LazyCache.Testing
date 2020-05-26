@@ -51,20 +51,6 @@ namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests
             var expectedResult = Guid.NewGuid().ToString();
 
             var mockedCache = Create.MockedCachingService();
-            mockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
-
-            var actualResult = mockedCache.Get<string>(cacheEntryKey);
-
-            Assert.AreEqual(expectedResult, actualResult);
-        }
-
-        [Test]
-        public void Example4()
-        {
-            var cacheEntryKey = "SomethingInTheCache";
-            var expectedResult = Guid.NewGuid().ToString();
-
-            var mockedCache = Create.MockedCachingService();
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
