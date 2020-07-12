@@ -6,7 +6,7 @@ __*A fully functional system mock of the LazyCache IAppCache interface*__
 
 ## Overview
 
-The intent of this library is to provide an easy to use, fully functional system mock for the LazyCache IAppCache interface.
+The intent of this library is to provide an easy to use, fully functional system mock of the LazyCache IAppCache interface.
 
 ## Resources
 
