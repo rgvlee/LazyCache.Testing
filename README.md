@@ -2,11 +2,9 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/0a917d1ef2b04dfea0e8a99b941dd42b)](https://www.codacy.com/manual/rgvlee/LazyCache.Testing?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rgvlee/LazyCache.Testing&amp;utm_campaign=Badge_Grade) [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/0a917d1ef2b04dfea0e8a99b941dd42b)](https://www.codacy.com/manual/rgvlee/LazyCache.Testing?utm_source=github.com&utm_medium=referral&utm_content=rgvlee/LazyCache.Testing&utm_campaign=Badge_Coverage)
 
-__*A fully functional system mock of the LazyCache IAppCache interface*__
-
 ## Overview
 
-The intent of this library is to provide an easy to use, fully functional system mock of the LazyCache IAppCache interface.
+The intent of this library is to provide the ability to create and manage an LazyCache IAppCache system mock. It's easy to use (usually just a single line of code) with implementations for both Moq and NSubstitute.
 
 ## Resources
 
