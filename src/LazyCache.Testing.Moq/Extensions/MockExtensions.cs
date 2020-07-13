@@ -94,23 +94,17 @@ namespace LazyCache.Testing.Moq.Extensions
 
             var cachingServiceMock = Mock.Get(mockedCachingService);
 
-            cachingServiceMock
-                .Setup(m => m.Get<T>(It.Is<string>(s => s.Equals(cacheEntryKey))))
-                .Callback(() => Logger.LogDebug("Cache Get invoked"))
-                .Returns(cacheEntryValue);
+            cachingServiceMock.Setup(m => m.Get<T>(It.Is<string>(s => s.Equals(cacheEntryKey)))).Callback(() => Logger.LogDebug("Cache Get invoked")).Returns(cacheEntryValue);
 
-            cachingServiceMock
-                .Setup(m => m.GetOrAdd(It.IsAny<string>(), It.IsAny<Func<ICacheEntry, T>>()))
+            cachingServiceMock.Setup(m => m.GetOrAdd(It.IsAny<string>(), It.IsAny<Func<ICacheEntry, T>>()))
                 .Callback(() => Logger.LogDebug("Cache GetOrAdd invoked"))
                 .Returns(cacheEntryValue);
 
-            cachingServiceMock
-                .Setup(m => m.GetAsync<T>(It.Is<string>(s => s.Equals(cacheEntryKey))))
+            cachingServiceMock.Setup(m => m.GetAsync<T>(It.Is<string>(s => s.Equals(cacheEntryKey))))
                 .Callback(() => Logger.LogDebug("Cache GetAsync invoked"))
                 .Returns(Task.FromResult(cacheEntryValue));
 
-            cachingServiceMock
-                .Setup(m => m.GetOrAddAsync(It.IsAny<string>(), It.IsAny<Func<ICacheEntry, Task<T>>>()))
+            cachingServiceMock.Setup(m => m.GetOrAddAsync(It.IsAny<string>(), It.IsAny<Func<ICacheEntry, Task<T>>>()))
                 .Callback(() => Logger.LogDebug("Cache GetOrAddAsync invoked"))
                 .Returns(Task.FromResult(cacheEntryValue));
 

@@ -1,6 +1,5 @@
 using System;
 using LazyCache.Testing.Common.Helpers;
-using LazyCache.Testing.Moq.Extensions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Moq;

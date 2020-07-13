@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Castle.DynamicProxy;
 using LazyCache.Testing.Common.Helpers;
