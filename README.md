@@ -4,7 +4,7 @@
 
 ## Overview
 
-LazyCache.Testing is a system mock of the LazyCache IAppCache interface. It's easy to use (usually just a single line of code) with implementations for both Moq and NSubstitute.
+LazyCache.Testing is a mocking library that creates LazyCache IAppCache system mocks. It's easy to use (usually just a single line of code) with implementations for both Moq and NSubstitute.
 
 ## Resources
 
