@@ -1,6 +1,5 @@
 using System;
 using LazyCache.Testing.Common.Helpers;
-using LazyCache.Testing.NSubstitute.Extensions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using NSubstitute;

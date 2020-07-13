@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using LazyCache.Testing.Common;
 using LazyCache.Testing.Common.Extensions;
 using LazyCache.Testing.Common.Helpers;

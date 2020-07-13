@@ -61,8 +61,7 @@ namespace LazyCache.Testing.NSubstitute.Extensions
 
             Logger.LogDebug($"Setting up cache entry Add for '{cacheEntryKey}'");
 
-            mockedCachingService
-                .When(x => x.Add(Arg.Is<string>(s => s.Equals(cacheEntryKey)), Arg.Any<T>(), Arg.Any<MemoryCacheEntryOptions>()))
+            mockedCachingService.When(x => x.Add(Arg.Is<string>(s => s.Equals(cacheEntryKey)), Arg.Any<T>(), Arg.Any<MemoryCacheEntryOptions>()))
                 .Do(x =>
                 {
                     Logger.LogDebug("Cache Add invoked");
@@ -101,23 +100,15 @@ namespace LazyCache.Testing.NSubstitute.Extensions
 
             Logger.LogDebug($"Setting up cache entry Get/GetOrAdd for '{cacheEntryKey}' (type: {typeof(T).Name}; value: '{cacheEntryValue}')");
 
-            mockedCachingService
-                .Get<T>(Arg.Is<string>(s => s.Equals(cacheEntryKey)))
-                .Returns(cacheEntryValue)
-                .AndDoes(x => Logger.LogDebug("Cache Get invoked"));
+            mockedCachingService.Get<T>(Arg.Is<string>(s => s.Equals(cacheEntryKey))).Returns(cacheEntryValue).AndDoes(x => Logger.LogDebug("Cache Get invoked"));
 
-            mockedCachingService
-                .GetOrAdd(Arg.Any<string>(), Arg.Any<Func<ICacheEntry, T>>())
-                .Returns(cacheEntryValue)
-                .AndDoes(x => Logger.LogDebug("Cache GetOrAdd invoked"));
+            mockedCachingService.GetOrAdd(Arg.Any<string>(), Arg.Any<Func<ICacheEntry, T>>()).Returns(cacheEntryValue).AndDoes(x => Logger.LogDebug("Cache GetOrAdd invoked"));
 
-            mockedCachingService
-                .GetAsync<T>(Arg.Is<string>(s => s.Equals(cacheEntryKey)))
+            mockedCachingService.GetAsync<T>(Arg.Is<string>(s => s.Equals(cacheEntryKey)))
                 .Returns(Task.FromResult(cacheEntryValue))
                 .AndDoes(x => Logger.LogDebug("Cache GetAsync invoked"));
 
-            mockedCachingService
-                .GetOrAddAsync(Arg.Any<string>(), Arg.Any<Func<ICacheEntry, Task<T>>>())
+            mockedCachingService.GetOrAddAsync(Arg.Any<string>(), Arg.Any<Func<ICacheEntry, Task<T>>>())
                 .Returns(Task.FromResult(cacheEntryValue))
                 .AndDoes(x => Logger.LogDebug("Cache GetOrAddAsync invoked"));
 
@@ -143,8 +134,7 @@ namespace LazyCache.Testing.NSubstitute.Extensions
 
             Logger.LogDebug($"Setting up cache entry Remove for '{cacheEntryKey}'");
 
-            mockedCachingService
-                .When(x => x.Remove(Arg.Is<string>(s => s.Equals(cacheEntryKey))))
+            mockedCachingService.When(x => x.Remove(Arg.Is<string>(s => s.Equals(cacheEntryKey))))
                 .Do(x =>
                 {
                     Logger.LogDebug("Cache Remove invoked");
