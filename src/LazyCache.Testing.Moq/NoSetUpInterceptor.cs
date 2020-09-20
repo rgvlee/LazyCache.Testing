@@ -1,8 +1,8 @@
 using System.Linq;
 using Castle.DynamicProxy;
-using LazyCache.Testing.Common.Helpers;
 using Microsoft.Extensions.Logging;
 using Moq;
+using rgvlee.Core.Common.Helpers;
 using IInvocation = Castle.DynamicProxy.IInvocation;
 using MockExtensions = LazyCache.Testing.Moq.Extensions.MockExtensions;
 
@@ -13,7 +13,7 @@ namespace LazyCache.Testing.Moq
     /// </summary>
     internal class NoSetUpInterceptor : IInterceptor
     {
-        private static readonly ILogger<NoSetUpInterceptor> Logger = LoggerHelper.CreateLogger<NoSetUpInterceptor>();
+        private static readonly ILogger<NoSetUpInterceptor> Logger = LoggingHelper.CreateLogger<NoSetUpInterceptor>();
 
         /// <summary>
         ///     Checks the last method invocation on the mock;

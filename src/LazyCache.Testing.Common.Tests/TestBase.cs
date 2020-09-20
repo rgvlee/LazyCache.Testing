@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using LazyCache.Testing.Common.Helpers;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
+using rgvlee.Core.Common.Helpers;
 
 namespace LazyCache.Testing.Common.Tests
 {
@@ -12,10 +12,10 @@ namespace LazyCache.Testing.Common.Tests
         [SetUp]
         public virtual void SetUp()
         {
-            LoggerHelper.LoggerFactory.AddConsole(LogLevel.Debug);
+            LoggingHelper.LoggerFactory.AddConsole(LogLevel.Debug);
         }
 
-        protected static readonly ILogger<TestBase> Logger = LoggerHelper.CreateLogger<TestBase>();
+        protected static readonly ILogger<TestBase> Logger = LoggingHelper.CreateLogger<TestBase>();
 
         protected IAppCache MockedCache;
 

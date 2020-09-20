@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
+using rgvlee.Core.Common.Helpers;
 
 namespace LazyCache.Testing.Common
 {

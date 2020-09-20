@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using LazyCache.Testing.Common;
-using LazyCache.Testing.Common.Extensions;
-using LazyCache.Testing.Common.Helpers;
 using Microsoft.Extensions.Logging;
 using Moq;
+using rgvlee.Core.Common.Extensions;
+using rgvlee.Core.Common.Helpers;
 using MockExtensions = LazyCache.Testing.Moq.Extensions.MockExtensions;
 
 namespace LazyCache.Testing.Moq
@@ -14,7 +14,7 @@ namespace LazyCache.Testing.Moq
     /// </summary>
     internal class NoSetUpDefaultValueProvider : DefaultValueProvider
     {
-        private static readonly ILogger<NoSetUpDefaultValueProvider> Logger = LoggerHelper.CreateLogger<NoSetUpDefaultValueProvider>();
+        private static readonly ILogger<NoSetUpDefaultValueProvider> Logger = LoggingHelper.CreateLogger<NoSetUpDefaultValueProvider>();
 
         private readonly IAppCache _mockedCachingService;
 
