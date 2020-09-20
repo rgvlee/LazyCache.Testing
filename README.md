@@ -8,9 +8,9 @@ LazyCache.Testing is a mocking library that creates LazyCache IAppCache system m
 
 ## Resources
 
--   [Source repository](https://github.com/rgvlee/LazyCache.Testing/)
--   [LazyCache.Testing.Moq - NuGet](https://www.nuget.org/packages/LazyCache.Testing.Moq/)
--   [LazyCache.Testing.NSubstitute - NuGet](https://www.nuget.org/packages/LazyCache.Testing.NSubstitute/)
+-   [Source repository](https://github.com/rgvlee/LazyCache.Testing)
+-   [LazyCache.Testing.Moq - NuGet](https://www.nuget.org/packages/LazyCache.Testing.Moq)
+-   [LazyCache.Testing.NSubstitute - NuGet](https://www.nuget.org/packages/LazyCache.Testing.NSubstitute)
 
 ## Usage
 
