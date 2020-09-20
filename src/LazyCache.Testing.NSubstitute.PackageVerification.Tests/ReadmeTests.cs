@@ -1,9 +1,9 @@
 using System;
-using LazyCache.Testing.Common.Helpers;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using NUnit.Framework;
+using rgvlee.Core.Common.Helpers;
 
 namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests
 {
@@ -53,7 +53,7 @@ namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-            mockedCache.Received(1).GetOrAdd(cacheEntryKey, Arg.Any<Func<ICacheEntry, string>>());
+            mockedCache.Received(1).GetOrAdd(cacheEntryKey, Arg.Any<Func<ICacheEntry, string>>(), Arg.Any<MemoryCacheEntryOptions>());
         }
     }
 }

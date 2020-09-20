@@ -52,7 +52,7 @@ var mockedCache = Create.MockedCachingService();
 var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
 var cacheMock = Mock.Get(mockedCache);
-cacheMock.Verify(x => x.GetOrAdd(cacheEntryKey, It.IsAny<Func<ICacheEntry, string>>()), Times.Once);
+cacheMock.Verify(x => x.GetOrAdd(cacheEntryKey, It.IsAny<Func<ICacheEntry, string>>(), It.IsAny<MemoryCacheEntryOptions>()), Times.Once);
 ```
 
 With regard to verifying invocations, all members of the `IAppCache` interface except `CacheProvider` are mocked.
