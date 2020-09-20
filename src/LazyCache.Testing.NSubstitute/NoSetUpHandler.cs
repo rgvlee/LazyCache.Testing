@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using LazyCache.Testing.Common;
-using LazyCache.Testing.Common.Extensions;
-using LazyCache.Testing.Common.Helpers;
 using LazyCache.Testing.NSubstitute.Extensions;
 using Microsoft.Extensions.Logging;
 using NSubstitute.Core;
+using rgvlee.Core.Common.Extensions;
+using rgvlee.Core.Common.Helpers;
 
 namespace LazyCache.Testing.NSubstitute
 {
@@ -13,7 +13,7 @@ namespace LazyCache.Testing.NSubstitute
     /// </summary>
     internal class NoSetUpHandler : ICallHandler
     {
-        private static readonly ILogger<NoSetUpHandler> Logger = LoggerHelper.CreateLogger<NoSetUpHandler>();
+        private static readonly ILogger<NoSetUpHandler> Logger = LoggingHelper.CreateLogger<NoSetUpHandler>();
 
         private readonly IAppCache _mockedCachingService;
 

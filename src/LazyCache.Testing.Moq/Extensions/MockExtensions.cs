@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using LazyCache.Testing.Common;
-using LazyCache.Testing.Common.Extensions;
-using LazyCache.Testing.Common.Helpers;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Moq;
+using rgvlee.Core.Common.Extensions;
+using rgvlee.Core.Common.Helpers;
 
 namespace LazyCache.Testing.Moq.Extensions
 {
@@ -15,7 +14,7 @@ namespace LazyCache.Testing.Moq.Extensions
     /// </summary>
     public static class MockExtensions
     {
-        private static readonly ILogger Logger = LoggerHelper.CreateLogger(typeof(MockExtensions));
+        private static readonly ILogger Logger = LoggingHelper.CreateLogger(typeof(MockExtensions));
 
         /// <summary>
         ///     Sets up a cache entry.
