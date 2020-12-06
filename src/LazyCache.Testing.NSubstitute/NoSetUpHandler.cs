@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using LazyCache.Testing.Common;
 using LazyCache.Testing.NSubstitute.Extensions;
 using Microsoft.Extensions.Logging;
@@ -87,6 +88,13 @@ namespace LazyCache.Testing.NSubstitute
             if (methodInfo.ReturnType == typeof(void))
             {
                 return RouteAction.Return(null);
+            }
+
+            if (methodInfo.ReturnType.IsGenericType && methodInfo.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+            {
+                var genericArgument = methodInfo.ReturnType.GetGenericArguments().Single();
+                var defaultValue = genericArgument.GetDefaultValue();
+                return RouteAction.Return(typeof(Task).GetMethod(nameof(Task.FromResult)).MakeGenericMethod(genericArgument).Invoke(null, new[] { defaultValue }));
             }
 
             return RouteAction.Return(methodInfo.ReturnType.GetDefaultValue());

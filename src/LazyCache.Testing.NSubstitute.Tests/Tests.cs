@@ -14,12 +14,12 @@ namespace LazyCache.Testing.NSubstitute.Tests
         {
             base.SetUp();
 
-            MockedCache = Create.MockedCachingService();
+            CachingService = Create.MockedCachingService();
         }
 
         protected override void SetUpCacheEntry<T>(string cacheEntryKey, T expectedResult)
         {
-            MockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
+            CachingService.SetUpCacheEntry(cacheEntryKey, expectedResult);
         }
 
         [Test]
@@ -28,11 +28,11 @@ namespace LazyCache.Testing.NSubstitute.Tests
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
 
-            MockedCache.Add(cacheEntryKey, expectedResult);
+            CachingService.Add(cacheEntryKey, expectedResult);
 
-            var actualResult = MockedCache.Get<TestObject>(cacheEntryKey);
+            var actualResult = CachingService.Get<TestObject>(cacheEntryKey);
 
-            MockedCache.Received(1).Get<TestObject>(cacheEntryKey);
+            CachingService.Received(1).Get<TestObject>(cacheEntryKey);
         }
 
         [Test]
@@ -41,9 +41,9 @@ namespace LazyCache.Testing.NSubstitute.Tests
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = new TestObject();
 
-            MockedCache.Add(cacheEntryKey, expectedResult);
+            CachingService.Add(cacheEntryKey, expectedResult);
 
-            MockedCache.Received(1).Add(cacheEntryKey, expectedResult, Arg.Any<MemoryCacheEntryOptions>());
+            CachingService.Received(1).Add(cacheEntryKey, expectedResult, Arg.Any<MemoryCacheEntryOptions>());
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using LazyCache.Testing.Common;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -76,6 +77,13 @@ namespace LazyCache.Testing.Moq
             if (methodInfo.ReturnType == typeof(void))
             {
                 return null;
+            }
+
+            if (methodInfo.ReturnType.IsGenericType && methodInfo.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+            {
+                var genericArgument = methodInfo.ReturnType.GetGenericArguments().Single();
+                var defaultValue = genericArgument.GetDefaultValue();
+                return typeof(Task).GetMethod(nameof(Task.FromResult)).MakeGenericMethod(genericArgument).Invoke(null, new[] { defaultValue });
             }
 
             return methodInfo.ReturnType.GetDefaultValue();

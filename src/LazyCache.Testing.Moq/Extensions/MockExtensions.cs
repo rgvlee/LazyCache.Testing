@@ -62,7 +62,7 @@ namespace LazyCache.Testing.Moq.Extensions
 
             Mock.Get(mockedCachingService)
                 .Setup(m => m.Add(It.Is<string>(s => s.Equals(cacheEntryKey)), It.IsAny<T>(), It.IsAny<MemoryCacheEntryOptions>()))
-                .Callback((string key, T item, MemoryCacheEntryOptions policyParameter) =>
+                .Callback((string key, T item, MemoryCacheEntryOptions providedPolicy) =>
                 {
                     Logger.LogDebug("Cache Add invoked");
                     mockedCachingService.SetUpCacheEntryGet(key, item);
