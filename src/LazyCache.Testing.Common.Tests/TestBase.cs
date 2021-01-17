@@ -10,16 +10,20 @@ using rgvlee.Core.Common.Helpers;
 namespace LazyCache.Testing.Common.Tests
 {
     [TestFixture]
-    public abstract class TestBase
+    public abstract class BaseForTests
     {
         [SetUp]
         public virtual void SetUp()
         {
-            LoggingHelper.LoggerFactory.AddConsole(LogLevel.Trace);
             //LoggingHelper.LoggerFactory = LoggerFactory.Create(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Trace));
+            LoggingHelper.LoggerFactory = new LoggerFactory().AddConsole(LogLevel.Trace);
         }
 
-        protected static readonly ILogger<TestBase> Logger = LoggingHelper.CreateLogger<TestBase>();
+        [TearDown]
+        public virtual void TearDown()
+        {
+            LoggingHelper.LoggerFactory.Dispose();
+        }
 
         protected IAppCache CachingService;
 
@@ -47,9 +51,9 @@ namespace LazyCache.Testing.Common.Tests
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult = Guid.NewGuid();
 
-            Logger.LogDebug("Add invocation started");
+            Console.WriteLine("Add invocation started");
             CachingService.Add(cacheEntryKey, expectedResult);
-            Logger.LogDebug("Add invocation finished");
+            Console.WriteLine("Add invocation finished");
             var actualResult = CachingService.Get<Guid>(cacheEntryKey);
 
             Assert.AreEqual(expectedResult, actualResult);
@@ -69,7 +73,7 @@ namespace LazyCache.Testing.Common.Tests
         }
 
         [Test]
-        public virtual void AddThenGetWithSetUp_Guid_ReturnsExpectedResult()
+        public virtual void GetThenAddWithSetUp_Guid_ReturnsExpectedResult()
         {
             var cacheEntryKey = "SomethingInTheCache";
             var expectedResult1 = Guid.NewGuid();
@@ -95,9 +99,9 @@ namespace LazyCache.Testing.Common.Tests
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             var cacheEntryOptions = new MemoryCacheEntryOptions().AddExpirationToken(new CancellationChangeToken(cts.Token));
 
-            Logger.LogDebug("Add invocation started");
+            Console.WriteLine("Add invocation started");
             CachingService.Add(cacheEntryKey, expectedResult, cacheEntryOptions);
-            Logger.LogDebug("Add invocation finished");
+            Console.WriteLine("Add invocation finished");
             var actualResult = CachingService.Get<Guid>(cacheEntryKey);
 
             Assert.AreEqual(expectedResult, actualResult);
@@ -111,12 +115,12 @@ namespace LazyCache.Testing.Common.Tests
 
             var cacheEntryOptions = new MemoryCacheEntryOptions().RegisterPostEvictionCallback((key, value, reason, state) =>
             {
-                Logger.LogDebug("PostEvictionCallback invoked");
+                Console.WriteLine("PostEvictionCallback invoked");
             });
 
-            Logger.LogDebug("Add invocation started");
+            Console.WriteLine("Add invocation started");
             CachingService.Add(cacheEntryKey, expectedResult, cacheEntryOptions);
-            Logger.LogDebug("Add invocation finished");
+            Console.WriteLine("Add invocation finished");
             var actualResult = CachingService.Get<Guid>(cacheEntryKey);
 
             Assert.AreEqual(expectedResult, actualResult);
@@ -350,6 +354,27 @@ namespace LazyCache.Testing.Common.Tests
                 Assert.AreEqual(expectedResult1, actualResult1);
                 Assert.That(actualResult2, Is.EqualTo(default(Guid)));
             });
+        }
+
+        [Test]
+        public virtual void GetOrAdd_GuidWithCallbackWithNoSetUp_ReturnsExpectedResult()
+        {
+            var cacheEntryKey = "SomethingInTheCache";
+            var expectedResult = Guid.NewGuid();
+            var invocationCounter = 0;
+            Func<Guid> func = () =>
+            {
+                invocationCounter++;
+                return expectedResult;
+            };
+
+            var options = new MemoryCacheEntryOptions { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(30) };
+            var actualResult1 = CachingService.GetOrAdd(cacheEntryKey, func, options);
+            var actualResult2 = CachingService.GetOrAdd(cacheEntryKey, func, options);
+
+            Assert.That(actualResult1, Is.EqualTo(expectedResult));
+            Assert.That(actualResult2, Is.EqualTo(expectedResult));
+            Assert.That(invocationCounter, Is.EqualTo(1));
         }
     }
 }

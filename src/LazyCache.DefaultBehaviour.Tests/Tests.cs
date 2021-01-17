@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace LazyCache.DefaultBehaviour.Tests
 {
-    public class Tests : TestBase
+    public class Tests : BaseForTests
     {
         [SetUp]
         public override void SetUp()
