@@ -1,5 +1,5 @@
+using AutoFixture;
 using LazyCache.Testing.Common.Tests;
-using LazyCache.Testing.Moq.Extensions;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
 using NUnit.Framework;
@@ -16,33 +16,18 @@ namespace LazyCache.Testing.Moq.Tests
             CachingService = Create.MockedCachingService();
         }
 
-        protected override void SetUpCacheEntry<T>(string cacheEntryKey, T expectedResult)
-        {
-            CachingService.SetUpCacheEntry(cacheEntryKey, expectedResult);
-        }
-
         [Test]
-        public virtual void AddThenGetWithNoSetUp_TestObject_GetInvokedOnce()
+        public virtual void AddThenGet_GuidKeyAndTestObjectValue_AddAndGetEachInvokedOnce()
         {
-            var cacheEntryKey = "SomethingInTheCache";
-            var expectedResult = new TestObject();
+            var cacheEntryKey = Fixture.Create<string>();
+            var expectedResult = Fixture.Create<TestObject>();
 
+            //Act
             CachingService.Add(cacheEntryKey, expectedResult);
-
             var actualResult = CachingService.Get<TestObject>(cacheEntryKey);
 
-            Mock.Get(CachingService).Verify(m => m.Get<TestObject>(cacheEntryKey), Times.Once);
-        }
-
-        [Test]
-        public virtual void AddWithNoSetUp_TestObject_AddInvokedOnce()
-        {
-            var cacheEntryKey = "SomethingInTheCache";
-            var expectedResult = new TestObject();
-
-            CachingService.Add(cacheEntryKey, expectedResult);
-
             Mock.Get(CachingService).Verify(m => m.Add(cacheEntryKey, expectedResult, It.IsAny<MemoryCacheEntryOptions>()), Times.Once);
+            Mock.Get(CachingService).Verify(m => m.Get<TestObject>(cacheEntryKey), Times.Once);
         }
     }
 }

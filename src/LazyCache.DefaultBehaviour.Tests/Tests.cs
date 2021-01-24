@@ -15,17 +15,14 @@ namespace LazyCache.DefaultBehaviour.Tests
             CachingService = new CachingService();
         }
 
-        protected override void SetUpCacheEntry<T>(string cacheEntryKey, T expectedResult)
-        {
-            CachingService.Add(cacheEntryKey, expectedResult);
-        }
-
         [TearDown]
-        public virtual void TearDown()
+        public override void TearDown()
         {
             var cacheProvider = CachingService.CacheProvider;
-            var memoryCache = (MemoryCache)cacheProvider.GetType().GetField("cache", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(cacheProvider);
+            var memoryCache = (MemoryCache) cacheProvider.GetType().GetField("cache", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(cacheProvider);
             memoryCache.Compact(1.0);
+
+            base.TearDown();
         }
     }
 }

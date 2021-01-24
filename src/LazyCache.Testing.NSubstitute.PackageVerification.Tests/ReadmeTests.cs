@@ -13,7 +13,7 @@ namespace LazyCache.Testing.NSubstitute.PackageVerification.Tests
         [SetUp]
         public void SetUp()
         {
-            LoggingHelper.LoggerFactory = LoggerFactory.Create(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Debug));
+            LoggingHelper.LoggerFactory = LoggerFactory.Create(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Trace));
         }
 
         [Test]
