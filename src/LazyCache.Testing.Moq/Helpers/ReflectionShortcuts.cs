@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using Moq;
 using MockExtensions = LazyCache.Testing.Moq.Extensions.MockExtensions;
@@ -16,11 +15,8 @@ namespace LazyCache.Testing.Moq.Helpers
             typeof(MockExtensions).GetMethods(BindingFlags.Static | BindingFlags.NonPublic).Single(mi => mi.Name.Equals("SetUpCacheEntryGet"));
 
         //private static readonly MethodInfo _itIsMethod = typeof(It).GetMethods().Single(x => x.Name.Equals(nameof(It.Is)) && x.IsGenericMethod && x.GetParameters().Length == 1);
-        private static readonly MethodInfo _itIsMethod = typeof(It).GetMethods()
-            .Single(x => x.Name.Equals(nameof(It.Is)) &&
-                         x.IsGenericMethod &&
-                         x.GetParameters().Length == 1 &&
-                         x.GetParameters()[0].ParameterType != typeof(Expression<Func<object, Type, bool>>));
+        private static readonly MethodInfo _itIsMethodWithExpressionOfFuncOfTValueAndBoolArgument = typeof(It).GetMethods()
+            .Single(x => x.ToString().Equals("TValue Is[TValue](System.Linq.Expressions.Expression`1[System.Func`2[TValue,System.Boolean]])"));
 
         private static readonly MethodInfo _itIsAnyMethod =
             typeof(It).GetMethods().Single(x => x.Name.Equals(nameof(It.IsAny)) && x.IsGenericMethod && x.GetParameters().Length == 0);
@@ -31,9 +27,9 @@ namespace LazyCache.Testing.Moq.Helpers
         internal static readonly MethodInfo GetOrAddAsyncWithMemoryCacheEntryOptionsMethod =
             typeof(IAppCache).GetMethods().SingleOrDefault(x => x.Name.Equals("GetOrAddAsync") && x.GetParameters().Length == 3);
 
-        internal static MethodInfo ItIsMethod(Type type)
+        internal static MethodInfo ItIsMethodWithExpressionOfFuncOfTValueAndBoolArgument(Type type)
         {
-            return _itIsMethod.MakeGenericMethod(type);
+            return _itIsMethodWithExpressionOfFuncOfTValueAndBoolArgument.MakeGenericMethod(type);
         }
 
         internal static MethodInfo ItIsAnyMethod(Type type)

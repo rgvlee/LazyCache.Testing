@@ -27,17 +27,14 @@ namespace LazyCache.Testing.Moq
 
             mockProxy.DefaultValueProvider = new NoSetUpDefaultValueProvider(mockProxy.Object);
 
-            var mockedCachingService = mockProxy.Object;
-
-            Mock.Get(mockProxy.Object)
-                .Setup(m => m.Add(It.IsAny<string>(), It.Is<object>(x => x == null), It.IsAny<MemoryCacheEntryOptions>()))
+            mockProxy.Setup(m => m.Add(It.IsAny<string>(), It.Is<object>(x => x == null), It.IsAny<MemoryCacheEntryOptions>()))
                 .Callback((string key, object item, MemoryCacheEntryOptions providedPolicy) =>
                 {
                     Logger.LogDebug("Cache Add with null cache entry value invoked");
                     throw new ArgumentNullException("item");
                 });
 
-            return mockedCachingService;
+            return mockProxy.Object;
         }
     }
 }

@@ -73,7 +73,7 @@ namespace LazyCache.Testing.Moq.Extensions
 
                 var getOrAddExpression = ExpressionHelper.CreateMethodCallExpression<IAppCache, T>(
                     ProjectReflectionShortcuts.GetOrAddWithMemoryCacheEntryOptionsMethod.MakeGenericMethod(typeof(T)),
-                    Expression.Call(ProjectReflectionShortcuts.ItIsMethod(typeof(string)),
+                    Expression.Call(ProjectReflectionShortcuts.ItIsMethodWithExpressionOfFuncOfTValueAndBoolArgument(typeof(string)),
                         ExpressionHelper.CreateMethodCallExpression<string, bool>(CoreReflectionShortcuts.StringEqualsMethodWithStringArgument,
                             Expression.Constant(cacheEntryKey, typeof(string)))),
                     Expression.Call(ProjectReflectionShortcuts.ItIsAnyMethod(typeof(Func<ICacheEntry, T>))),
@@ -97,7 +97,7 @@ namespace LazyCache.Testing.Moq.Extensions
 
                 var getOrAddAsyncExpression = ExpressionHelper.CreateMethodCallExpression<IAppCache, Task<T>>(
                     ProjectReflectionShortcuts.GetOrAddAsyncWithMemoryCacheEntryOptionsMethod.MakeGenericMethod(typeof(T)),
-                    Expression.Call(ProjectReflectionShortcuts.ItIsMethod(typeof(string)),
+                    Expression.Call(ProjectReflectionShortcuts.ItIsMethodWithExpressionOfFuncOfTValueAndBoolArgument(typeof(string)),
                         ExpressionHelper.CreateMethodCallExpression<string, bool>(CoreReflectionShortcuts.StringEqualsMethodWithStringArgument,
                             Expression.Constant(cacheEntryKey, typeof(string)))),
                     Expression.Call(ProjectReflectionShortcuts.ItIsAnyMethod(typeof(Func<ICacheEntry, Task<T>>))),
