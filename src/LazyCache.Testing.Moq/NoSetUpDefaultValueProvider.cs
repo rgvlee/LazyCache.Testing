@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using LazyCache.Testing.Common;
 using Microsoft.Extensions.Logging;
 using Moq;
 using rgvlee.Core.Common.Extensions;
 using rgvlee.Core.Common.Helpers;
-using MockExtensions = LazyCache.Testing.Moq.Extensions.MockExtensions;
+using ProjectReflectionShortcuts = LazyCache.Testing.Moq.Helpers.ReflectionShortcuts;
+using CoreReflectionShortcuts = rgvlee.Core.Common.Helpers.ReflectionShortcuts;
 
 namespace LazyCache.Testing.Moq
 {
@@ -51,31 +53,42 @@ namespace LazyCache.Testing.Moq
             var methodInfo = lastInvocation.Method;
             var args = lastInvocation.Arguments;
 
-            if (methodInfo.Name.StartsWith("GetOrAdd"))
+            if (methodInfo.Name.Equals("GetOrAdd"))
             {
                 //We have everything we need to set up a match, so let's do it
                 var key = args[0].ToString();
+                var value = args[1].GetType().GetMethod("Invoke").Invoke(args[1], new object[] { new CacheEntryFake(key) });
 
-                var funcType = methodInfo.GetParameters()[1].ParameterType;
-                Logger.LogDebug($"{funcType} methods: ");
-                foreach (var mi in funcType.GetMethods())
-                {
-                    Logger.LogDebug(mi.ToString());
-                }
-
-                var value = funcType.GetMethod("Invoke").Invoke(args[1], new object[] { new CacheEntryFake(key) });
-
-                var valueType = value.GetType();
-
-                var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntry"));
-                method.MakeGenericMethod(valueType).Invoke(null, new[] { _mockedCachingService, key, value });
+                ProjectReflectionShortcuts.SetUpCacheEntryMethod(value.GetType()).Invoke(null, new[] { _mockedCachingService, key, value });
 
                 return value;
             }
 
+            if (methodInfo.Name.Equals("GetOrAddAsync"))
+            {
+                //We have everything we need to set up a match, so let's do it
+                var key = args[0].ToString();
+                var task = args[1].GetType().GetMethod("Invoke").Invoke(args[1], new object[] { new CacheEntryFake(key) });
+                var taskResult = task.GetType().GetProperty("Result").GetValue(task);
+
+                ProjectReflectionShortcuts.SetUpCacheEntryMethod(taskResult.GetType()).Invoke(null, new[] { _mockedCachingService, key, taskResult });
+
+                return task;
+            }
+
+            //void method
             if (methodInfo.ReturnType == typeof(void))
             {
                 return null;
+            }
+
+            //Return default values
+            if (methodInfo.ReturnType.IsGenericType && methodInfo.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+            {
+                var genericArgument = methodInfo.ReturnType.GetGenericArguments().Single();
+                var defaultValue = genericArgument.GetDefaultValue();
+
+                return CoreReflectionShortcuts.TaskFromResultMethod(genericArgument).Invoke(null, new[] { defaultValue });
             }
 
             return methodInfo.ReturnType.GetDefaultValue();

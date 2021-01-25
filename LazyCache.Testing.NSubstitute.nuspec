@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>LazyCache.Testing.NSubstitute</id>
-    <version>1.2.1</version>
+    <version>1.3.0</version>
     <authors>rgvlee</authors>
     <owners>rgvlee</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -17,13 +17,17 @@
         <dependency id="LazyCache" version="2.0.0" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Logging" version="2.1.0" exclude="Build,Analyzers" />
         <dependency id="NSubstitute" version="4.1.0" exclude="Build,Analyzers" />
-        <dependency id="rgvlee.Core" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="rgvlee.Core" version="1.2.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>
   </metadata>
   <files>
     <file src="src\LazyCache.Testing.Common\bin\Release\netstandard2.0\LazyCache.Testing.Common.dll" target="lib\netstandard2.0" />
+    <file src="src\LazyCache.Testing.Common\bin\Release\netstandard2.0\LazyCache.Testing.Common.xml" target="lib\netstandard2.0" />
+    <file src="src\LazyCache.Testing.Common\bin\Release\netstandard2.0\LazyCache.Testing.Common.pdb" target="lib\netstandard2.0" />
     <file src="src\LazyCache.Testing.NSubstitute\bin\Release\netstandard2.0\LazyCache.Testing.NSubstitute.dll" target="lib\netstandard2.0" />
+    <file src="src\LazyCache.Testing.NSubstitute\bin\Release\netstandard2.0\LazyCache.Testing.NSubstitute.xml" target="lib\netstandard2.0" />
+    <file src="src\LazyCache.Testing.NSubstitute\bin\Release\netstandard2.0\LazyCache.Testing.NSubstitute.pdb" target="lib\netstandard2.0" />
     <file src="LICENSE" />
   </files>
 </package>

@@ -1,4 +1,5 @@
 using System;
+using AutoFixture;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -13,48 +14,52 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests
         [SetUp]
         public void SetUp()
         {
-            LoggingHelper.LoggerFactory = LoggerFactory.Create(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Debug));
+            LoggingHelper.LoggerFactory = LoggerFactory.Create(builder => builder.AddConsole().SetMinimumLevel(LogLevel.Trace));
+
+            Fixture = new Fixture();
         }
+
+        protected Fixture Fixture;
 
         [Test]
         public void Example1()
         {
-            var cacheEntryKey = "SomethingInTheCache";
-            var expectedResult = Guid.NewGuid().ToString();
+            var cacheEntryKey = Fixture.Create<string>();
+            var expectedResult = Fixture.Create<Guid>();
 
             var mockedCache = Create.MockedCachingService();
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
 
         [Test]
         public void Example2()
         {
-            var cacheEntryKey = "SomethingInTheCache";
-            var expectedResult = Guid.NewGuid().ToString();
+            var cacheEntryKey = Fixture.Create<string>();
+            var expectedResult = Fixture.Create<Guid>();
 
             var mockedCache = Create.MockedCachingService();
             mockedCache.Add(cacheEntryKey, expectedResult);
 
-            var actualResult = mockedCache.Get<string>(cacheEntryKey);
+            var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
 
-            Assert.AreEqual(expectedResult, actualResult);
+            Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
 
         [Test]
         public void Example3()
         {
-            var cacheEntryKey = "SomethingInTheCache";
-            var expectedResult = Guid.NewGuid().ToString();
+            var cacheEntryKey = Fixture.Create<string>();
+            var expectedResult = Fixture.Create<Guid>();
 
             var mockedCache = Create.MockedCachingService();
 
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
             var cacheMock = Mock.Get(mockedCache);
-            cacheMock.Verify(x => x.GetOrAdd(cacheEntryKey, It.IsAny<Func<ICacheEntry, string>>(), It.IsAny<MemoryCacheEntryOptions>()), Times.Once);
+            cacheMock.Verify(x => x.GetOrAdd(cacheEntryKey, It.IsAny<Func<ICacheEntry, Guid>>(), It.IsAny<MemoryCacheEntryOptions>()), Times.Once);
         }
     }
 }

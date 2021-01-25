@@ -1,49 +1,32 @@
+using AutoFixture;
 using LazyCache.Testing.Common.Tests;
-using LazyCache.Testing.NSubstitute.Extensions;
 using Microsoft.Extensions.Caching.Memory;
 using NSubstitute;
 using NUnit.Framework;
 
 namespace LazyCache.Testing.NSubstitute.Tests
 {
-    [TestFixture]
-    public class Tests : TestBase
+    public class Tests : BaseForTests
     {
         [SetUp]
         public override void SetUp()
         {
             base.SetUp();
 
-            MockedCache = Create.MockedCachingService();
-        }
-
-        protected override void SetUpCacheEntry<T>(string cacheEntryKey, T expectedResult)
-        {
-            MockedCache.SetUpCacheEntry(cacheEntryKey, expectedResult);
+            CachingService = Create.MockedCachingService();
         }
 
         [Test]
-        public virtual void AddThenGetWithNoSetUp_TestObject_GetInvokedOnce()
+        public virtual void AddThenGet_TestObject_AddAndGetEachInvokedOnce()
         {
-            var cacheEntryKey = "SomethingInTheCache";
-            var expectedResult = new TestObject();
+            var cacheEntryKey = Fixture.Create<string>();
+            var expectedResult = Fixture.Create<TestObject>();
 
-            MockedCache.Add(cacheEntryKey, expectedResult);
+            CachingService.Add(cacheEntryKey, expectedResult);
+            var actualResult = CachingService.Get<TestObject>(cacheEntryKey);
 
-            var actualResult = MockedCache.Get<TestObject>(cacheEntryKey);
-
-            MockedCache.Received(1).Get<TestObject>(cacheEntryKey);
-        }
-
-        [Test]
-        public virtual void AddWithNoSetUp_TestObject_AddInvokedOnce()
-        {
-            var cacheEntryKey = "SomethingInTheCache";
-            var expectedResult = new TestObject();
-
-            MockedCache.Add(cacheEntryKey, expectedResult);
-
-            MockedCache.Received(1).Add(cacheEntryKey, expectedResult, Arg.Any<MemoryCacheEntryOptions>());
+            CachingService.Received(1).Add(cacheEntryKey, expectedResult, Arg.Any<MemoryCacheEntryOptions>());
+            CachingService.Received(1).Get<TestObject>(cacheEntryKey);
         }
     }
 }

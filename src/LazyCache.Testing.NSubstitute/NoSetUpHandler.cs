@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using LazyCache.Testing.Common;
-using LazyCache.Testing.NSubstitute.Extensions;
 using Microsoft.Extensions.Logging;
 using NSubstitute.Core;
 using rgvlee.Core.Common.Extensions;
 using rgvlee.Core.Common.Helpers;
+using ProjectReflectionShortcuts = LazyCache.Testing.NSubstitute.Helpers.ReflectionShortcuts;
+using CoreReflectionShortcuts = rgvlee.Core.Common.Helpers.ReflectionShortcuts;
 
 namespace LazyCache.Testing.NSubstitute
 {
@@ -49,44 +51,53 @@ namespace LazyCache.Testing.NSubstitute
             var methodInfo = call.GetMethodInfo();
             var args = call.GetArguments();
 
-            if (methodInfo.Name.StartsWith("Add"))
+            if (methodInfo.Name.Equals("Add"))
             {
                 //We have everything we need to set up a match, so let's do it
                 var key = args[0].ToString();
                 var value = args[1];
-                var valueType = methodInfo.GetParameters()[1].ParameterType;
 
-                var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntry"));
-                method.MakeGenericMethod(valueType).Invoke(null, new[] { _mockedCachingService, key, value });
+                ProjectReflectionShortcuts.SetUpCacheEntryMethod(value.GetType()).Invoke(null, new[] { _mockedCachingService, key, value });
 
                 return RouteAction.Return(null);
             }
 
-            if (methodInfo.Name.StartsWith("GetOrAdd"))
+            if (methodInfo.Name.Equals("GetOrAdd"))
             {
                 //We have everything we need to set up a match, so let's do it
                 var key = args[0].ToString();
+                var value = args[1].GetType().GetMethod("Invoke").Invoke(args[1], new object[] { new CacheEntryFake(key) });
 
-                var funcType = methodInfo.GetParameters()[1].ParameterType;
-                Logger.LogDebug($"{funcType} methods: ");
-                foreach (var mi in funcType.GetMethods())
-                {
-                    Logger.LogDebug(mi.ToString());
-                }
-
-                var value = funcType.GetMethod("Invoke").Invoke(args[1], new[] { new CacheEntryFake(key) });
-
-                var valueType = value.GetType();
-
-                var method = typeof(MockExtensions).GetMethods().Single(mi => mi.Name.Equals("SetUpCacheEntry"));
-                method.MakeGenericMethod(valueType).Invoke(null, new[] { _mockedCachingService, key, value });
+                ProjectReflectionShortcuts.SetUpCacheEntryMethod(value.GetType()).Invoke(null, new[] { _mockedCachingService, key, value });
 
                 return RouteAction.Return(value);
             }
 
+            if (methodInfo.Name.Equals("GetOrAddAsync"))
+            {
+                //We have everything we need to set up a match, so let's do it
+                var key = args[0].ToString();
+                var task = args[1].GetType().GetMethod("Invoke").Invoke(args[1], new object[] { new CacheEntryFake(key) });
+                var taskResult = task.GetType().GetProperty("Result").GetValue(task);
+
+                ProjectReflectionShortcuts.SetUpCacheEntryMethod(taskResult.GetType()).Invoke(null, new[] { _mockedCachingService, key, taskResult });
+
+                return RouteAction.Return(task);
+            }
+
+            //void method
             if (methodInfo.ReturnType == typeof(void))
             {
                 return RouteAction.Return(null);
+            }
+
+            //Return default values
+            if (methodInfo.ReturnType.IsGenericType && methodInfo.ReturnType.GetGenericTypeDefinition() == typeof(Task<>))
+            {
+                var genericArgument = methodInfo.ReturnType.GetGenericArguments().Single();
+                var defaultValue = genericArgument.GetDefaultValue();
+
+                return RouteAction.Return(CoreReflectionShortcuts.TaskFromResultMethod(genericArgument).Invoke(null, new[] { defaultValue }));
             }
 
             return RouteAction.Return(methodInfo.ReturnType.GetDefaultValue());

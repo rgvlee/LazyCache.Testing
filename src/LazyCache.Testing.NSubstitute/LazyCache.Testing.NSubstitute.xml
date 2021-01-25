@@ -20,56 +20,6 @@
                 Extensions for mocks.
             </summary>
         </member>
-        <member name="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)">
-            <summary>
-                Sets up a cache entry.
-            </summary>
-            <typeparam name="T">The cache entry value type.</typeparam>
-            <param name="mockedCachingService">The mocked caching service.</param>
-            <param name="cacheEntryKey">The cache entry key.</param>
-            <param name="cacheEntryValue">The cache entry value.</param>
-            <returns>The mocked caching service.</returns>
-        </member>
-        <member name="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntryAdd``1(LazyCache.IAppCache,System.String)">
-            <summary>
-                Sets up the add method for a cache entry.
-            </summary>
-            <typeparam name="T">The cache entry value type.</typeparam>
-            <param name="mockedCachingService">The mocked caching service.</param>
-            <param name="cacheEntryKey">The cache entry key.</param>
-            <returns>The mocked caching service.</returns>
-            <remarks>
-                I've left this accessible for advanced usage. In most cases you should just use
-                <see cref="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)" />.
-            </remarks>
-        </member>
-        <member name="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntryGet``1(LazyCache.IAppCache,System.String,``0)">
-            <summary>
-                Sets up the get methods for a cache entry.
-            </summary>
-            <typeparam name="T">The cache entry value type.</typeparam>
-            <param name="mockedCachingService">The mocked caching service.</param>
-            <param name="cacheEntryKey">The cache entry key.</param>
-            <param name="cacheEntryValue">The cache entry value.</param>
-            <returns>The mocked caching service.</returns>
-            <remarks>
-                I've left this accessible for advanced usage. In most cases you should just use
-                <see cref="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)" />.
-            </remarks>
-        </member>
-        <member name="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntryRemove``1(LazyCache.IAppCache,System.String)">
-            <summary>
-                Sets up the remove method for a cache entry.
-            </summary>
-            <typeparam name="T">The cache entry value type.</typeparam>
-            <param name="mockedCachingService">The mocked caching service.</param>
-            <param name="cacheEntryKey">The cache entry key.</param>
-            <returns>The mocked caching service.</returns>
-            <remarks>
-                I've left this accessible for advanced usage. In most cases you should just use
-                <see cref="M:LazyCache.Testing.NSubstitute.Extensions.MockExtensions.SetUpCacheEntry``1(LazyCache.IAppCache,System.String,``0)" />.
-            </remarks>
-        </member>
         <member name="T:LazyCache.Testing.NSubstitute.NoSetUpHandler">
             <summary>
                 Handler for methods that have not been set up on a lazy cache mock.
