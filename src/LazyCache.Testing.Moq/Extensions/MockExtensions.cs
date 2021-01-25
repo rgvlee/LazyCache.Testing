@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
@@ -96,7 +96,7 @@ namespace LazyCache.Testing.Moq.Extensions
                 Logger.LogDebug("Setting up GetOrAddAsyncWithMemoryCacheEntryOptionsMethod");
 
                 var getOrAddAsyncExpression = ExpressionHelper.CreateMethodCallExpression<IAppCache, Task<T>>(
-                    ProjectReflectionShortcuts.GetOrAddWithMemoryCacheEntryOptionsMethod.MakeGenericMethod(typeof(T)),
+                    ProjectReflectionShortcuts.GetOrAddAsyncWithMemoryCacheEntryOptionsMethod.MakeGenericMethod(typeof(T)),
                     Expression.Call(ProjectReflectionShortcuts.ItIsMethod(typeof(string)),
                         ExpressionHelper.CreateMethodCallExpression<string, bool>(CoreReflectionShortcuts.StringEqualsMethodWithStringArgument,
                             Expression.Constant(cacheEntryKey, typeof(string)))),
