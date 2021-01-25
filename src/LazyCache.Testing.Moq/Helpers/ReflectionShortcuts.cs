@@ -14,18 +14,22 @@ namespace LazyCache.Testing.Moq.Helpers
         private static readonly MethodInfo _setUpCacheEntryGetMethod =
             typeof(MockExtensions).GetMethods(BindingFlags.Static | BindingFlags.NonPublic).Single(mi => mi.Name.Equals("SetUpCacheEntryGet"));
 
-        //private static readonly MethodInfo _itIsMethod = typeof(It).GetMethods().Single(x => x.Name.Equals(nameof(It.Is)) && x.IsGenericMethod && x.GetParameters().Length == 1);
         private static readonly MethodInfo _itIsMethodWithExpressionOfFuncOfTValueAndBoolArgument = typeof(It).GetMethods()
             .Single(x => x.ToString().Equals("TValue Is[TValue](System.Linq.Expressions.Expression`1[System.Func`2[TValue,System.Boolean]])"));
 
-        private static readonly MethodInfo _itIsAnyMethod =
-            typeof(It).GetMethods().Single(x => x.Name.Equals(nameof(It.IsAny)) && x.IsGenericMethod && x.GetParameters().Length == 0);
+        private static readonly MethodInfo _itIsAnyMethod = typeof(It).GetMethods().Single(x => x.Name.Equals(nameof(It.IsAny)));
 
-        internal static readonly MethodInfo GetOrAddWithMemoryCacheEntryOptionsMethod =
-            typeof(IAppCache).GetMethods().SingleOrDefault(x => x.Name.Equals("GetOrAdd") && x.GetParameters().Length == 3);
+        internal static readonly MethodInfo GetOrAddWithMemoryCacheEntryOptionsMethod = typeof(IAppCache).GetMethods()
+            .SingleOrDefault(x =>
+                x.ToString()
+                    .Equals(
+                        "T GetOrAdd[T](System.String, System.Func`2[Microsoft.Extensions.Caching.Memory.ICacheEntry,T], Microsoft.Extensions.Caching.Memory.MemoryCacheEntryOptions)"));
 
-        internal static readonly MethodInfo GetOrAddAsyncWithMemoryCacheEntryOptionsMethod =
-            typeof(IAppCache).GetMethods().SingleOrDefault(x => x.Name.Equals("GetOrAddAsync") && x.GetParameters().Length == 3);
+        internal static readonly MethodInfo GetOrAddAsyncWithMemoryCacheEntryOptionsMethod = typeof(IAppCache).GetMethods()
+            .SingleOrDefault(x =>
+                x.ToString()
+                    .Equals(
+                        "System.Threading.Tasks.Task`1[T] GetOrAddAsync[T](System.String, System.Func`2[Microsoft.Extensions.Caching.Memory.ICacheEntry,System.Threading.Tasks.Task`1[T]], Microsoft.Extensions.Caching.Memory.MemoryCacheEntryOptions)"));
 
         internal static MethodInfo ItIsMethodWithExpressionOfFuncOfTValueAndBoolArgument(Type type)
         {
