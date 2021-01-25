@@ -23,7 +23,11 @@
   </metadata>
   <files>
     <file src="src\LazyCache.Testing.Common\bin\Release\netstandard2.0\LazyCache.Testing.Common.dll" target="lib\netstandard2.0" />
+    <file src="src\LazyCache.Testing.Common\bin\Release\netstandard2.0\LazyCache.Testing.Common.xml" target="lib\netstandard2.0" />
+    <file src="src\LazyCache.Testing.Common\bin\Release\netstandard2.0\LazyCache.Testing.Common.pdb" target="lib\netstandard2.0" />
     <file src="src\LazyCache.Testing.Moq\bin\Release\netstandard2.0\LazyCache.Testing.Moq.dll" target="lib\netstandard2.0" />
+    <file src="src\LazyCache.Testing.Moq\bin\Release\netstandard2.0\LazyCache.Testing.Moq.xml" target="lib\netstandard2.0" />
+    <file src="src\LazyCache.Testing.Moq\bin\Release\netstandard2.0\LazyCache.Testing.Moq.pdb" target="lib\netstandard2.0" />
     <file src="LICENSE" />
   </files>
 </package>
