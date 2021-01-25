@@ -9,7 +9,7 @@
     <license type="file">LICENSE</license>
     <projectUrl>https://github.com/rgvlee/LazyCache.Testing</projectUrl>
     <description>A mocking library that creates LazyCache IAppCache system mocks using NSubstitute.</description>
-    <copyright>Copyright (c) 2020 Lee Anderson</copyright>
+    <copyright>Copyright (c) 2021 Lee Anderson</copyright>
     <tags>LazyCache NSubstitute nsub mock testing</tags>
     <repository url="https://github.com/rgvlee/LazyCache.Testing" />
     <dependencies>
