@@ -21,7 +21,7 @@ namespace LazyCache.Testing.NSubstitute.Extensions
             EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
             EnsureArgument.IsNotNullOrEmpty(cacheEntryKey, nameof(cacheEntryKey));
 
-            Logger.LogDebug("Setting up cache entry for '{cacheEntryKey}' (type: {type}; value: '{cacheEntryValue}')", cacheEntryKey, typeof(T), cacheEntryValue);
+            Logger.LogDebug("Setting up cache entry for '{cacheEntryKey}' (type: '{type}'; value: '{cacheEntryValue}')", cacheEntryKey, typeof(T), cacheEntryValue);
 
             mockedCachingService.SetUpCacheEntryAdd<T>(cacheEntryKey);
 
@@ -61,7 +61,7 @@ namespace LazyCache.Testing.NSubstitute.Extensions
             EnsureArgument.IsNotNull(mockedCachingService, nameof(mockedCachingService));
             EnsureArgument.IsNotNullOrEmpty(cacheEntryKey, nameof(cacheEntryKey));
 
-            Logger.LogDebug("Setting up cache entry Get/GetOrAdd for '{cacheEntryKey}' (type: {type}; value: '{cacheEntryValue}')", cacheEntryKey, typeof(T), cacheEntryValue);
+            Logger.LogDebug("Setting up cache entry Get/GetOrAdd for '{cacheEntryKey}' (type: '{type}'; value: '{cacheEntryValue}')", cacheEntryKey, typeof(T), cacheEntryValue);
 
             mockedCachingService.Get<T>(Arg.Is<string>(s => s.Equals(cacheEntryKey))).Returns(cacheEntryValue).AndDoes(x => Logger.LogDebug("Cache Get invoked"));
 
