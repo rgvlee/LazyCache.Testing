@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using rgvlee.Core.Common.Helpers;
 using ProjectReflectionShortcuts = LazyCache.Testing.Moq.Helpers.ReflectionShortcuts;
+using CoreReflectionShortcuts = rgvlee.Core.Common.Helpers.ReflectionShortcuts;
 
 namespace LazyCache.Testing.Moq.Extensions
 {
@@ -73,7 +74,7 @@ namespace LazyCache.Testing.Moq.Extensions
                 var getOrAddExpression = ExpressionHelper.CreateMethodCallExpression<IAppCache, T>(
                     ProjectReflectionShortcuts.GetOrAddWithMemoryCacheEntryOptionsMethod.MakeGenericMethod(typeof(T)),
                     Expression.Call(ProjectReflectionShortcuts.ItIsMethod(typeof(string)),
-                        ExpressionHelper.CreateMethodCallExpression<string, bool>(typeof(string).GetMethod("Equals", new[] { typeof(string) }),
+                        ExpressionHelper.CreateMethodCallExpression<string, bool>(CoreReflectionShortcuts.StringEqualsMethodWithStringArgument,
                             Expression.Constant(cacheEntryKey, typeof(string)))),
                     Expression.Call(ProjectReflectionShortcuts.ItIsAnyMethod(typeof(Func<ICacheEntry, T>))),
                     Expression.Call(ProjectReflectionShortcuts.ItIsAnyMethod(typeof(MemoryCacheEntryOptions))));
@@ -97,7 +98,7 @@ namespace LazyCache.Testing.Moq.Extensions
                 var getOrAddAsyncExpression = ExpressionHelper.CreateMethodCallExpression<IAppCache, Task<T>>(
                     ProjectReflectionShortcuts.GetOrAddWithMemoryCacheEntryOptionsMethod.MakeGenericMethod(typeof(T)),
                     Expression.Call(ProjectReflectionShortcuts.ItIsMethod(typeof(string)),
-                        ExpressionHelper.CreateMethodCallExpression<string, bool>(typeof(string).GetMethod("Equals", new[] { typeof(string) }),
+                        ExpressionHelper.CreateMethodCallExpression<string, bool>(CoreReflectionShortcuts.StringEqualsMethodWithStringArgument,
                             Expression.Constant(cacheEntryKey, typeof(string)))),
                     Expression.Call(ProjectReflectionShortcuts.ItIsAnyMethod(typeof(Func<ICacheEntry, Task<T>>))),
                     Expression.Call(ProjectReflectionShortcuts.ItIsAnyMethod(typeof(MemoryCacheEntryOptions))));
