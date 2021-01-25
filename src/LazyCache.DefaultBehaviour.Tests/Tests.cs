@@ -12,13 +12,13 @@ namespace LazyCache.DefaultBehaviour.Tests
         {
             base.SetUp();
 
-            CachingService = new CachingService();
+            SUT = new CachingService();
         }
 
         [TearDown]
         public override void TearDown()
         {
-            var cacheProvider = CachingService.CacheProvider;
+            var cacheProvider = SUT.CacheProvider;
             var memoryCache = (MemoryCache) cacheProvider.GetType().GetField("cache", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(cacheProvider);
             memoryCache.Compact(1.0);
 

@@ -24,40 +24,49 @@ namespace LazyCache.Testing.Moq.PackageVerification.Tests
         [Test]
         public void Example1()
         {
+            //Arrange
             var cacheEntryKey = Fixture.Create<string>();
             var expectedResult = Fixture.Create<Guid>();
 
             var mockedCache = Create.MockedCachingService();
 
+            //Act
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
+            //Assert
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
 
         [Test]
         public void Example2()
         {
+            //Arrange
             var cacheEntryKey = Fixture.Create<string>();
             var expectedResult = Fixture.Create<Guid>();
 
             var mockedCache = Create.MockedCachingService();
             mockedCache.Add(cacheEntryKey, expectedResult);
 
+            //Act
             var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
 
+            //Assert
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
 
         [Test]
         public void Example3()
         {
+            //Arrange
             var cacheEntryKey = Fixture.Create<string>();
             var expectedResult = Fixture.Create<Guid>();
 
             var mockedCache = Create.MockedCachingService();
 
+            //Act
             var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
+            //Assert
             var cacheMock = Mock.Get(mockedCache);
             cacheMock.Verify(x => x.GetOrAdd(cacheEntryKey, It.IsAny<Func<ICacheEntry, Guid>>(), It.IsAny<MemoryCacheEntryOptions>()), Times.Once);
         }

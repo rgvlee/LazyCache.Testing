@@ -17,40 +17,49 @@ LazyCache.Testing is a mocking library that creates LazyCache IAppCache system m
 Start by creating a mocked caching service using `Create.MockedCachingService()`:
 
 ```c#
+//Arrange
 var cacheEntryKey = Fixture.Create<string>();
 var expectedResult = Fixture.Create<Guid>();
 
 var mockedCache = Create.MockedCachingService();
 
+//Act
 var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
+//Assert
 Assert.That(actualResult, Is.EqualTo(expectedResult));
 ```
 
 This creates a mocked `IAppCache`. If your SUT populates the cache you're done. If it doesn't, or you like your arrange to be verbose, populate it as if you were using the real thing:
 
 ```c#
+//Arrange
 var cacheEntryKey = Fixture.Create<string>();
 var expectedResult = Fixture.Create<Guid>();
 
 var mockedCache = Create.MockedCachingService();
 mockedCache.Add(cacheEntryKey, expectedResult);
 
+//Act
 var actualResult = mockedCache.Get<Guid>(cacheEntryKey);
 
+//Assert
 Assert.That(actualResult, Is.EqualTo(expectedResult));
 ```
 
 The Moq implementation of `Create.MockedCachingService()` returns the mocked caching service. If you need the mock itself (e.g., to verify an invocation) use `Mock.Get(mockedCache)`:
 
 ```c#
+//Arrange
 var cacheEntryKey = Fixture.Create<string>();
 var expectedResult = Fixture.Create<Guid>();
 
 var mockedCache = Create.MockedCachingService();
 
+//Act
 var actualResult = mockedCache.GetOrAdd(cacheEntryKey, () => expectedResult, DateTimeOffset.Now.AddMinutes(30));
 
+//Assert
 var cacheMock = Mock.Get(mockedCache);
 cacheMock.Verify(x => x.GetOrAdd(cacheEntryKey, It.IsAny<Func<ICacheEntry, Guid>>(), It.IsAny<MemoryCacheEntryOptions>()), Times.Once);
 ```

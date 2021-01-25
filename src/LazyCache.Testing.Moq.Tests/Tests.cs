@@ -13,7 +13,7 @@ namespace LazyCache.Testing.Moq.Tests
         {
             base.SetUp();
 
-            CachingService = Create.MockedCachingService();
+            SUT = Create.MockedCachingService();
         }
 
         [Test]
@@ -22,11 +22,11 @@ namespace LazyCache.Testing.Moq.Tests
             var cacheEntryKey = Fixture.Create<string>();
             var expectedResult = Fixture.Create<TestObject>();
 
-            CachingService.Add(cacheEntryKey, expectedResult);
-            var actualResult = CachingService.Get<TestObject>(cacheEntryKey);
+            SUT.Add(cacheEntryKey, expectedResult);
+            var actualResult = SUT.Get<TestObject>(cacheEntryKey);
 
-            Mock.Get(CachingService).Verify(m => m.Add(cacheEntryKey, expectedResult, It.IsAny<MemoryCacheEntryOptions>()), Times.Once);
-            Mock.Get(CachingService).Verify(m => m.Get<TestObject>(cacheEntryKey), Times.Once);
+            Mock.Get(SUT).Verify(m => m.Add(cacheEntryKey, expectedResult, It.IsAny<MemoryCacheEntryOptions>()), Times.Once);
+            Mock.Get(SUT).Verify(m => m.Get<TestObject>(cacheEntryKey), Times.Once);
         }
     }
 }

@@ -7,6 +7,14 @@
     <LangVersion>9</LangVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <WarningsAsErrors>NU1605</WarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <WarningsAsErrors>NU1605</WarningsAsErrors>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="..\LazyCache.Testing.Common.Tests\TestObject.cs" Link="TestObject.cs" />
   </ItemGroup>
@@ -14,7 +22,7 @@
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.15.0" />
     <PackageReference Include="LazyCache" Version="2.1.2" />
-    <PackageReference Include="LazyCache.Testing.Moq" Version="1.3.0-rc06" />
+    <PackageReference Include="LazyCache.Testing.Moq" Version="1.3.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
     <PackageReference Include="Moq" Version="4.16.0" />
     <PackageReference Include="nunit" Version="3.13.0" />

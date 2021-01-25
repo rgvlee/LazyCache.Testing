@@ -31,7 +31,7 @@ namespace LazyCache.Testing.Common.Tests
 
         protected Fixture Fixture;
 
-        protected IAppCache CachingService;
+        protected IAppCache SUT;
 
         [Test]
         public virtual void Add_DefaultTestObject_ThrowsException()
@@ -40,7 +40,7 @@ namespace LazyCache.Testing.Common.Tests
             {
                 var ex = Assert.Throws<ArgumentNullException>(() =>
                 {
-                    CachingService.Add(Fixture.Create<string>(), default(TestObject));
+                    SUT.Add(Fixture.Create<string>(), default(TestObject));
                 });
 
                 Assert.That(ex?.Message, Is.EqualTo("Value cannot be null.\r\nParameter name: item"));
@@ -53,8 +53,8 @@ namespace LazyCache.Testing.Common.Tests
             var cacheEntryKey = Fixture.Create<string>();
             var expectedResult = Fixture.Create<Guid>();
 
-            CachingService.Add(cacheEntryKey, expectedResult);
-            var actualResult = CachingService.Get<Guid>(cacheEntryKey);
+            SUT.Add(cacheEntryKey, expectedResult);
+            var actualResult = SUT.Get<Guid>(cacheEntryKey);
 
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
@@ -65,8 +65,8 @@ namespace LazyCache.Testing.Common.Tests
             var cacheEntryKey = Fixture.Create<string>();
             var expectedResult = Fixture.Create<TestObject>();
 
-            CachingService.Add(cacheEntryKey, expectedResult);
-            var actualResult = CachingService.Get<TestObject>(cacheEntryKey);
+            SUT.Add(cacheEntryKey, expectedResult);
+            var actualResult = SUT.Get<TestObject>(cacheEntryKey);
 
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
@@ -80,8 +80,8 @@ namespace LazyCache.Testing.Common.Tests
             var cacheEntryOptions = Fixture.Create<MemoryCacheEntryOptions>();
             cacheEntryOptions.AddExpirationToken(new CancellationChangeToken(cts.Token));
 
-            CachingService.Add(cacheEntryKey, expectedResult, cacheEntryOptions);
-            var actualResult = CachingService.Get<Guid>(cacheEntryKey);
+            SUT.Add(cacheEntryKey, expectedResult, cacheEntryOptions);
+            var actualResult = SUT.Get<Guid>(cacheEntryKey);
 
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
@@ -97,8 +97,8 @@ namespace LazyCache.Testing.Common.Tests
                 Console.WriteLine("PostEvictionCallback invoked");
             });
 
-            CachingService.Add(cacheEntryKey, expectedResult, cacheEntryOptions);
-            var actualResult = CachingService.Get<Guid>(cacheEntryKey);
+            SUT.Add(cacheEntryKey, expectedResult, cacheEntryOptions);
+            var actualResult = SUT.Get<Guid>(cacheEntryKey);
 
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
@@ -112,8 +112,8 @@ namespace LazyCache.Testing.Common.Tests
             var cacheEntryOptions = Fixture.Create<MemoryCacheEntryOptions>();
 
             var actualResult = await (withCacheEntryOptions
-                ? CachingService.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult), cacheEntryOptions)
-                : CachingService.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult)));
+                ? SUT.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult), cacheEntryOptions)
+                : SUT.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult)));
 
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
@@ -127,8 +127,8 @@ namespace LazyCache.Testing.Common.Tests
             var cacheEntryOptions = Fixture.Create<MemoryCacheEntryOptions>();
 
             var actualResult = await (withCacheEntryOptions
-                ? CachingService.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult), cacheEntryOptions)
-                : CachingService.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult)));
+                ? SUT.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult), cacheEntryOptions)
+                : SUT.GetOrAddAsync(cacheEntryKey, () => Task.FromResult(expectedResult)));
 
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
@@ -142,8 +142,8 @@ namespace LazyCache.Testing.Common.Tests
             var cacheEntryOptions = Fixture.Create<MemoryCacheEntryOptions>();
 
             var actualResult = withCacheEntryOptions
-                ? CachingService.GetOrAdd(cacheEntryKey, () => expectedResult, cacheEntryOptions)
-                : CachingService.GetOrAdd(cacheEntryKey, () => expectedResult);
+                ? SUT.GetOrAdd(cacheEntryKey, () => expectedResult, cacheEntryOptions)
+                : SUT.GetOrAdd(cacheEntryKey, () => expectedResult);
 
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
@@ -157,8 +157,8 @@ namespace LazyCache.Testing.Common.Tests
             var cacheEntryOptions = Fixture.Create<MemoryCacheEntryOptions>();
 
             var actualResult = withCacheEntryOptions
-                ? CachingService.GetOrAdd(cacheEntryKey, () => expectedResult, cacheEntryOptions)
-                : CachingService.GetOrAdd(cacheEntryKey, () => expectedResult);
+                ? SUT.GetOrAdd(cacheEntryKey, () => expectedResult, cacheEntryOptions)
+                : SUT.GetOrAdd(cacheEntryKey, () => expectedResult);
 
             Assert.That(actualResult, Is.EqualTo(expectedResult));
         }
@@ -170,9 +170,9 @@ namespace LazyCache.Testing.Common.Tests
             var expectedResult1 = Fixture.Create<Guid>();
             var expectedResult2 = default(Guid);
 
-            var actualResult1 = CachingService.GetOrAdd(cacheEntryKey, () => expectedResult1);
-            CachingService.Remove(cacheEntryKey);
-            var actualResult2 = CachingService.Get<Guid>(cacheEntryKey);
+            var actualResult1 = SUT.GetOrAdd(cacheEntryKey, () => expectedResult1);
+            SUT.Remove(cacheEntryKey);
+            var actualResult2 = SUT.Get<Guid>(cacheEntryKey);
 
             Assert.Multiple(() =>
             {
@@ -189,9 +189,9 @@ namespace LazyCache.Testing.Common.Tests
             var expectedResult2 = Fixture.Create<TestObject>();
             var expectedResult3 = expectedResult2;
 
-            var actualResult1 = CachingService.Get<TestObject>(cacheEntryKey);
-            var actualResult2 = CachingService.GetOrAdd(cacheEntryKey, () => expectedResult2, DateTimeOffset.Now.AddMinutes(30));
-            var actualResult3 = CachingService.Get<TestObject>(cacheEntryKey);
+            var actualResult1 = SUT.Get<TestObject>(cacheEntryKey);
+            var actualResult2 = SUT.GetOrAdd(cacheEntryKey, () => expectedResult2, DateTimeOffset.Now.AddMinutes(30));
+            var actualResult3 = SUT.Get<TestObject>(cacheEntryKey);
 
             Assert.Multiple(() =>
             {
@@ -204,7 +204,7 @@ namespace LazyCache.Testing.Common.Tests
         [Test]
         public virtual void Get_ReturnsDefaultValue()
         {
-            var actualResult = CachingService.Get<Guid>(Fixture.Create<string>());
+            var actualResult = SUT.Get<Guid>(Fixture.Create<string>());
 
             Assert.That(actualResult, Is.EqualTo(default(Guid)));
         }
@@ -212,7 +212,7 @@ namespace LazyCache.Testing.Common.Tests
         [Test]
         public virtual async Task GetAsync_ReturnsDefaultValue()
         {
-            var actualResult = await CachingService.GetAsync<Guid>(Fixture.Create<string>());
+            var actualResult = await SUT.GetAsync<Guid>(Fixture.Create<string>());
 
             Assert.That(actualResult, Is.EqualTo(default(Guid)));
         }
@@ -222,7 +222,7 @@ namespace LazyCache.Testing.Common.Tests
         {
             Assert.DoesNotThrow(() =>
             {
-                CachingService.Remove(Fixture.Create<string>());
+                SUT.Remove(Fixture.Create<string>());
             });
         }
 
@@ -231,9 +231,9 @@ namespace LazyCache.Testing.Common.Tests
         {
             var cacheEntryKey = Fixture.Create<string>();
 
-            var actualResult1 = CachingService.Get<Guid>(cacheEntryKey);
-            CachingService.Remove(cacheEntryKey);
-            var actualResult2 = CachingService.Get<Guid>(cacheEntryKey);
+            var actualResult1 = SUT.Get<Guid>(cacheEntryKey);
+            SUT.Remove(cacheEntryKey);
+            var actualResult2 = SUT.Get<Guid>(cacheEntryKey);
 
             Assert.Multiple(() =>
             {
@@ -255,8 +255,8 @@ namespace LazyCache.Testing.Common.Tests
             };
             var options = Fixture.Create<MemoryCacheEntryOptions>();
 
-            var actualResult1 = CachingService.GetOrAdd(cacheEntryKey, func, options);
-            var actualResult2 = CachingService.GetOrAdd(cacheEntryKey, func, options);
+            var actualResult1 = SUT.GetOrAdd(cacheEntryKey, func, options);
+            var actualResult2 = SUT.GetOrAdd(cacheEntryKey, func, options);
 
             Assert.Multiple(() =>
             {
@@ -279,8 +279,8 @@ namespace LazyCache.Testing.Common.Tests
             };
             var options = Fixture.Create<MemoryCacheEntryOptions>();
 
-            var actualResult1 = await CachingService.GetOrAddAsync(cacheEntryKey, func, options);
-            var actualResult2 = await CachingService.GetOrAddAsync(cacheEntryKey, func, options);
+            var actualResult1 = await SUT.GetOrAddAsync(cacheEntryKey, func, options);
+            var actualResult2 = await SUT.GetOrAddAsync(cacheEntryKey, func, options);
 
             Assert.Multiple(() =>
             {
