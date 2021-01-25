@@ -96,6 +96,7 @@ namespace LazyCache.Testing.NSubstitute
             {
                 var genericArgument = methodInfo.ReturnType.GetGenericArguments().Single();
                 var defaultValue = genericArgument.GetDefaultValue();
+
                 return RouteAction.Return(CoreReflectionShortcuts.TaskFromResultMethod(genericArgument).Invoke(null, new[] { defaultValue }));
             }
 

@@ -87,6 +87,7 @@ namespace LazyCache.Testing.Moq
             {
                 var genericArgument = methodInfo.ReturnType.GetGenericArguments().Single();
                 var defaultValue = genericArgument.GetDefaultValue();
+
                 return CoreReflectionShortcuts.TaskFromResultMethod(genericArgument).Invoke(null, new[] { defaultValue });
             }
 
