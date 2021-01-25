@@ -17,12 +17,11 @@ namespace LazyCache.Testing.NSubstitute.Tests
         }
 
         [Test]
-        public virtual void AddThenGet_GuidKeyAndTestObjectValue_AddAndGetEachInvokedOnce()
+        public virtual void AddThenGet_TestObject_AddAndGetEachInvokedOnce()
         {
             var cacheEntryKey = Fixture.Create<string>();
             var expectedResult = Fixture.Create<TestObject>();
 
-            //Act
             CachingService.Add(cacheEntryKey, expectedResult);
             var actualResult = CachingService.Get<TestObject>(cacheEntryKey);
 
